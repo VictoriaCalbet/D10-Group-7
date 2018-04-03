@@ -26,7 +26,7 @@
 <%@ attribute name="code" required="true" %>
 
 <%@ attribute name="readonly" required="false" %>
-
+<%@ attribute name="valueImput" required="false" %>
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
 </jstl:if>
@@ -34,9 +34,7 @@
 <%-- Definition --%>
 
 <div>
-	<form:label path="${path}">
-		<spring:message code="${code}" />
-	</form:label>	
-	<form:input path="${path}" readonly="${readonly}" />	
-	<form:errors path="${path}" cssClass="error" />
+    <b><form:label path="${path}"><spring:message code="${code}"/></form:label>:</b>
+    <form:input path="${path}" readonly="${readonly}"/>
+    <form:errors path="${path}" cssClass="error" />
 </div>	

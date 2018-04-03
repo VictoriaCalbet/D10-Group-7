@@ -1,5 +1,5 @@
 <%--
- * submit.tag
+ * textbox.tag
  *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
@@ -21,12 +21,22 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
 
 <%-- Attributes --%> 
-
-<%@ attribute name="name" required="true" %> 
+ 
+<%@ attribute name="path" required="true" %>
 <%@ attribute name="code" required="true" %>
 
+<%@ attribute name="readonly" required="false" %>
+<%@ attribute name="valueImput" required="false" %>
+<jstl:if test="${readonly == null}">
+	<jstl:set var="readonly" value="false" />
+</jstl:if>
+<jstl:if test="${valueImput== null}">
+	<jstl:set var="valueImput" value="" />
+</jstl:if>
 <%-- Definition --%>
 
-<button type="submit" name="${name}" class="btn btn-primary">
-	<spring:message code="${code}" />
-</button>
+<div>
+    <b><form:label path="${path}"><spring:message code="${code}"/></form:label>:</b>
+    <form:input path="${path}" readonly="${readonly}" value="${valueImput}"/>
+    <form:errors path="${path}" cssClass="error" />
+</div>	

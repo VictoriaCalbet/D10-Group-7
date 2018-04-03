@@ -1,7 +1,7 @@
 <%--
- * submit.tag
+ * selecMultiple.tag
  *
- * Copyright (C) 2017 Universidad de Sevilla
+ * Copyright (C) 2018 Universidad de Sevilla
  * 
  * The use of this project is hereby constrained to the conditions of the 
  * TDG Licence, a copy of which you may download from 
@@ -22,11 +22,22 @@
 
 <%-- Attributes --%> 
 
-<%@ attribute name="name" required="true" %> 
+<%@ attribute name="path" required="true" %>
 <%@ attribute name="code" required="true" %>
+<%@ attribute name="items" required="true" type="java.util.Collection" %>
+<%@ attribute name="itemLabel" required="true" %>
+
+<%@ attribute name="id" required="false" %>
+
+<jstl:if test="${id == null}">
+	<jstl:set var="id" value="${UUID.randomUUID().toString()}" />
+</jstl:if>
+
 
 <%-- Definition --%>
 
-<button type="submit" name="${name}" class="btn btn-primary">
-	<spring:message code="${code}" />
-</button>
+	<b><form:label path="${path}"><spring:message code="${code}"/></form:label>:</b>	
+    <form:select id="${id}" path="${path}" onchange="${onchange}" multiple="multiple">
+        <form:options items="${items}" itemValue="id" itemLabel="${itemLabel}" />
+    </form:select>
+    <form:errors path="${path}" cssClass="error" />
