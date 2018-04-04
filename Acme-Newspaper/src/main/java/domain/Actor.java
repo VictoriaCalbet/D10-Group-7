@@ -74,7 +74,7 @@ public abstract class Actor extends DomainEntity {
 		return this.emailAddresses;
 	}
 
-	public void setEmail(final String emailAddresses) {
+	public void setEmailAddresses(final String emailAddresses) {
 		this.emailAddresses = emailAddresses;
 	}
 

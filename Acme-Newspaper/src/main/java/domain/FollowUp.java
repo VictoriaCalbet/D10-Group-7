@@ -70,6 +70,7 @@ public class FollowUp extends DomainEntity {
 	}
 
 	@Valid
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public Collection<String> getPictures() {
 		return this.pictures;
 	}
