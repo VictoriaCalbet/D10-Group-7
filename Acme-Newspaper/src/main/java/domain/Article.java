@@ -111,6 +111,7 @@ public class Article extends DomainEntity {
 
 	@Valid
 	@NotNull
+	@ElementCollection
 	@OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
 	public Collection<FollowUp> getFollowUps() {
 		return this.followUps;
