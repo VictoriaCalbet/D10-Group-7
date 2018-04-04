@@ -302,11 +302,9 @@
 		<property name="text" value="Believe it or not, the student has passed all his exams while having a hangover after last night's party. Truly imoressive. 'It's true I didn't sleep that much last night, but hey! I am not so tired, because the previous day I slept for 12 hours!'" />
 		<property name="publicationMoment" value="04/11/2016 10:00" />
 		<property name="pictures">
-		
 			<list>
 			
 			</list>
-		
 		</property>
 		<property name="user" ref="user2"/>
 		<property name="article" ref="article3"/> 

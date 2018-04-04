@@ -7,6 +7,7 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -73,6 +74,7 @@ public class Article extends DomainEntity {
 	}
 
 	@Valid
+	@ElementCollection
 	public Collection<String> getPictures() {
 		return this.pictures;
 	}
@@ -108,6 +110,7 @@ public class Article extends DomainEntity {
 
 	@Valid
 	@NotNull
+	@ElementCollection
 	@OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
 	public Collection<FollowUp> getFollowUps() {
 		return this.followUps;
