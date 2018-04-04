@@ -1,15 +1,17 @@
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
@@ -22,11 +24,11 @@ public abstract class Actor extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	private String	name;
-	private String	surname;
-	private String	postalAddresses;
-	private String	phoneNumbers;
-	private String	emailAddresses;
+	private String				name;
+	private String				surname;
+	private Collection<String>	postalAddresses;
+	private Collection<String>	phoneNumbers;
+	private Collection<String>	emailAddresses;
 
 
 	@NotBlank
@@ -49,32 +51,36 @@ public abstract class Actor extends DomainEntity {
 		this.surname = surname;
 	}
 
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getpostalAddresses() {
+	@Valid
+	@NotNull
+	@ElementCollection
+	public Collection<String> getpostalAddresses() {
 		return this.postalAddresses;
 	}
 
-	public void setPostalAddresses(final String postalAddresses) {
+	public void setPostalAddresses(final Collection<String> postalAddresses) {
 		this.postalAddresses = postalAddresses;
 	}
 
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getphoneNumbers() {
+	@Valid
+	@NotNull
+	@ElementCollection
+	public Collection<String> getphoneNumbers() {
 		return this.phoneNumbers;
 	}
 
-	public void setphoneNumbers(final String phoneNumbers) {
+	public void setphoneNumbers(final Collection<String> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
 
-	@NotBlank
-	@Email
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getEmailAddresses() {
+	@Valid
+	@NotNull
+	@ElementCollection
+	public Collection<String> getEmailAddresses() {
 		return this.emailAddresses;
 	}
 
-	public void setEmailAddresses(final String emailAddresses) {
+	public void setEmailAddresses(final Collection<String> emailAddresses) {
 		this.emailAddresses = emailAddresses;
 	}
 

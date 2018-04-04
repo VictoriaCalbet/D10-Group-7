@@ -95,9 +95,19 @@
 	<bean id="administrator1" class="domain.Administrator">
 		<property name="name" value="admin1"/>
 		<property name="surname" value="McAdmin1"/>
-		<property name="postalAddresses"><null/></property>
-		<property name="phoneNumbers"><null/></property>
-		<property name="emailAddresses" value="admin1@admins.com"/>
+		<property name="postalAddresses">
+			<list>
+			</list>
+		</property>
+		<property name="phoneNumbers">
+			<list>
+			</list>
+		</property>
+		<property name="emailAddresses">
+			<list>
+				<value>admin1@admins.com</value>
+			</list>
+		</property>
 		<property name="userAccount" ref="userAccount1"/>
 	</bean>
 	
@@ -106,9 +116,21 @@
 	<bean id="user1" class="domain.User">
 		<property name="name" value="user1"/>
 		<property name="surname" value="McUser1"/>
-		<property name="postalAddresses" value="16th, Lollipop Street" />
-		<property name="phoneNumbers" value="678555342" />
-		<property name="emailAddresses" value="user1@users.com"/>
+		<property name="postalAddresses">
+			<list>
+				<value>16th, Lollipop Street</value>
+			</list>
+		</property>
+		<property name="phoneNumbers">
+			<list>
+				<value>678555342</value>
+			</list>
+		</property>
+		<property name="emailAddresses">
+			<list>
+				<value>user1@users.com</value>
+			</list>
+		</property>
 		<property name="userAccount" ref="userAccount2"/>
 		<property name="followUps">
 			<list>
@@ -136,9 +158,21 @@
 	<bean id="user2" class="domain.User">
 		<property name="name" value="user2"/>
 		<property name="surname" value="McUser2"/>
-		<property name="postalAddresses" value="14th, Blueberry Street" />
-		<property name="phoneNumbers" value="678555343" />
-		<property name="emailAddresses" value="user2@users.com"/>
+		<property name="postalAddresses">
+			<list>
+				<value>14th, Blueberry Street</value>
+			</list>
+		</property>
+		<property name="phoneNumbers">
+			<list>
+				<value>678555343</value>
+			</list>
+		</property>
+		<property name="emailAddresses">
+			<list>
+				<value>user2@users.com</value>
+			</list>
+		</property>
 		<property name="userAccount" ref="userAccount3"/>
 		<property name="followUps">
 			<list>
@@ -166,9 +200,21 @@
 	<bean id="user3" class="domain.User">
 		<property name="name" value="user3"/>
 		<property name="surname" value="McUser3"/>
-		<property name="postalAddresses" value="16th, Shadow Isles Street" />
-		<property name="phoneNumbers" value="678555344" />
-		<property name="emailAddresses" value="user3@users.com"/>
+		<property name="postalAddresses">
+			<list>
+				<value>16th, Shadow Isles Street</value>
+			</list>
+		</property>
+		<property name="phoneNumbers">
+			<list>
+				<value>678555344</value>
+			</list>
+		</property>
+		<property name="emailAddresses">
+			<list>
+				<value>user3@users.com</value>
+			</list>
+		</property>
 		<property name="userAccount" ref="userAccount4"/>
 		<property name="followUps">
 			<list>
@@ -197,9 +243,21 @@
 	<bean id="customer1" class="domain.Customer">
 		<property name="name" value="customer1"/>
 		<property name="surname" value="McCustomer1"/>
-		<property name="postalAddresses" value="4th, Blank Street" />
-		<property name="phoneNumbers" value="678555345" />
-		<property name="emailAddresses" value="customer1@customers.com"/>
+		<property name="postalAddresses">
+			<list>
+				<value>4th, Blank Street</value>
+			</list>
+		</property>
+		<property name="phoneNumbers">
+			<list>
+				<value>678555345</value>
+			</list>
+		</property>
+		<property name="emailAddresses">
+			<list>
+				<value>customer1@customers.com</value>
+			</list>
+		</property>
 		<property name="userAccount" ref="userAccount5"/>
 		<property name="subscriptions">
 			<list>
@@ -212,9 +270,21 @@
 	<bean id="customer2" class="domain.Customer">
 		<property name="name" value="customer2"/>
 		<property name="surname" value="McCustomer2"/>
-		<property name="postalAddresses" value="46th, Warden Road" />
-		<property name="phoneNumbers" value="678555446" />
-		<property name="emailAddresses" value="customer2@customers.com"/>
+		<property name="postalAddresses">
+			<list>
+				<value>46th, Warden Road</value>
+			</list>
+		</property>
+		<property name="phoneNumbers">
+			<list>
+				<value>678555446</value>
+			</list>
+		</property>
+		<property name="emailAddresses">
+			<list>
+				<value>customer2@customers.com</value>
+			</list>
+		</property>
 		<property name="userAccount" ref="userAccount6"/>
 		<property name="subscriptions">
 			<list>
@@ -302,11 +372,8 @@
 		<property name="text" value="Believe it or not, the student has passed all his exams while having a hangover after last night's party. Truly imoressive. 'It's true I didn't sleep that much last night, but hey! I am not so tired, because the previous day I slept for 12 hours!'" />
 		<property name="publicationMoment" value="04/11/2016 10:00" />
 		<property name="pictures">
-		
 			<list>
-			
 			</list>
-		
 		</property>
 		<property name="user" ref="user2"/>
 		<property name="article" ref="article3"/> 
