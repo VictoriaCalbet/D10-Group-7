@@ -119,22 +119,24 @@
 		<property name="postalAddresses">
 			<list>
 				<value>16th, Lollipop Street</value>
+				<value>17th, Lollipop Street</value>
 			</list>
 		</property>
 		<property name="phoneNumbers">
 			<list>
 				<value>678555342</value>
+				<value>678555352</value>
 			</list>
 		</property>
 		<property name="emailAddresses">
 			<list>
 				<value>user1@users.com</value>
+				<value>user1@acme.com</value>
 			</list>
 		</property>
 		<property name="userAccount" ref="userAccount2"/>
 		<property name="followUps">
 			<list>
-				
 			</list>
 		</property>
 		<property name="newspapers">
@@ -218,18 +220,14 @@
 		<property name="userAccount" ref="userAccount4"/>
 		<property name="followUps">
 			<list>
-				
 			</list>
 		</property>
 		<property name="newspapers">
 			<list>
-				
 			</list>
 		</property>
 		<property name="articles">
-			<list>
-				
-				
+			<list>				
 			</list>
 		</property>
 		<property name="chirps">
@@ -288,7 +286,6 @@
 		<property name="userAccount" ref="userAccount6"/>
 		<property name="subscriptions">
 			<list>
-				
 			</list>
 		</property>
 		
@@ -302,18 +299,12 @@
 		<property name="body" value="An employee messed it all up after accidentally mixing two chemical components in a pool." />
 		<property name="publicationMoment" value="01/11/2016 10:00" />
 		<property name="pictures"> 
-		
-			<list>
-			
-				
+			<list>			
 			</list>
-		
-		</property>
-		
+		</property>		
 		<property name="isDraft" value="false"/>
 		<property name="followUps">
 			<list>
-				
 			</list>
 		</property>
 		<property name="user" ref="user1"/>
@@ -326,16 +317,12 @@
 		<property name="body" value="Clients caused chaos in a supermarket. They pushed and kicked each other. The reason? The Nutella had a 70% discount." />
 		<property name="publicationMoment" value="01/11/2016 10:00" />
 		<property name="pictures">
-		
 			<list>
-			
 			</list>
-		
 		</property>
 		<property name="isDraft" value="false"/>
 		<property name="followUps">
 			<list>
-				
 			</list>
 		</property>
 		<property name="user" ref="user1"/>
@@ -348,11 +335,8 @@
 		<property name="body" value="A student has been able to break the laws of nature. He is able to have an active social life while speeling well and passing all of his exams." />
 		<property name="publicationMoment" value="01/11/2016 12:00" />
 		<property name="pictures">
-		
-			<list>
-			
+			<list>			
 			</list>
-		
 		</property>
 		<property name="isDraft" value="false"/>
 		<property name="followUps">
@@ -389,18 +373,13 @@
 		<property name="isPrivate" value="false"/>
 		<property name="user" ref="user1"/>
 		<property name="articles">
-		
-			<list>
-			
+			<list>			
 				<ref bean="article1"/>
 				<ref bean="article2"/>
-			
 			</list>
-		
 		</property>
 		<property name="subscriptions">
 			<list>
-			
 			</list>
 		</property> 
 	</bean>
@@ -466,11 +445,12 @@
 	<bean id="systemConfiguration" class="domain.SystemConfiguration">
 		
 		<property name="tabooWords">
-		
-		<list> 
-			<value>"sex,sexo,cialis,viagra"</value>
-		</list>
-		
+			<list> 
+			<value>sex</value>
+			<value>sexo</value>
+			<value>cialis</value>
+			<value>viagra</value>
+			</list>
 		</property>
 	</bean>
 	
