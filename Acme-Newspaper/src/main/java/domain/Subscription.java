@@ -15,8 +15,6 @@ public class Subscription extends DomainEntity {
 	// Attributes -------------------------------------------------------------
 
 	private CreditCard	creditCard;
-	private Newspaper	newspaper;
-	private Customer	customer;
 
 
 	@Valid
@@ -26,7 +24,14 @@ public class Subscription extends DomainEntity {
 	public void setCreditCard(final CreditCard creditCard) {
 		this.creditCard = creditCard;
 	}
+
+
 	// Relationships ----------------------------------------------------------
+
+	private Newspaper	newspaper;
+	private Customer	customer;
+
+
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)

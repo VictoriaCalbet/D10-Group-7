@@ -6,16 +6,20 @@ import java.util.Date;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
-import org.hibernate.validator.constraints.URL;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -23,12 +27,12 @@ public class Article extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	private String	title;
-	private Date	publicationMoment;
-	private String	summary;
-	private String	body;
-	private String	pictures;
-	private Boolean	isDraft;
+	private String				title;
+	private Date				publicationMoment;
+	private String				summary;
+	private String				body;
+	private Collection<String>	pictures;
+	private Boolean				isDraft;
 
 
 	@NotBlank
@@ -40,13 +44,16 @@ public class Article extends DomainEntity {
 		this.title = title;
 	}
 
-	@Valid
+	@Past
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
 	public Date getPublicationMoment() {
 		return this.publicationMoment;
 	}
 	public void setPublicationMoment(final Date publicationMoment) {
 		this.publicationMoment = publicationMoment;
 	}
+
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getSummary() {
@@ -65,13 +72,12 @@ public class Article extends DomainEntity {
 		this.body = body;
 	}
 
-	@URL
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getPictures() {
+	@Valid
+	public Collection<String> getPictures() {
 		return this.pictures;
 	}
 
-	public void setPictures(final String pictures) {
+	public void setPictures(final Collection<String> pictures) {
 		this.pictures = pictures;
 	}
 
@@ -102,7 +108,7 @@ public class Article extends DomainEntity {
 
 	@Valid
 	@NotNull
-	@OneToMany(mappedBy = "article")
+	@OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
 	public Collection<FollowUp> getFollowUps() {
 		return this.followUps;
 	}
