@@ -411,7 +411,7 @@
 	</bean>
 	
 	<bean id="newspaper2" class="domain.Newspaper">
-		<property name="title" value="Shocking facts"/>
+		<property name="title" value="The World Hoy"/>
 		<property name="description" value="A newspaper dedicated to inform about shocking news that happen around the globe."/>
 		<property name="picture"><null/></property>
 		<property name="publicationDate" value="01/11/2016 12:00" />

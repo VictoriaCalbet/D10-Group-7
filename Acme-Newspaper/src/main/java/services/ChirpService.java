@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ChirpRepository;
+import domain.Administrator;
 import domain.Chirp;
+import domain.User;
 
 @Service
 @Transactional
@@ -22,6 +25,12 @@ public class ChirpService {
 
 
 	// Supporting services ----------------------------------------------------
+	
+	@Autowired
+	private UserService userService;
+	
+	@Autowired
+	private AdministratorService administratorService;
 
 	// Constructors -----------------------------------------------------------
 
@@ -50,6 +59,70 @@ public class ChirpService {
 		result = this.chirpRepository.findOne(chirpId);
 		return result;
 	}
+	
+	public Chirp create(){
+		
+		Chirp result = null;
+		result = new Chirp();
+		result.setPublicationMoment(new Date());
+		return result;
+	}
+	
+	public Chirp saveFromCreate(Chirp chirp){
+		
+		Assert.notNull(chirp);
+		Assert.notNull(chirp.getDescription());
+		Assert.notNull(chirp.getTitle());
+		
+		User user = this.userService.findByPrincipal();
+		
+		Assert.notNull(user);
+		
+		chirp.setPublicationMoment(new Date(System.currentTimeMillis() - 1));
+		
+		//TODO: check if the title and the description contain taboo words
+		
+			
+		final Chirp savedChirp = this.chirpRepository.save(chirp);
+		
+		Collection<Chirp> chirps = user.getChirps();
+		
+		chirps.add(savedChirp);
+		
+		user.setChirps(chirps);
+		
+		this.userService.save(user);
+		
+		return savedChirp;
+		
+	}
+	
+	public void delete(Chirp c){
+		
+		Assert.notNull(c);
+		Administrator admin = this.administratorService.findByPrincipal();
+		Assert.notNull(admin);
+		
+		this.chirpRepository.delete(c);
+	}
+	
+	
 
 	// Other business methods -------------------------------------------------
+	
+	public Collection<Chirp> listAllChirpsByUser(int id){
+		
+		Collection<Chirp> chirps = this.chirpRepository.listAllChirpsByUser(id);
+		
+		return chirps;
+		
+	}
+	
+	public Collection<Chirp> listAllChirpsByFollowedUsers(int id){
+		
+		Collection<Chirp> chirps = this.chirpRepository.listAllChirpsByFollowedUsers(id);
+		
+		return chirps;
+		
+	}
 }
