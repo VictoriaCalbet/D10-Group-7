@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -21,6 +22,8 @@ public class User extends Actor {
 	private Collection<FollowUp>	followUps;
 	private Collection<Article>		articles;
 	private Collection<Chirp>		chirps;
+	private Collection<User>		followed;
+	private Collection<User>		followers;
 
 
 	@Valid
@@ -64,5 +67,27 @@ public class User extends Actor {
 
 	public void setChirps(final Collection<Chirp> chirps) {
 		this.chirps = chirps;
+	}
+
+	@Valid
+	@NotNull
+	@ManyToMany(mappedBy = "followers")
+	public Collection<User> getFollowed() {
+		return this.followed;
+	}
+
+	public void setFollowed(final Collection<User> followed) {
+		this.followed = followed;
+	}
+
+	@Valid
+	@NotNull
+	@ManyToMany
+	public Collection<User> getFollowers() {
+		return this.followers;
+	}
+
+	public void setFollowers(final Collection<User> followers) {
+		this.followers = followers;
 	}
 }

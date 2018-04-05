@@ -155,6 +155,16 @@
 				<ref bean="chirp1"/>
 			</list>
 		</property>
+		<property name="followed">
+			<list>
+				<ref bean="user2"/>
+				<ref bean="user3"/>
+			</list>
+		</property>
+		<property name="followers">
+			<list>
+			</list>
+		</property>
 	</bean>
 	
 	<bean id="user2" class="domain.User">
@@ -189,12 +199,19 @@
 		<property name="articles">
 			<list>
 				<ref bean="article3"/>
-				
 			</list>
 		</property>
 		<property name="chirps">
 			<list>
-				
+			</list>
+		</property>
+		<property name="followed">
+			<list>
+			</list>
+		</property>
+		<property name="followers">
+			<list>
+				<ref bean="user1"/>
 			</list>
 		</property>
 	</bean>
@@ -233,6 +250,15 @@
 		<property name="chirps">
 			<list>
 				<ref bean="chirp2"/>
+			</list>
+		</property>
+		<property name="followed">
+			<list>
+			</list>
+		</property>
+		<property name="followers">
+			<list>
+				<ref bean="user1"/>
 			</list>
 		</property>
 	</bean>
@@ -353,7 +379,7 @@
 	<bean id="followUp1" class="domain.FollowUp">
 		<property name="title" value="FollowUp of Article 3"/>
 		<property name="summary" value="College student still breaks the immutable triangle"/>
-		<property name="text" value="Believe it or not, the student has passed all his exams while having a hangover after last night's party. Truly imoressive. 'It's true I didn't sleep that much last night, but hey! I am not so tired, because the previous day I slept for 12 hours!'" />
+		<property name="text" value="Believe it or not, the student has passed all his exams while having a hangover after last night's party. Truly impressive. 'It's true I didn't sleep that much last night, but hey! I am not so tired, because the previous day I slept for 12 hours!'" />
 		<property name="publicationMoment" value="04/11/2016 10:00" />
 		<property name="pictures">
 			<list>
