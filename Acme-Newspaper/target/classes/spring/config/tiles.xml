@@ -26,6 +26,17 @@
 		<value>/views/profile/tiles.xml</value>
 		<value>/views/legal-terms/tiles.xml</value>
 		<value>/views/about-us/tiles.xml</value>
+		
+		<value>/views/actor/tiles.xml</value>
+		<value>/views/administrator/tiles.xml</value>
+		<value>/views/article/tiles.xml</value>
+		<value>/views/chirp/tiles.xml</value>
+		<value>/views/customer/tiles.xml</value>
+		<value>/views/follow-up/tiles.xml</value>
+		<value>/views/newspaper/tiles.xml</value>
+		<value>/views/subscription/tiles.xml</value>
+		<value>/views/system-configuration/tiles.xml</value>
+		<value>/views/user/tiles.xml</value>
 	</util:list>
 
 </beans>
