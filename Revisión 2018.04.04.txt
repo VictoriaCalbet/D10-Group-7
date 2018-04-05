@@ -1,0 +1,20 @@
+1. ¿Existe alguna forma de que una anotación del dominio examine las entidades que están dentro de una Collection? Ej: @Email para Collection<String>; comprobar que todos los string siguen el patrón.
+
+No sabe cómo se puede hacer. Habría que investigar.
+
+2. Formato de las fechas. En Newspaper, ¿es el formato para mostrar o para introducir los datos en el formulario? En el resto, ¿el formato podemos elegirlo?
+
+El formato es a la hora de mostrar los datos.
+
+14. Misma pregunta que 1. pero para pictures.
+
+Misma respuesta que 1.
+
+22. ¿Hay que guardar la CreditCard o se mete cada vez que queramos suscribirnos a algo? ¿Qué pasa cuando una creditCard expira?
+
+Se guardan en Subscription y hay que comprobar que su fecha de expiración sea futura cuando nos traigamos los newspaper privados.
+
+¿Pico de rendimiento mínimo?
+
+No hay rendimiento mínimo pero tenemos que mostrar capturas con la carga máxima aceptable y con un valor superior al máximo para demostrar que ese es real.
+
