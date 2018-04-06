@@ -15,7 +15,7 @@ import domain.Administrator;
 
 @Service
 @Transactional
-public class AdmistratorService {
+public class AdministratorService {
 
 	// Managed Repository -----------------------------------------------------
 
@@ -27,7 +27,7 @@ public class AdmistratorService {
 
 	// Constructors -----------------------------------------------------------
 
-	public AdmistratorService() {
+	public AdministratorService() {
 		super();
 	}
 
