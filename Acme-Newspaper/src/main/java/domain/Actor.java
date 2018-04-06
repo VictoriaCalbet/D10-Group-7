@@ -66,11 +66,11 @@ public abstract class Actor extends DomainEntity {
 	@Valid
 	@NotNull
 	@ElementCollection
-	public Collection<String> getphoneNumbers() {
+	public Collection<String> getPhoneNumbers() {
 		return this.phoneNumbers;
 	}
 
-	public void setphoneNumbers(final Collection<String> phoneNumbers) {
+	public void setPhoneNumbers(final Collection<String> phoneNumbers) {
 		this.phoneNumbers = phoneNumbers;
 	}
 
