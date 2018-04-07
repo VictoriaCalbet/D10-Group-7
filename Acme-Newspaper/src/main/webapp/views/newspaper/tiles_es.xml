@@ -21,9 +21,19 @@
 		<put-attribute name="body" value="/views/newspaper/list.jsp" />
 	</definition>
 	
-	<definition name="newspaper/edit" extends="master.page">	
-		<put-attribute name="title" value="Editar un periodico" />
+	<definition name="newspaper/user/create" extends="master.page">	
+		<put-attribute name="title" value="Crear un periodico" />
 		<put-attribute name="body" value="/views/newspaper/edit.jsp" />
+	</definition>
+	
+	<definition name="newspaper/user/publish" extends="master.page">	
+		<put-attribute name="title" value="Publicar un periódico" />
+		<put-attribute name="body" value="/views/newspaper/publish.jsp" />
+	</definition>
+	
+	<definition name="newspaper/info" extends="master.page">
+		<put-attribute name="title" value="Información de un periódico" />
+		<put-attribute name="body" value="/views/trip/display.jsp" />
 	</definition>
 	
 </tiles-definitions>

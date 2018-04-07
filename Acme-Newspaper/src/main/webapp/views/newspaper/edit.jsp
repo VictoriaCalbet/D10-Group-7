@@ -18,3 +18,20 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<form:form action="${requestURI}" modelAttribute="newspaperForm">
+
+	<!-- Hidden attributes -->
+	<form:hidden path="id"/>
+	
+	<!-- Editable attributes -->
+	
+	<acme:textbox code="newspaper.title" path="title"/>
+	<acme:textarea code="newspaper.description" path="description"/>	
+	<acme:textbox code="newspaper.picture" path="picture"/>
+	<acme:checkbox code="newspaper.isPrivate" path="isPrivate"/>
+	
+		<!-- Action buttons -->
+	<acme:submit name="save" code="newspaper.save" /> &nbsp;
+	<acme:cancel url="/" code="newspaper.cancel" /> <br/>
+
+</form:form>

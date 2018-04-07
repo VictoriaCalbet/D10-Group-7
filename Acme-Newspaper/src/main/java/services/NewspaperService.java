@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.NewspaperRepository;
+import domain.Actor;
+import domain.Article;
 import domain.Newspaper;
+import domain.Subscription;
+import domain.User;
 
 @Service
 @Transactional
@@ -20,8 +25,13 @@ public class NewspaperService {
 	@Autowired
 	private NewspaperRepository	newspaperRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private UserService			userService;
+	@Autowired
+	private ActorService		actorService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -30,6 +40,21 @@ public class NewspaperService {
 	}
 
 	// Simple CRUD methods ----------------------------------------------------
+
+	public Newspaper create() {
+
+		final Newspaper result = new Newspaper();
+		final User u = this.userService.findByPrincipal();
+
+		final Collection<Article> articles = new ArrayList<Article>();
+		final Collection<Subscription> subscriptions = new ArrayList<Subscription>();
+
+		result.setArticles(articles);
+		result.setPublisher(u);
+		result.setSubscriptions(subscriptions);
+
+		return result;
+	}
 
 	// DO NOT MODIFY. ANY OTHER SAVE METHOD MUST BE NAMED DIFFERENT.
 	public Newspaper save(final Newspaper newspaper) {
@@ -51,6 +76,19 @@ public class NewspaperService {
 		return result;
 	}
 
+	public void deleteAdmin(final int newspaperId) {
+		final Newspaper n = this.newspaperRepository.findOne(newspaperId);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(actor, "ADMIN"));
+		Assert.notNull(n, "message.error.newspaper.null");
+		final User publisher = n.getPublisher();
+		publisher.getNewspapers().remove(n);
+		this.userService.save(publisher);
+
+		this.newspaperRepository.delete(n);
+
+	}
+
 	// Other business methods -------------------------------------------------
 
 	public Collection<Newspaper> findAvailableNewspapersByCustomerId(final int customerId) {
@@ -59,6 +97,18 @@ public class NewspaperService {
 		return result;
 	}
 
+	public Collection<Newspaper> findPublicated() {
+		return this.newspaperRepository.findPublicated();
+	}
+
+	public Collection<Newspaper> findNewspaperByKeyWord(final String keyWord) {
+		return this.newspaperRepository.findNewspaperByKeyWord(keyWord);
+	}
+
+	public Integer numArticlesFinalOfNewspaper(final int newspaperId) {
+		return this.newspaperRepository.numArticlesFinalOfNewspaper(newspaperId);
+
+	}
 	// Dashboard services ------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.1

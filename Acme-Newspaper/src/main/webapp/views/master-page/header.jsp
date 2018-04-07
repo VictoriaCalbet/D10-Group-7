@@ -23,6 +23,7 @@
 <div>
 	<ul id="jMenu">
 		<security:authorize access="permitAll">
+			<li><a class="fNiv" href="newspaper/list.do"><spring:message code="master.page.newspaper"/></a></li>
 			<li>
 				<a class="fNiv" href="user/list.do"> <spring:message code="master.page.users"/></a>
 			</li>
@@ -32,7 +33,8 @@
 		</security:authorize>
 		
 		<security:authorize access="isAnonymous()">
-			<li><a class="fNiv"><spring:message
+			<li>			
+			<a class="fNiv"><spring:message
 						code="master.page.register" /></a>
 				<ul>
 					<li class="arrow"></li>
@@ -44,8 +46,19 @@
 			</li>
 		</security:authorize>
 	
+			<!-- #User -->
+		<security:authorize access="hasRole('USER')">
+			<li><a class="fNiv" href="newspaper/user/create.do"><spring:message code="master.page.newspaper.create" /></a></li>
+			<li><a class="fNiv" href="newspaper/user/list.do"><spring:message code="master.page.newspaper.user.list" /></a></li>
+		
+		
+		</security:authorize>
+		
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMIN')">
+		
+			<li><a class="fNiv" href="newspaper/administrator/list.do"><spring:message code="master.page.newspaper.admin.list" /></a></li>
+		
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator" /></a>
 				<ul>

@@ -34,14 +34,12 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.2
 
-	// TODO
-	@Query("select count(a) from Article a")
+	@Query("select avg(news.articles.size) from Newspaper news where news.isPrivate is true")
 	Double avgNoArticlesPerPrivateNewspapers();
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.3
 
-	// TODO
-	@Query("select count(a) from Article a")
+	@Query("select avg(news.articles.size) from Newspaper news where news.isPrivate is false")
 	Double avgNoArticlesPerPublicNewspapers();
 
 }
