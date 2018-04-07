@@ -70,7 +70,7 @@ public class DashboardAdministratorController extends AbstractController {
 		result.addObject("avgArticlesWrittenByWriter", avgArticlesWrittenByWriter);
 		result.addObject("stdArticlesWrittenyWriter", stdArticlesWrittenyWriter);
 
-		// Requisito 7.3.3
+		// Requisito 7.3.3 - OK
 		final Double avgArticlesPerNewspaper = this.articleService.avgArticlesPerNewspaper();
 		final Double stdArticlesPerNewspaper = this.articleService.stdArticlesPerNewspaper();
 		result.addObject("avgArticlesPerNewspaper", avgArticlesPerNewspaper);
