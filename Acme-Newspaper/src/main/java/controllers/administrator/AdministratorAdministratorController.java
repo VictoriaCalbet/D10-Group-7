@@ -47,11 +47,23 @@ public class AdministratorAdministratorController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView edit() {
+	public ModelAndView create() {
 		final ModelAndView result;
 		ActorForm actorForm;
 
 		actorForm = this.actorFormService.create();
+		result = this.createEditModelAndView(actorForm);
+
+		return result;
+
+	}
+
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
+		final ModelAndView result;
+		ActorForm actorForm;
+
+		actorForm = this.actorFormService.createFromActor();
 		result = this.createEditModelAndView(actorForm);
 
 		return result;

@@ -1,7 +1,5 @@
 
-package controllers;
-
-import java.util.Collection;
+package controllers.customer;
 
 import javax.validation.Valid;
 
@@ -12,45 +10,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CustomerService;
 import services.forms.ActorFormService;
-import domain.Customer;
+import controllers.AbstractController;
 import domain.forms.ActorForm;
 
 @Controller
-@RequestMapping("/customer")
-public class CustomerController extends AbstractController {
-
-	@Autowired
-	private CustomerService		customerService;
+@RequestMapping("/customer/customer")
+public class CustomerCustomerController extends AbstractController {
 
 	@Autowired
 	private ActorFormService	actorFormService;
 
 
-	public CustomerController() {
+	public CustomerCustomerController() {
 		super();
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
-		ModelAndView result;
-		Collection<Customer> customers;
-
-		customers = this.customerService.findAll();
-
-		result = new ModelAndView("customer/list");
-		result.addObject("customers", customers);
-		result.addObject("requestURI", "customer/list.do");
-		return result;
-	}
-
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
 		final ModelAndView result;
 		ActorForm actorForm;
 
-		actorForm = this.actorFormService.create();
+		actorForm = this.actorFormService.createFromActor();
 		result = this.createEditModelAndView(actorForm);
 
 		return result;

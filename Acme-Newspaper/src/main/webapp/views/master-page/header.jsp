@@ -22,7 +22,7 @@
 
 <div>
 	<ul id="jMenu">
-		<security:authorize access="isAnonymous()">
+		<security:authorize access="permitAll">
 			<li>
 				<a class="fNiv" href="user/list.do"> <spring:message code="master.page.users"/></a>
 			</li>

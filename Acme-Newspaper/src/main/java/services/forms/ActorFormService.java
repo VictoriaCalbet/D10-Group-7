@@ -134,7 +134,7 @@ public class ActorFormService {
 
 			Assert.isTrue(!this.actorService.checkLogin(), "message.error.actorForm.customer.login");
 
-			userAccount = this.userAccountService.createComplete(actorForm.getUsername(), actorForm.getPassword(), "USER");
+			userAccount = this.userAccountService.createComplete(actorForm.getUsername(), actorForm.getPassword(), "CUSTOMER");
 			customer = this.customerService.create();
 
 			customer.setName(actorForm.getName());

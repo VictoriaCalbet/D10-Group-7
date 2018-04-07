@@ -46,7 +46,7 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView edit() {
+	public ModelAndView create() {
 		final ModelAndView result;
 		ActorForm actorForm;
 

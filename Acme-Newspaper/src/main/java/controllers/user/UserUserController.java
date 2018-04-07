@@ -1,7 +1,5 @@
 
-package controllers;
-
-import java.util.Collection;
+package controllers.user;
 
 import javax.validation.Valid;
 
@@ -12,45 +10,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.CustomerService;
 import services.forms.ActorFormService;
-import domain.Customer;
+import controllers.AbstractController;
 import domain.forms.ActorForm;
 
 @Controller
-@RequestMapping("/customer")
-public class CustomerController extends AbstractController {
-
-	@Autowired
-	private CustomerService		customerService;
+@RequestMapping("/user/user")
+public class UserUserController extends AbstractController {
 
 	@Autowired
 	private ActorFormService	actorFormService;
 
 
-	public CustomerController() {
+	public UserUserController() {
 		super();
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
-		ModelAndView result;
-		Collection<Customer> customers;
-
-		customers = this.customerService.findAll();
-
-		result = new ModelAndView("customer/list");
-		result.addObject("customers", customers);
-		result.addObject("requestURI", "customer/list.do");
-		return result;
-	}
-
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView create() {
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public ModelAndView edit() {
 		final ModelAndView result;
 		ActorForm actorForm;
 
-		actorForm = this.actorFormService.create();
+		actorForm = this.actorFormService.createFromActor();
 		result = this.createEditModelAndView(actorForm);
 
 		return result;
@@ -66,12 +47,12 @@ public class CustomerController extends AbstractController {
 		else
 			try {
 				if (actorForm.getId() != 0)
-					this.actorFormService.saveFromEdit(actorForm, "CUSTOMER");
+					this.actorFormService.saveFromEdit(actorForm, "USER");
 				else
-					this.actorFormService.saveFromCreate(actorForm, "CUSTOMER");
+					this.actorFormService.saveFromCreate(actorForm, "USER");
 				result = new ModelAndView("redirect:../");
 			} catch (final Throwable oops) {
-				String messageError = "customer.commit.error";
+				String messageError = "user.commit.error";
 				if (oops.getMessage().contains("message.error"))
 					messageError = oops.getMessage();
 				result = this.createEditModelAndView(actorForm, messageError);
@@ -96,7 +77,7 @@ public class CustomerController extends AbstractController {
 		result = new ModelAndView("actorForm/edit");
 		result.addObject("actorForm", actorForm);
 		result.addObject("message", message);
-		result.addObject("requestURI", "customer/edit.do");
+		result.addObject("requestURI", "user/edit.do");
 
 		return result;
 	}
