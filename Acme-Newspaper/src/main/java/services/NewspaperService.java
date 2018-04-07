@@ -109,6 +109,7 @@ public class NewspaperService {
 		return this.newspaperRepository.numArticlesFinalOfNewspaper(newspaperId);
 
 	}
+
 	// Dashboard services ------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.1
