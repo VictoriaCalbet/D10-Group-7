@@ -1,36 +1,41 @@
 
-package domain;
+package domain.forms;
 
 import java.util.Collection;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
-import security.UserAccount;
-
-@Entity
-@Access(AccessType.PROPERTY)
-public abstract class Actor extends DomainEntity {
+public class ActorForm {
 
 	// Attributes -------------------------------------------------------------
 
+	private int					id;
 	private String				name;
 	private String				surname;
 	private Collection<String>	postalAddresses;
 	private Collection<String>	phoneNumbers;
 	private Collection<String>	emailAddresses;
+	private String				username;
+	private String				password;
+	private String				repeatedPassword;
+	private boolean				acceptTerms;
 
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(final int id) {
+		this.id = id;
+	}
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
@@ -85,21 +90,47 @@ public abstract class Actor extends DomainEntity {
 		this.emailAddresses = emailAddresses;
 	}
 
+	@NotBlank
+	@Size(min = 5, max = 32)
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(final String username) {
+		this.username = username;
+	}
+
+	@NotBlank
+	@Size(min = 5, max = 32)
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(final String password) {
+		this.password = password;
+	}
+
+	@NotBlank
+	@Size(min = 5, max = 32)
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getRepeatedPassword() {
+		return this.repeatedPassword;
+	}
+
+	public void setRepeatedPassword(final String repeatedPassword) {
+		this.repeatedPassword = repeatedPassword;
+	}
+
+	public boolean getAcceptTerms() {
+		return this.acceptTerms;
+	}
+
+	public void setAcceptTerms(final boolean acceptTerms) {
+		this.acceptTerms = acceptTerms;
+	}
 
 	// Relationships ----------------------------------------------------------
-
-	private UserAccount	userAccount;
-
-
-	@Valid
-	@NotNull
-	@OneToOne(cascade = CascadeType.ALL)
-	public UserAccount getUserAccount() {
-		return this.userAccount;
-	}
-
-	public void setUserAccount(final UserAccount userAccount) {
-		this.userAccount = userAccount;
-	}
 
 }
