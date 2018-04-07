@@ -1,6 +1,8 @@
 
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -14,8 +16,7 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Inte
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.4
 
-	// TODO
-	@Query("select count(s) from Subscription s")
-	Double ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
+	@Query("select news, news.subscriptions.size*1.0/(select count(cust) from Customer cust) from Newspaper news")
+	Collection<Double> ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
 
 }

@@ -19,9 +19,6 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.1
 
-	@Query("select n from Newspaper n where n.publicationDate < CURRENT_TIMESTAMP")
-	Collection<Newspaper> findPublishedNewspapers();
-
 	@Query("select avg(usr.newspapers.size) from User usr")
 	Double avgNewspaperCreatedPerUser();
 
@@ -42,8 +39,7 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.1
 
-	// TODO
-	@Query("select count(n) from Newspaper n")
+	@Query("select count(news)*1.0/(select nws from Newspaper nws where nws.isPrivate is false) from Newspaper news where news.isPrivate is true")
 	Double ratioOfPublicVsPrivateNewspapers();
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.5
@@ -51,5 +47,4 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	// TODO
 	@Query("select count(n) from Newspaper n")
 	Double avgRatioOfPrivateVsPublicNewspaperPerPublisher();
-
 }

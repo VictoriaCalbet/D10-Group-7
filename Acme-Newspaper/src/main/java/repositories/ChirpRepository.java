@@ -23,7 +23,7 @@ public interface ChirpRepository extends JpaRepository<Chirp, Integer> {
 	// Acme-Newspaper 1.0 - Requisito 17.6.4
 
 	// TODO
-	@Query("select count(c) from Chirp c")
+	@Query("select avg(usr.chirps.size) from User usr")
 	public Double avgNoChirpsPerUser();
 
 }
