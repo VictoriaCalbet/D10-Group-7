@@ -46,7 +46,7 @@
 	
 	<spring:message code="newspaper.articles.title" var="articleTitleHeader" />	
 	<display:column title="${articleTitleHeader}">	
-		<a href="article/info.do?articleId=${row.id}">
+		<a href="article/display.do?articleId=${row.id}">
 		 	${row.title}
 		</a>
 	</display:column>
