@@ -21,16 +21,16 @@ public class ChirpService {
 	// Managed Repository -----------------------------------------------------
 
 	@Autowired
-	private ChirpRepository	chirpRepository;
-
+	private ChirpRepository			chirpRepository;
 
 	// Supporting services ----------------------------------------------------
-	
+
 	@Autowired
-	private UserService userService;
-	
+	private UserService				userService;
+
 	@Autowired
-	private AdministratorService administratorService;
+	private AdministratorService	administratorService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -59,70 +59,77 @@ public class ChirpService {
 		result = this.chirpRepository.findOne(chirpId);
 		return result;
 	}
-	
-	public Chirp create(){
-		
+
+	public Chirp create() {
+
 		Chirp result = null;
 		result = new Chirp();
 		result.setPublicationMoment(new Date());
 		return result;
 	}
-	
-	public Chirp saveFromCreate(Chirp chirp){
-		
+
+	public Chirp saveFromCreate(final Chirp chirp) {
+
 		Assert.notNull(chirp);
 		Assert.notNull(chirp.getDescription());
 		Assert.notNull(chirp.getTitle());
-		
-		User user = this.userService.findByPrincipal();
-		
+
+		final User user = this.userService.findByPrincipal();
+
 		Assert.notNull(user);
-		
+
 		chirp.setPublicationMoment(new Date(System.currentTimeMillis() - 1));
-		
+
 		//TODO: check if the title and the description contain taboo words
-		
-			
+
 		final Chirp savedChirp = this.chirpRepository.save(chirp);
-		
-		Collection<Chirp> chirps = user.getChirps();
-		
+
+		final Collection<Chirp> chirps = user.getChirps();
+
 		chirps.add(savedChirp);
-		
+
 		user.setChirps(chirps);
-		
+
 		this.userService.save(user);
-		
+
 		return savedChirp;
-		
+
 	}
-	
-	public void delete(Chirp c){
-		
+
+	public void delete(final Chirp c) {
+
 		Assert.notNull(c);
-		Administrator admin = this.administratorService.findByPrincipal();
+		final Administrator admin = this.administratorService.findByPrincipal();
 		Assert.notNull(admin);
-		
+
 		this.chirpRepository.delete(c);
 	}
-	
-	
 
 	// Other business methods -------------------------------------------------
-	
-	public Collection<Chirp> listAllChirpsByUser(int id){
-		
-		Collection<Chirp> chirps = this.chirpRepository.listAllChirpsByUser(id);
-		
+
+	public Collection<Chirp> listAllChirpsByUser(final int id) {
+
+		final Collection<Chirp> chirps = this.chirpRepository.listAllChirpsByUser(id);
+
 		return chirps;
-		
+
 	}
-	
-	public Collection<Chirp> listAllChirpsByFollowedUsers(int id){
-		
-		Collection<Chirp> chirps = this.chirpRepository.listAllChirpsByFollowedUsers(id);
-		
+
+	public Collection<Chirp> listAllChirpsByFollowedUsers(final int id) {
+
+		final Collection<Chirp> chirps = this.chirpRepository.listAllChirpsByFollowedUsers(id);
+
 		return chirps;
-		
+
+	}
+
+	// Dashboard services ------------------------------------------------------
+
+	// Acme-Newspaper 1.0 - Requisito 17.6.4
+
+	public Double avgNoChirpsPerUser() {
+		Double result = null;
+		result = this.chirpRepository.avgNoChirpsPerUser();
+		return result;
 	}
 }

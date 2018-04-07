@@ -9,4 +9,10 @@ import domain.Subscription;
 @Repository
 public interface SubscriptionRepository extends JpaRepository<Subscription, Integer> {
 
+	// Dashboard queries -------------------------------------------------------
+
+	// Acme-Newspaper 1.0 - Requisito 24.1.4
+
+	Double ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
+
 }

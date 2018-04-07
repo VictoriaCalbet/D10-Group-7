@@ -156,4 +156,31 @@ public class UserService {
 
 		return result;
 	}
+
+	// Dashboard services ------------------------------------------------------
+
+	// Acme-Newspaper 1.0 - Requisito 7.3.6
+
+	public Double ratioOfUsersWhoHaveEverCreatedPerNewspaper() {
+		Double result = null;
+		result = this.userRepository.ratioOfUsersWhoHaveEverCreatedPerNewspaper();
+		return result;
+	}
+
+	// Acme-Newspaper 1.0 - Requisito 7.3.7
+
+	public Double ratioOfUsersWhoHaveEverWrittenPerNewspaper() {
+		Double result = null;
+		result = this.userRepository.ratioOfUsersWhoHaveEverWrittenPerNewspaper();
+		return result;
+	}
+
+	// Acme-Newspaper 1.0 - Requisito 17.6.5
+
+	public Double ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser() {
+		Double result = null;
+		result = this.userRepository.ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser();
+		return result;
+	}
+
 }

@@ -11,11 +11,17 @@ import domain.Chirp;
 
 @Repository
 public interface ChirpRepository extends JpaRepository<Chirp, Integer> {
-	
+
 	@Query("select c from Chirp c where c.user.id = ?1")
 	public Collection<Chirp> listAllChirpsByUser(int id);
-	
+
 	@Query("select c from Chirp c, User u where u.id = ?1 and c.user in elements(u.followed)")
 	public Collection<Chirp> listAllChirpsByFollowedUsers(int id);
+
+	// Dashboard queries -------------------------------------------------------
+
+	// Acme-Newspaper 1.0 - Requisito 17.6.4
+
+	public Double avgNoChirpsPerUser();
 
 }

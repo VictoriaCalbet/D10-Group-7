@@ -52,4 +52,58 @@ public class NewspaperService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	public Collection<Newspaper> findAvailableNewspapersByCustomerId(final int customerId) {
+		Collection<Newspaper> result = null;
+		result = this.newspaperRepository.findAvailableNewspapersByCustomerId(customerId);
+		return result;
+	}
+
+	// Dashboard services ------------------------------------------------------
+
+	// Acme-Newspaper 1.0 - Requisito 7.3.1
+
+	public Double avgNewspaperCreatedPerUser() {
+		Double result = null;
+		result = this.newspaperRepository.avgNewspaperCreatedPerUser();
+		return result;
+	}
+
+	public Double stdNewspapercreatedPerUser() {
+		Double result = null;
+		result = this.newspaperRepository.stdNewspapercreatedPerUser();
+		return result;
+	}
+
+	// Acme-Newspaper 1.0 - Requisito 7.3.4
+
+	public Collection<Newspaper> newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg() {
+		Collection<Newspaper> result = null;
+		result = this.newspaperRepository.newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg();
+		return result;
+	}
+
+	// Acme-Newspaper 1.0 - Requisito 7.3.5
+
+	public Collection<Newspaper> newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg() {
+		Collection<Newspaper> result = null;
+		result = this.newspaperRepository.newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg();
+		return result;
+	}
+
+	// Acme-Newspaper 1.0 - Requisito 24.1.1
+
+	public Double ratioOfPublicVsPrivateNewspapers() {
+		Double result = null;
+		result = this.newspaperRepository.ratioOfPublicVsPrivateNewspapers();
+		return result;
+	}
+
+	// Acme-Newspaper 1.0 - Requisito 24.1.5
+
+	public Double avgRatioOfPrivateVsPublicNewspaperPerPublisher() {
+		Double result = null;
+		result = this.newspaperRepository.avgRatioOfPrivateVsPublicNewspaperPerPublisher();
+		return result;
+	}
 }

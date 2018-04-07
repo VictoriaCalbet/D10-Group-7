@@ -52,4 +52,30 @@ public class FollowUpService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	// Dashboard services ------------------------------------------------------
+
+	// Acme-Newspaper 1.0 - Requisito 17.6.1
+
+	public Double avgFollowUpsPerArticle() {
+		Double result = null;
+		result = this.followUpRepository.avgFollowUpsPerArticle();
+		return result;
+	}
+
+	// Acme-Newspaper 1.0 - Requisito 17.6.2
+
+	public Double avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished() {
+		Double result = null;
+		result = this.followUpRepository.avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished();
+		return result;
+	}
+
+	// Acme-Newspaper 1.0 - Requisito 17.6.3
+
+	public Double avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished() {
+		Double result = null;
+		result = this.followUpRepository.avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished();
+		return result;
+	}
 }
