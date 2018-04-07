@@ -19,6 +19,13 @@
 
 <display:table name="users" id="row" requestURI="${requestURI}" pagesize="5">
 
+	<spring:message code="user.profile" var="profileHeader" />	
+	<display:column title="${profileHeader}">	
+		<a href="user/display.do?userId=${row.id}">
+		 	<spring:message code="user.profile" />
+		</a>
+	</display:column>
+
 	<spring:message code="user.name" var="nameHeader" />
 	<display:column property="name" title="${nameHeader}" sortable="true" />
 	
