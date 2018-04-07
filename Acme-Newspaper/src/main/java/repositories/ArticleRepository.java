@@ -1,6 +1,8 @@
 
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,9 @@ import domain.Article;
 
 @Repository
 public interface ArticleRepository extends JpaRepository<Article, Integer> {
+
+	@Query("select a from Article a where a.isDraft IS FALSE AND a.publicationMoment < CURRENT_TIMESTAMP AND a.newspaper.isPrivate IS FALSE AND a.newspaper.publicationDate < CURRENT_TIMESTAMP AND a.writer.id = ?1")
+	Collection<Article> findAllPublishedByUserId(int userId);
 
 	// Dashboard queries -------------------------------------------------------
 

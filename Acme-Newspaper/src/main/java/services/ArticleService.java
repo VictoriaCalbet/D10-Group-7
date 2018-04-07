@@ -53,6 +53,14 @@ public class ArticleService {
 
 	// Other business methods -------------------------------------------------
 
+	public Collection<Article> findAllPublishedByUserId(final int userId) {
+		Collection<Article> result;
+
+		result = this.articleRepository.findAllPublishedByUserId(userId);
+
+		return result;
+	}
+
 	// Dashboard services ------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.2

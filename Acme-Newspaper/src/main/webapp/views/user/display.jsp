@@ -34,3 +34,23 @@
 	<b><spring:message code="user.emailAddresses" />: </b>
 	<jstl:out value="${user.emailAddresses}" /><br>
 </div>
+
+<display:table name="articles" id="row" requestURI="${requestURI}" pagesize="5">
+
+	<spring:message code="article.title" var="titleHeader" />
+	<display:column property="title" title="${titleHeader}" sortable="true"/>
+
+	<spring:message code="article.publicationMoment" var="publicationMomentHeader" />
+	<spring:message code="article.publicationMoment.pattern" var="datePattern"/>
+	<display:column title="${publicationMomentHeader}" sortable="true">
+		<fmt:formatDate value="${row.publicationMoment}" pattern="${datePattern}"/>
+	</display:column>
+	
+	<spring:message code="article.summary" var="summaryHeader" />
+	<display:column property="summary" title="${summaryHeader}" sortable="true"/>
+	
+	<spring:message code="article.newspaper" var="newspaperHeader" />
+	<display:column property="newspaper.title" title="${newspaperHeader}" sortable="true"/>
+	
+	
+</display:table>

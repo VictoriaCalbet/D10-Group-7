@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ArticleService;
 import services.UserService;
 import services.forms.ActorFormService;
+import domain.Article;
 import domain.User;
 import domain.forms.ActorForm;
 
@@ -26,6 +28,9 @@ public class UserController extends AbstractController {
 
 	@Autowired
 	private ActorFormService	actorFormService;
+
+	@Autowired
+	private ArticleService		articleService;
 
 
 	public UserController() {
@@ -46,14 +51,17 @@ public class UserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(final Integer userId) {
+	public ModelAndView display(final int userId) {
 		ModelAndView result;
 		User user;
+		final Collection<Article> articles;
 
 		user = this.userService.findOne(userId);
+		articles = this.articleService.findAllPublishedByUserId(userId);
 
 		result = new ModelAndView("user/display");
 		result.addObject("user", user);
+		result.addObject("articles", articles);
 		result.addObject("requestURI", "user/display.do");
 		return result;
 	}
