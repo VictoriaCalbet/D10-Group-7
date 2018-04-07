@@ -17,3 +17,21 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<display:table name="customers" id="row" requestURI="${requestURI}" pagesize="5">
+
+	<spring:message code="customer.name" var="nameHeader" />
+	<display:column property="name" title="${nameHeader}" sortable="true" />
+	
+	<spring:message code="customer.surname" var="surnameHeader" />
+	<display:column property="surname" title="${surnameHeader}" sortable="true" />
+	
+	<spring:message code="customer.postalAddresses" var="postalAddressesHeader" />
+	<display:column property="postalAddresses" title="${postalAddressesHeader}" sortable="true" />
+	
+	<spring:message code="customer.phoneNumbers" var="phoneNumbersHeader" />
+	<display:column property="phoneNumbers" title="${phoneNumbersHeader}" sortable="true" />
+	
+	<spring:message code="customer.emailAddresses" var="emailAddressesHeader" />
+	<display:column property="emailAddresses" title="${emailAddressesHeader}" sortable="true" />
+
+</display:table>

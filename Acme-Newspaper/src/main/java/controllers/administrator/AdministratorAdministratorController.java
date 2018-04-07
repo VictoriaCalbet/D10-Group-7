@@ -19,7 +19,7 @@ import domain.Administrator;
 import domain.forms.ActorForm;
 
 @Controller
-@RequestMapping("/administrator")
+@RequestMapping("/administrator/administrator")
 public class AdministratorAdministratorController extends AbstractController {
 
 	@Autowired
