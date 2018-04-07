@@ -40,22 +40,64 @@
 		<security:intercept-url pattern="/security/loginFailure.do" access="permitAll" /> 
 
 		<security:intercept-url pattern="/welcome/index.do" access="permitAll" />
-		<security:intercept-url pattern="/legal-terms/index.do" access="permitAll" />		 
-		<security:intercept-url pattern="/about-us/index.do" access="permitAll" />		 
 		
-		<security:intercept-url pattern="/customer/create.do" access="!isAuthenticated()" />		 
-
-		<security:intercept-url pattern="/administrator/action-1.do" access="hasRole('ADMIN')" /> 
-		<security:intercept-url pattern="/administrator/action-2.do" access="hasRole('ADMIN')" /> 
-		<security:intercept-url pattern="/administrator/administrator/*" access="hasRole('ADMIN')" /> 
-
-		<security:intercept-url pattern="/customer/action-1.do" access="hasRole('CUSTOMER')" /> 
-		<security:intercept-url pattern="/customer/action-2.do" access="hasRole('CUSTOMER')" /> 
-		<security:intercept-url pattern="/customer/customer/*" access="hasRole('CUSTOMER')" /> 
-
-		<security:intercept-url pattern="/profile/action-1.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/profile/action-2.do" access="isAuthenticated()" /> 
-		<security:intercept-url pattern="/profile/action-3.do" access="isAuthenticated()" /> 
+		<security:intercept-url pattern="/legal-terms/index.do" access="permitAll" />		 
+		<security:intercept-url pattern="/about-us/index.do" access="permitAll" />		
+	
+		<!--  **************************************************************************************  --> 	 
+		
+		<!-- Actor -->
+		
+		<!-- Administrator -->
+		<security:intercept-url pattern="/administrator/dashboard.do" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/administrator/customer/**" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/administrator/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/administrator/**" access="permitAll" />
+		
+		<!-- Article -->
+		<security:intercept-url pattern="/article/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/article/customer/**" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/article/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/article/**" access="permitAll" />
+		
+		<!-- Chirp -->
+		<security:intercept-url pattern="/chirp/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/chirp/customer/**" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/chirp/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/chirp/**" access="permitAll" />
+		
+		<!-- Customer -->
+		<security:intercept-url pattern="/customer/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/customer/customer/**" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/customer/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/customer/create.do" access="!isAuthenticated()" />
+		<security:intercept-url pattern="/customer/**" access="permitAll" />
+		
+		<!-- FollowUp -->
+		<security:intercept-url pattern="/followUp/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/followUp/customer/**" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/followUp/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/followUp/**" access="permitAll" />
+		
+		<!-- Newspaper -->
+		<security:intercept-url pattern="/newspaper/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/newspaper/customer/**" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/newspaper/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/newspaper/**" access="permitAll" />
+		
+		<!-- Subscription -->
+		<security:intercept-url pattern="/subscription/customer/**" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/subscription/**" access="permitAll" />
+		
+		<!-- User -->
+		<security:intercept-url pattern="/user/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/user/customer/**" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/user/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/user/**" access="permitAll" />
+		
+		<!-- OTHERS -->
+		<security:intercept-url pattern="/systemConfiguration/administrator/**" access="hasRole('ADMIN')" />
 	
 		<security:intercept-url pattern="/**" access="hasRole('NONE')" />
 
