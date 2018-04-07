@@ -109,9 +109,11 @@ public class UserService {
 		Assert.notNull(user, "message.error.user.null");
 
 		final User result;
+		User principal;
 
-		// Check unlogged user
-		Assert.isTrue(!this.actorService.checkLogin(), "message.error.user.login");
+		// Check logged customer
+		principal = this.findByPrincipal();
+		Assert.isTrue(principal.getId() == user.getId(), "message.error.user.login");
 
 		// Check Authority
 		final boolean isUser;

@@ -16,9 +16,9 @@
       
 <tiles-definitions>
 
-	<definition name="customer/list" extends="master.page">	
-		<put-attribute name="title" value="Listado de clientes" />
-		<put-attribute name="body" value="/views/customer/list.jsp" />
+	<definition name="actorForm/edit" extends="master.page">	
+		<put-attribute name="title" value="Editar un actor" />
+		<put-attribute name="body" value="/views/actorForm/edit.jsp" />
 	</definition>
 	
 </tiles-definitions>

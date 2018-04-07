@@ -26,18 +26,27 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	Double stdNewspapercreatedPerUser();
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.4
+
+	// TODO
+	@Query("select n from Newspaper n")
 	Collection<Newspaper> newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg();
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.5
 
+	// TODO
+	@Query("select n from Newspaper n")
 	Collection<Newspaper> newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg();
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.1
 
+	// TODO
+	@Query("select count(n) from Newspaper n")
 	Double ratioOfPublicVsPrivateNewspapers();
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.5
 
+	// TODO
+	@Query("select count(n) from Newspaper n")
 	Double avgRatioOfPrivateVsPublicNewspaperPerPublisher();
 
 }

@@ -62,7 +62,7 @@ public class CustomerService {
 
 	// DO NOT MODIFY. ANY OTHER SAVE METHOD MUST BE NAMED DIFFERENT.
 	public Customer save(final Customer customer) {
-		Assert.notNull(customer);
+		Assert.notNull(customer, "message.error.customer.null");
 		Customer result;
 		result = this.customerRepository.save(customer);
 		return result;
@@ -101,9 +101,11 @@ public class CustomerService {
 		Assert.notNull(customer, "message.error.customer.null");
 
 		final Customer result;
+		Customer principal;
 
-		// Check unlogged user
-		Assert.isTrue(!this.actorService.checkLogin(), "message.error.customer.login");
+		// Check logged customer
+		principal = this.findByPrincipal();
+		Assert.isTrue(principal.getId() == customer.getId(), "message.error.customer.login");
 
 		// Check Authority
 		final boolean isCustomer;

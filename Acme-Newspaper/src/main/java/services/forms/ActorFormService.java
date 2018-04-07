@@ -90,7 +90,7 @@ public class ActorFormService {
 			Administrator principal;
 
 			principal = this.administratorService.findByPrincipal();
-			Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.actorForm.admin.create.login");
+			Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"), "message.error.actorForm.admin.login");
 			final Administrator administrator;
 			final UserAccount userAccount;
 
@@ -112,7 +112,7 @@ public class ActorFormService {
 			final User user;
 			final UserAccount userAccount;
 
-			Assert.isTrue(!this.actorService.checkLogin(), "message.error.user.login");
+			Assert.isTrue(!this.actorService.checkLogin(), "message.error.actorForm.user.login");
 
 			userAccount = this.userAccountService.createComplete(actorForm.getUsername(), actorForm.getPassword(), "USER");
 			user = this.userService.create();
@@ -132,7 +132,7 @@ public class ActorFormService {
 			final Customer customer;
 			final UserAccount userAccount;
 
-			Assert.isTrue(!this.actorService.checkLogin(), "message.error.customer.login");
+			Assert.isTrue(!this.actorService.checkLogin(), "message.error.actorForm.customer.login");
 
 			userAccount = this.userAccountService.createComplete(actorForm.getUsername(), actorForm.getPassword(), "USER");
 			customer = this.customerService.create();

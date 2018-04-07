@@ -17,14 +17,20 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.6
 
+	// TODO
+	@Query("select count(u) from User u")
 	public Double ratioOfUsersWhoHaveEverCreatedPerNewspaper();
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.7
 
+	// TODO
+	@Query("select count(u) from User u")
 	public Double ratioOfUsersWhoHaveEverWrittenPerNewspaper();
 
 	// Acme-Newspaper 1.0 - Requisito 17.6.5
 
+	// TODO
+	@Query("select count(u) from User u")
 	public Double ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser();
 
 }

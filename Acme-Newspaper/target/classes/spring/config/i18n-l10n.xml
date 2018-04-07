@@ -28,6 +28,7 @@
 		<value>/views/about-us/messages</value>
 		
 		<value>/views/actor/messages</value>
+		<value>/views/actorForm/messages</value>
 		<value>/views/administrator/messages</value>
 		<value>/views/article/messages</value>
 		<value>/views/chirp/messages</value>
