@@ -163,17 +163,17 @@ public class UserService {
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.6
 
-	public Double ratioOfUsersWhoHaveEverCreatedPerNewspaper() {
+	public Double ratioOfUsersWhoHaveEverCreatedANewspaper() {
 		Double result = null;
-		result = this.userRepository.ratioOfUsersWhoHaveEverCreatedPerNewspaper();
+		result = this.userRepository.ratioOfUsersWhoHaveEverCreatedANewspaper();
 		return result;
 	}
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.7
 
-	public Double ratioOfUsersWhoHaveEverWrittenPerNewspaper() {
+	public Double ratioOfUsersWhoHaveEverWrittenAnArticle() {
 		Double result = null;
-		result = this.userRepository.ratioOfUsersWhoHaveEverWrittenPerNewspaper();
+		result = this.userRepository.ratioOfUsersWhoHaveEverWrittenAnArticle();
 		return result;
 	}
 
