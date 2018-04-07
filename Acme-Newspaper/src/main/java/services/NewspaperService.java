@@ -59,6 +59,10 @@ public class NewspaperService {
 		return result;
 	}
 
+	public Collection<Newspaper> findPublishedNewspapers() {
+		return this.newspaperRepository.findPublishedNewspapers();
+	}
+
 	// Dashboard services ------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.1

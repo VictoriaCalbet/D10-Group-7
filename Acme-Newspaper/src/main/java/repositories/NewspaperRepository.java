@@ -19,6 +19,9 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.1
 
+	@Query("select n from Newspaper n where n.publicationDate < CURRENT_TIMESTAMP")
+	Collection<Newspaper> findPublishedNewspapers();
+
 	@Query("select avg(usr.newspapers.size) from User usr")
 	Double avgNewspaperCreatedPerUser();
 
