@@ -333,7 +333,7 @@
 			<list>
 			</list>
 		</property>
-		<property name="user" ref="user1"/>
+		<property name="writer" ref="user1"/>
 		<property name="newspaper" ref="newspaper1"/> 
 	</bean>
 	
@@ -351,7 +351,7 @@
 			<list>
 			</list>
 		</property>
-		<property name="user" ref="user1"/>
+		<property name="writer" ref="user1"/>
 		<property name="newspaper" ref="newspaper1"/> 
 	</bean>
 	
@@ -370,7 +370,7 @@
 				<ref bean="followUp1"/>
 			</list>
 		</property>
-		<property name="user" ref="user2"/>
+		<property name="writer" ref="user2"/>
 		<property name="newspaper" ref="newspaper2"/> 
 	</bean>
 	
@@ -397,7 +397,7 @@
 		<property name="picture"><null/></property>
 		<property name="publicationDate" value="01/11/2016 11:00" />
 		<property name="isPrivate" value="false"/>
-		<property name="user" ref="user1"/>
+		<property name="publisher" ref="user1"/>
 		<property name="articles">
 			<list>			
 				<ref bean="article1"/>
@@ -416,7 +416,7 @@
 		<property name="picture"><null/></property>
 		<property name="publicationDate" value="01/11/2016 12:00" />
 		<property name="isPrivate" value="true"/>
-		<property name="user" ref="user2"/>
+		<property name="publisher" ref="user2"/>
 		<property name="articles">
 			<list>
 				<ref bean="article3"/>

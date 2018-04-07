@@ -83,7 +83,7 @@ public class Newspaper extends DomainEntity {
 
 
 	// Relationships ----------------------------------------------------------
-	private User						user;
+	private User						publisher;
 	private Collection<Article>			articles;
 	private Collection<Subscription>	subscriptions;
 
@@ -91,11 +91,11 @@ public class Newspaper extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getUser() {
-		return this.user;
+	public User getPublisher() {
+		return this.publisher;
 	}
-	public void setUser(final User user) {
-		this.user = user;
+	public void setPublisher(final User publisher) {
+		this.publisher = publisher;
 	}
 
 	@Valid

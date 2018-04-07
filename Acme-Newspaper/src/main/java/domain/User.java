@@ -28,7 +28,7 @@ public class User extends Actor {
 
 	@Valid
 	@NotNull
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "publisher")
 	public Collection<Newspaper> getNewspapers() {
 		return this.newspapers;
 	}
@@ -49,7 +49,7 @@ public class User extends Actor {
 
 	@Valid
 	@NotNull
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "writer")
 	public Collection<Article> getArticles() {
 		return this.articles;
 	}

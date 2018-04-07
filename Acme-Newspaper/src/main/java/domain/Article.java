@@ -94,7 +94,7 @@ public class Article extends DomainEntity {
 
 
 	// Relationships ----------------------------------------------------------
-	private User					user;
+	private User					writer;
 	private Collection<FollowUp>	followUps;
 	private Newspaper				newspaper;
 
@@ -102,11 +102,11 @@ public class Article extends DomainEntity {
 	@Valid
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getUser() {
-		return this.user;
+	public User getWriter() {
+		return this.writer;
 	}
-	public void setUser(final User user) {
-		this.user = user;
+	public void setWriter(final User writer) {
+		this.writer = writer;
 	}
 
 	@Valid
