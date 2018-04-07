@@ -22,6 +22,15 @@
 
 <div>
 	<ul id="jMenu">
+		<security:authorize access="isAnonymous()">
+			<li>
+				<a class="fNiv" href="user/list.do"> <spring:message code="master.page.users"/></a>
+			</li>
+			<li>
+				<a class="fNiv" href="customer/list.do"> <spring:message code="master.page.customers"/></a>
+			</li>
+		</security:authorize>
+	
 		<!-- Do not forget the "fNiv" class for the first level links !! -->
 		<security:authorize access="hasRole('ADMIN')">
 			<li><a class="fNiv"><spring:message
@@ -30,7 +39,10 @@
 					<li class="arrow"></li>
 					<li><a href="administrator/dashboard.do">
 						<spring:message code="master.page.administrator.dashboard" /></a></li>
-				</ul></li>
+					<li><a href="administrator/administrator/list.do">
+						<spring:message code="master.page.administrators" /></a></li>
+				</ul>
+			</li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('CUSTOMER')">
