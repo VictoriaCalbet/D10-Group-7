@@ -17,8 +17,36 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<security:authentication property="principal" var="loggedactor"/>
+
 <display:table name="users" id="row" requestURI="${requestURI}" pagesize="5">
 
+	<security:authorize access="hasRole('USER')">
+	<spring:message code="chirp.unfollow" var="unfollow" />	
+	<display:column title="${follow}">
+	
+	<jstl:if test="${row.id!=loggedUser.id}">
+	
+	<jstl:choose>
+	<jstl:when test="${row.followers.contains(loggedUser)}">
+	
+		
+		<a href="chirp/user/unfollow.do?userId=${row.id}">
+		 	<spring:message code="chirp.unfollow" />
+		</a>
+	
+	</jstl:when>
+	
+	<jstl:otherwise>
+	<a href="chirp/user/follow.do?userId=${row.id}">
+		 	<spring:message code="chirp.follow" />
+		</a>
+	</jstl:otherwise>
+	
+	</jstl:choose>
+	</jstl:if>
+	</display:column>
+	</security:authorize>
 	<spring:message code="user.profile" var="profileHeader" />	
 	<display:column title="${profileHeader}">	
 		<a href="user/display.do?userId=${row.id}">

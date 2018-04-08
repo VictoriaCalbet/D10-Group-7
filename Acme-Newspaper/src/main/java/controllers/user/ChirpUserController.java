@@ -7,9 +7,11 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ChirpService;
@@ -55,6 +57,53 @@ public class ChirpUserController extends AbstractController{
 		return result;
 	}
 	
+	//Following a user
+	@RequestMapping(value = "/follow", method = RequestMethod.GET)
+	public ModelAndView follow(@RequestParam int userId) {
+		ModelAndView result;
+		
+		try {
+		
+		Assert.notNull(this.userService.findOne(userId),"message.error.user.null");	
+		this.chirpService.followUser(userId);
+
+		result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
+		result.addObject("loggedUser",this.userService.findByPrincipal());
+		}catch(Throwable oops){
+			String messageError = "chirp.commit.error";
+			if (oops.getMessage().contains("message.error"))
+				messageError = oops.getMessage();
+			result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
+			result.addObject("message",messageError);
+			
+		}
+		return result;
+	}
+	
+	//Unfollowing a user
+		@RequestMapping(value = "/unfollow", method = RequestMethod.GET)
+		public ModelAndView unfollow(@RequestParam int userId) {
+			ModelAndView result;
+			
+			try {
+			
+			Assert.notNull(this.userService.findOne(userId),"message.error.user.null");	
+			this.chirpService.unfollowUser(userId);
+
+			result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
+			result.addObject("loggedUser",this.userService.findByPrincipal());
+			}catch(Throwable oops){
+				String messageError = "chirp.commit.error";
+				if (oops.getMessage().contains("message.error"))
+					messageError = oops.getMessage();
+				result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
+				result.addObject("message",messageError);
+				
+				
+			}
+			return result;
+		}
+	
 	//List followed's chirps
 	
 	@RequestMapping(value = "/listFollowedChirps", method = RequestMethod.GET)
@@ -83,6 +132,7 @@ public class ChirpUserController extends AbstractController{
 				result = new ModelAndView("user/list");
 				result.addObject("users", users);
 				result.addObject("requestURI", "user/listFollowedUsers.do");
+				result.addObject("loggedUser",this.userService.findByPrincipal());
 
 				return result;
 			}
@@ -99,7 +149,8 @@ public class ChirpUserController extends AbstractController{
 					result = new ModelAndView("user/list");
 					result.addObject("users", users);
 					result.addObject("requestURI", "user/listFollowers.do");
-
+					result.addObject("loggedUser",this.userService.findByPrincipal());
+					
 					return result;
 				}	
 

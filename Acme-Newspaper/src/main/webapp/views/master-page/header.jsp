@@ -50,6 +50,10 @@
 		<security:authorize access="hasRole('USER')">
 			<li><a class="fNiv" href="newspaper/user/create.do"><spring:message code="master.page.newspaper.create" /></a></li>
 			<li><a class="fNiv" href="newspaper/user/list.do"><spring:message code="master.page.newspaper.user.list" /></a></li>
+			<li><a class="fNiv" href="chirp/user/list.do"><spring:message code="master.page.chirp.user.list" /></a></li>
+			<li><a class="fNiv" href="chirp/user/listFollowedUsers.do"><spring:message code="master.page.chirp.user.listFollowed" /></a></li>
+		    <li><a class="fNiv" href="chirp/user/listFollowers.do"><spring:message code="master.page.chirp.user.listFollowers" /></a></li>
+			<li><a class="fNiv" href="chirp/user/listFollowedChirps.do"><spring:message code="master.page.chirp.user.listFollowedChirps" /></a></li>
 		
 		
 		</security:authorize>

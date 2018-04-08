@@ -134,6 +134,44 @@ public class ChirpService {
 		return chirps;
 
 	}
+	
+	//Other services required
+	
+	public void followUser(int userId){
+		final User u = this.userService.findByPrincipal();
+		final User followed = this.userService.findOne(userId);
+
+		Assert.notNull(this.userService.findOne(userId),"message.error.user.null");	
+		Assert.isTrue(!u.getFollowed().contains(followed),"message.error.chirp.alreadyFollowing");
+		Assert.isTrue(u.getId()!=followed.getId(),"message.error.chirp.cantFollowYourself");
+		Collection<User> followedUsers = u.getFollowed();
+		Collection<User> followedUserFollowers = followed.getFollowers();
+		
+		followedUsers.add(followed);
+		followedUserFollowers.add(u);
+		
+		u.setFollowed(followedUsers);
+		followed.setFollowers(followedUserFollowers);
+		
+		this.userService.save(u);
+		this.userService.save(followed);
+	}
+	
+	public void unfollowUser(int userId){
+		final User u = this.userService.findByPrincipal();
+		final User followed = this.userService.findOne(userId);
+		Collection<User> followedUsers = u.getFollowed();
+		Collection<User> followedUserFollowers = followed.getFollowers();
+		
+		followedUsers.remove(followed);
+		followedUserFollowers.remove(u);
+		
+		u.setFollowed(followedUsers);
+		followed.setFollowers(followedUserFollowers);
+		
+		this.userService.save(u);
+		this.userService.save(followed);
+	}
 
 	// Dashboard services ------------------------------------------------------
 
