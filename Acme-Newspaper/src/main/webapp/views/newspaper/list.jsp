@@ -63,9 +63,36 @@
 		codeError="newspaper.unspecifiedImage" height="60" width="60"/>	
 	</display:column>
 	
+<security:authorize access="hasAnyRole('USER, ADMIN') or isAnonymous()">	
 		<spring:message code="newspaper.moreInfo" var="moreInfoHeader" />	
 		<display:column title="${moreInfoHeader}">
-			<jstl:if test="${!ns.contains(row)}">
+				<a href="newspaper/info.do?newspaperId=${row.id}">
+				 	<spring:message code="newspaper.moreInfoButton" />
+				</a>
+		</display:column>
+	
+
+		<spring:message code="newspaper.article" var="articleHeader" />	
+			<display:column title="${articleHeader}">			
+				<jstl:choose>
+				
+					<jstl:when test="${fn:length(row.articles) !=0}">	
+						<a href="article/list.do?newspaperId=${row.id}">
+						 	<spring:message code="newspaper.articleButton" />
+						</a>
+					</jstl:when>
+					<jstl:otherwise>
+						<spring:message code= "newspaper.notArticles" var="newspaperNotArticles"/>
+							<jstl:out value="${newspaperNotArticles}"/> 
+					</jstl:otherwise>
+				</jstl:choose>
+		</display:column>
+</security:authorize>	
+	
+<security:authorize access="hasRole('CUSTOMER')">	
+		<spring:message code="newspaper.moreInfo" var="moreInfoHeader" />	
+		<display:column title="${moreInfoHeader}">
+			<jstl:if test="${ns.contains(row)}">
 				<a href="newspaper/info.do?newspaperId=${row.id}">
 				 	<spring:message code="newspaper.moreInfoButton" />
 				</a>
@@ -91,18 +118,23 @@
 				</jstl:choose>
 				</jstl:if>
 		</display:column>
-	
+</security:authorize>	
 	
 	<security:authorize access="hasRole('USER')">
 		
 		<spring:message code="newspaper.published" var="publishedHeader" />	
 		<display:column title="${publishedHeader}">	
 			<jstl:choose>
-				<jstl:when test="${row.publicationDate == null && row.publisher.userAccount.username==loggedactor.username}">	
+				<jstl:when test="${row.publicationDate == null && row.publisher.userAccount.username==loggedactor.username && fn:length(row.articles)!=0}">	
 					<a href="newspaper/user/publish.do?newspaperId=${row.id}">
 					 	<spring:message code="newspaper.publishButton" />
 					</a>
 				</jstl:when>
+				<jstl:when test="${row.publicationDate == null && row.publisher.userAccount.username==loggedactor.username && fn:length(row.articles)==0}">	
+					<spring:message code= "newspaper.notArticles" var="newspaperNotArticles"/>
+						<jstl:out value="${newspaperNotArticles}"/> 
+				</jstl:when>
+				
 				<jstl:otherwise>
 					<spring:message code= "newspaper.notPublish" var="newspaperNotPublish"/>
 						<jstl:out value="${newspaperNotPublish}"/> 

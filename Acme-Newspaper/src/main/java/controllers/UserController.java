@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.ArticleService;
 import services.UserService;
 import services.forms.ActorFormService;
@@ -32,6 +33,9 @@ public class UserController extends AbstractController {
 	@Autowired
 	private ArticleService		articleService;
 
+	@Autowired
+	private ActorService		actorService;
+	
 
 	public UserController() {
 		super();
@@ -47,6 +51,14 @@ public class UserController extends AbstractController {
 		result = new ModelAndView("user/list");
 		result.addObject("users", users);
 		result.addObject("requestURI", "user/list.do");
+		
+		if(this.actorService.checkLogin() && actorService.checkAuthority(this.actorService.findByPrincipal(), "USER")){
+			
+			User user = this.userService.findByPrincipal();
+
+			result.addObject("loggedUser",user);
+	}
+		
 		return result;
 	}
 
@@ -100,7 +112,6 @@ public class UserController extends AbstractController {
 
 		return result;
 	}
-
 	// Ancillary methods
 
 	public ModelAndView createEditModelAndView(final ActorForm actorForm) {

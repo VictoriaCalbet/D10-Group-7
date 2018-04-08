@@ -58,7 +58,7 @@
 	</display:column>
 	
 	<jstl:set var = "string1" value = "${row.summary}"/>
-	<jstl:set var = "string2" value = "${fn:substring(string1, 0, 5)} ..." />
+	<jstl:set var = "string2" value = "${fn:substring(string1, 0, 15)} ..." />
 	<jstl:set var = "idS" value = "${row.id}"/>
 	
 	<spring:message code="newspaper.articles.summary" var="articleSummaryHeader" />
