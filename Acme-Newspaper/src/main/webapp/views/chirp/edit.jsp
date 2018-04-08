@@ -18,3 +18,19 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<form:form action="${requestURI}" modelAttribute="chirpForm">
+
+	<!-- Hidden attributes -->
+	<form:hidden path="id"/>
+	<form:hidden path="publicationMoment"/>
+	<!-- Editable attributes -->
+	
+	<acme:textbox code="chirp.title" path="title"/>
+	<acme:textarea code="chirp.description" path="description"/>	
+	
+		<!-- Action buttons -->
+	<acme:submit name="save" code="chirp.save" /> &nbsp;
+	<acme:cancel url="/" code="chirp.cancel" /> <br/>
+
+</form:form>
+
