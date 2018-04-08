@@ -49,12 +49,7 @@ public class NewspaperPublishFormService {
 	public void publishTo(final NewspaperPublishForm nP) {
 
 		Assert.notNull(nP, "message.error.newspaper.null");
-		final Newspaper n = this.newspaperService.findOne(nP.getNewspaperId());
-		n.setPublicationDate(nP.getPublicationDate());
-
-		Assert.isTrue(n.getArticles().size() == this.newspaperService.numArticlesFinalOfNewspaper(n.getId()));
-
-		this.newspaperService.save(n);
+		this.newspaperService.publish(nP.getNewspaperId(), nP.getPublicationDate());
 
 	}
 

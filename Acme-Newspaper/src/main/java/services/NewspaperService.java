@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -128,6 +129,20 @@ public class NewspaperService {
 
 		return this.newspaperRepository.findNewspaperSubscribedOfCustomer(customerId);
 
+	}
+
+	public void flush() {
+		this.newspaperRepository.flush();
+	}
+
+	public void publish(final int newspaperId, final Date publicationDate) {
+		final Newspaper n = this.findOne(newspaperId);
+		n.setPublicationDate(publicationDate);
+
+		Assert.isTrue(this.userService.findByPrincipal().equals(n.getPublisher()), "message.error.newspaper.user");
+		Assert.isTrue(n.getArticles().size() == this.numArticlesFinalOfNewspaper(n.getId()));
+
+		this.save(n);
 	}
 
 	// Dashboard services ------------------------------------------------------

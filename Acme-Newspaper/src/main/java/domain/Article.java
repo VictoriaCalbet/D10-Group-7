@@ -33,7 +33,7 @@ public class Article extends DomainEntity {
 	private String				summary;
 	private String				body;
 	private Collection<String>	pictures;
-	private Boolean				isDraft;
+	private boolean				isDraft;
 
 
 	@NotBlank
