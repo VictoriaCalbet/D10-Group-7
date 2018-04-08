@@ -64,6 +64,6 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	Double avgRatioOfPrivateVsPublicNewspaperPerPublisher();
 
 	// Not publicated yet and public newspapers
-	@Query("select n from Newspaper n where n.isPrivate = false and n.publicationDate > CURRENT_TIMESTAMP")
+	@Query("select n from Newspaper n where n.isPrivate = false and n.publicationDate = null")
 	Collection<Newspaper> findAllNotPublishedAndPublic();
 }

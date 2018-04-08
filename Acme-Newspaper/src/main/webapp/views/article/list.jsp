@@ -17,3 +17,13 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
+<display:table name="articles" id="row" requestURI="${requestURI}" pagesize="5">
+
+
+<spring:message code="article.title" var="titleHeader" />
+<display:column property="title" title="${titleHeader}" sortable="false" />
+	
+<spring:message code="article.summary" var="articleHeader" />
+<display:column property="summary" title="${articleHeader}" sortable="false" />
+		
+</display:table>

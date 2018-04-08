@@ -21,9 +21,22 @@
 		<put-attribute name="body" value="/views/article/list.jsp" />
 	</definition>
 	
-	<definition name="article/edit" extends="master.page">	
+	<definition name="article/user/list" extends="master.page">	
+		<put-attribute name="title" value="Listado de articulos" />
+		<put-attribute name="body" value="/views/article/list.jsp" />
+	</definition>
+	
+	<definition name="article/user/edit" extends="master.page">	
 		<put-attribute name="title" value="Edit an article" />
 		<put-attribute name="body" value="/views/article/edit.jsp" />
 	</definition>
+	<definition name="article/display" extends="master.page">	
+		<put-attribute name="title" value="Information of the article" />
+		<put-attribute name="body" value="/views/article/display.jsp" />
+	</definition>
 	
+	<definition name="article/user/display" extends="master.page">	
+		<put-attribute name="title" value="Information of the article" />
+		<put-attribute name="body" value="/views/article/display.jsp" />
+	</definition>
 </tiles-definitions>

@@ -1,14 +1,11 @@
 
-package domain;
+package domain.forms;
 
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.Access;
-import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -22,19 +19,33 @@ import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
-@Entity
-@Access(AccessType.PROPERTY)
-public class Article extends DomainEntity {
+import domain.FollowUp;
+import domain.Newspaper;
+import domain.User;
+
+public class ArticleForm {
 
 	// Attributes -------------------------------------------------------------
 
-	private String				title;
-	private Date				publicationMoment;
-	private String				summary;
-	private String				body;
-	private Collection<String>	pictures;
-	private boolean				isDraft;
+	private int						id;
+	private String					title;
+	private Date					publicationMoment;
+	private String					summary;
+	private String					body;
+	private Collection<String>		pictures;
+	private boolean					isDraft;
+	private Newspaper				newspaper;
+	private User					writer;
+	private Collection<FollowUp>	followUps;
 
+
+	public int getId() {
+		return this.id;
+	}
+
+	public void setId(final int id) {
+		this.id = id;
+	}
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
@@ -92,12 +103,15 @@ public class Article extends DomainEntity {
 		this.isDraft = isDraft;
 	}
 
-
-	// Relationships ----------------------------------------------------------
-	private User					writer;
-	private Collection<FollowUp>	followUps;
-	private Newspaper				newspaper;
-
+	@Valid
+	@NotNull
+	@ManyToOne(optional = false)
+	public Newspaper getNewspaper() {
+		return this.newspaper;
+	}
+	public void setNewspaper(final Newspaper newspaper) {
+		this.newspaper = newspaper;
+	}
 
 	@Valid
 	@NotNull
@@ -108,7 +122,6 @@ public class Article extends DomainEntity {
 	public void setWriter(final User writer) {
 		this.writer = writer;
 	}
-
 	@Valid
 	@NotNull
 	@OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
@@ -118,15 +131,5 @@ public class Article extends DomainEntity {
 
 	public void setFollowUps(final Collection<FollowUp> followUps) {
 		this.followUps = followUps;
-	}
-
-	@Valid
-	@NotNull
-	@ManyToOne(optional = false)
-	public Newspaper getNewspaper() {
-		return this.newspaper;
-	}
-	public void setNewspaper(final Newspaper newspaper) {
-		this.newspaper = newspaper;
 	}
 }
