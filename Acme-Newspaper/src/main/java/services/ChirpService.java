@@ -172,6 +172,11 @@ public class ChirpService {
 		this.userService.save(u);
 		this.userService.save(followed);
 	}
+	
+	public void flush(){
+		
+		this.chirpRepository.flush();
+	}
 
 	// Dashboard services ------------------------------------------------------
 
