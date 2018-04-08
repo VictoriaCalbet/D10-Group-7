@@ -125,11 +125,16 @@
 		<spring:message code="newspaper.published" var="publishedHeader" />	
 		<display:column title="${publishedHeader}">	
 			<jstl:choose>
-				<jstl:when test="${row.publicationDate == null && row.publisher.userAccount.username==loggedactor.username}">	
+				<jstl:when test="${row.publicationDate == null && row.publisher.userAccount.username==loggedactor.username && fn:length(row.articles)!=0}">	
 					<a href="newspaper/user/publish.do?newspaperId=${row.id}">
 					 	<spring:message code="newspaper.publishButton" />
 					</a>
 				</jstl:when>
+				<jstl:when test="${row.publicationDate == null && row.publisher.userAccount.username==loggedactor.username && fn:length(row.articles)==0}">	
+					<spring:message code= "newspaper.notArticles" var="newspaperNotArticles"/>
+						<jstl:out value="${newspaperNotArticles}"/> 
+				</jstl:when>
+				
 				<jstl:otherwise>
 					<spring:message code= "newspaper.notPublish" var="newspaperNotPublish"/>
 						<jstl:out value="${newspaperNotPublish}"/> 

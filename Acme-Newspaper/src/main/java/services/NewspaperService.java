@@ -140,7 +140,8 @@ public class NewspaperService {
 		n.setPublicationDate(publicationDate);
 
 		Assert.isTrue(this.userService.findByPrincipal().equals(n.getPublisher()), "message.error.newspaper.user");
-		Assert.isTrue(n.getArticles().size() == this.numArticlesFinalOfNewspaper(n.getId()));
+		Assert.isTrue(n.getArticles().size() > 0, "message.error.newspaper.articles");
+		Assert.isTrue(n.getArticles().size() == this.numArticlesFinalOfNewspaper(n.getId()), "message.error.newspaper.articles.num");
 
 		this.save(n);
 	}
