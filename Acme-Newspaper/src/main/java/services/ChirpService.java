@@ -42,7 +42,7 @@ public class ChirpService {
 
 	// DO NOT MODIFY. ANY OTHER SAVE METHOD MUST BE NAMED DIFFERENT.
 	public Chirp save(final Chirp chirp) {
-		Assert.notNull(chirp);
+		Assert.notNull(chirp,"message.error.chirp.null");
 		Chirp result;
 		result = this.chirpRepository.save(chirp);
 		return result;
@@ -64,21 +64,23 @@ public class ChirpService {
 
 		Chirp result = null;
 		result = new Chirp();
-		result.setPublicationMoment(new Date());
+		result.setPublicationMoment(new Date(System.currentTimeMillis() - 1));
 		return result;
+		
 	}
 
 	public Chirp saveFromCreate(final Chirp chirp) {
 
-		Assert.notNull(chirp);
-		Assert.notNull(chirp.getDescription());
-		Assert.notNull(chirp.getTitle());
+		Assert.notNull(chirp, "message.error.chirp.null");
+		Assert.notNull(chirp.getDescription(),"message.error.chirp.description.null");
+		Assert.notNull(chirp.getTitle(),"message.error.chirp.title.null");
 
 		final User user = this.userService.findByPrincipal();
 
-		Assert.notNull(user);
+		Assert.notNull(user,"message.error.chirp.user");
 
 		chirp.setPublicationMoment(new Date(System.currentTimeMillis() - 1));
+		chirp.setUser(user);
 
 		//TODO: check if the title and the description contain taboo words
 
@@ -98,10 +100,20 @@ public class ChirpService {
 
 	public void delete(final Chirp c) {
 
-		Assert.notNull(c);
+		Assert.notNull(c, "message.error.chirp.null");
 		final Administrator admin = this.administratorService.findByPrincipal();
-		Assert.notNull(admin);
+		Assert.notNull(admin, "message.error.chirp.notAnAdmin");
 
+		User user = c.getUser();
+		
+		Collection<Chirp> chirps = user.getChirps();
+		
+		chirps.remove(c);
+		
+		user.setChirps(chirps);
+		
+		this.userService.save(user);
+		
 		this.chirpRepository.delete(c);
 	}
 
