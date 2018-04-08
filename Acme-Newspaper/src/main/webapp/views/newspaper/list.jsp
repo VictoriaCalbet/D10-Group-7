@@ -31,8 +31,7 @@
 
 <display:table name="newspapers" id="row" requestURI="${requestURI}" pagesize="5">
 
-	<jstl:set var="isPrivate" value="${row.isPrivate}" />
-	
+	<jstl:set var="isPrivate" value="${row.isPrivate}" />		
 	
 	
 	<jstl:if test="${isPrivate eq true}">
@@ -64,26 +63,33 @@
 		codeError="newspaper.unspecifiedImage" height="60" width="60"/>	
 	</display:column>
 	
-	<spring:message code="newspaper.moreInfo" var="moreInfoHeader" />	
-	<display:column title="${moreInfoHeader}">	
-		<a href="newspaper/info.do?newspaperId=${row.id}">
-		 	<spring:message code="newspaper.moreInfoButton" />
-		</a>
-	</display:column>
+		<spring:message code="newspaper.moreInfo" var="moreInfoHeader" />	
+		<display:column title="${moreInfoHeader}">
+			<jstl:if test="${!ns.contains(row)}">
+				<a href="newspaper/info.do?newspaperId=${row.id}">
+				 	<spring:message code="newspaper.moreInfoButton" />
+				</a>
+			</jstl:if>
+		</display:column>
 	
-	<spring:message code="newspaper.article" var="articleHeader" />	
-		<display:column title="${articleHeader}">	
-			<jstl:choose>
-				<jstl:when test="${fn:length(row.articles) !=0}">	
-					<a href="article/list.do?newspaperId=${row.id}">
-					 	<spring:message code="newspaper.articleButton" />
-					</a>
-				</jstl:when>
-				<jstl:otherwise>
-					<spring:message code= "newspaper.notArticles" var="newspaperNotArticles"/>
-						<jstl:out value="${newspaperNotArticles}"/> 
-				</jstl:otherwise>
-			</jstl:choose>
+
+		<spring:message code="newspaper.article" var="articleHeader" />	
+			<display:column title="${articleHeader}">
+				<jstl:if test="${ns.contains(row)}">
+			
+				<jstl:choose>
+				
+					<jstl:when test="${fn:length(row.articles) !=0}">	
+						<a href="article/list.do?newspaperId=${row.id}">
+						 	<spring:message code="newspaper.articleButton" />
+						</a>
+					</jstl:when>
+					<jstl:otherwise>
+						<spring:message code= "newspaper.notArticles" var="newspaperNotArticles"/>
+							<jstl:out value="${newspaperNotArticles}"/> 
+					</jstl:otherwise>
+				</jstl:choose>
+				</jstl:if>
 		</display:column>
 	
 	

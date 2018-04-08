@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.NewspaperService;
+import domain.Actor;
 import domain.Newspaper;
 
 @Controller
@@ -22,6 +24,9 @@ public class NewspaperController extends AbstractController {
 
 	@Autowired
 	private NewspaperService	newspaperService;
+
+	@Autowired
+	private ActorService		actorService;
 
 
 	public NewspaperController() {
@@ -34,11 +39,19 @@ public class NewspaperController extends AbstractController {
 	public ModelAndView list(@RequestParam(required = false) final String message) {
 		ModelAndView result;
 		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
+		Collection<Newspaper> ns = new ArrayList<Newspaper>();
 
-		newspapers = this.newspaperService.findPublicated();
+		try {
+			final Actor a = this.actorService.findByPrincipal();
+			newspapers = this.newspaperService.findPublicatedAll();
+			ns = this.newspaperService.findNewspaperSubscribedOfCustomer(a.getId());
+		} catch (final Throwable oops) {
+			newspapers = this.newspaperService.findPublicated();
+		}
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
+		result.addObject("ns", ns);
 		result.addObject("message", message);
 		result.addObject("requestURI", "newspaper/list.do");
 

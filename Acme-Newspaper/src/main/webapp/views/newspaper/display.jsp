@@ -71,8 +71,7 @@
 	
 	</display:column>
 	
-  </display:table>
-  
+  </display:table>  
 </div>
 
 <script type="text/javascript">

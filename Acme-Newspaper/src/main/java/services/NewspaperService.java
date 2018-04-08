@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 import repositories.NewspaperRepository;
 import domain.Actor;
 import domain.Article;
+import domain.Customer;
 import domain.Newspaper;
 import domain.Subscription;
 import domain.User;
@@ -31,6 +32,8 @@ public class NewspaperService {
 	private UserService			userService;
 	@Autowired
 	private ActorService		actorService;
+	@Autowired
+	private CustomerService		customerService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -107,6 +110,23 @@ public class NewspaperService {
 
 	public Integer numArticlesFinalOfNewspaper(final int newspaperId) {
 		return this.newspaperRepository.numArticlesFinalOfNewspaper(newspaperId);
+
+	}
+
+	public Collection<Newspaper> findPublicatedAll() {
+		return this.newspaperRepository.findPublicatedAll();
+	}
+
+	public Collection<Newspaper> findNewspaperSubscribedOfCustomer() {
+
+		final Customer c = this.customerService.findByPrincipal();
+		return this.newspaperRepository.findNewspaperSubscribedOfCustomer(c.getId());
+
+	}
+
+	public Collection<Newspaper> findNewspaperSubscribedOfCustomer(final int customerId) {
+
+		return this.newspaperRepository.findNewspaperSubscribedOfCustomer(customerId);
 
 	}
 
