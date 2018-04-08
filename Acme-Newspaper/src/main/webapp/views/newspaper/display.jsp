@@ -40,7 +40,6 @@
 		</jstl:if>
 
 
-
   <h3><spring:message code="newspaper.articles"/></h3>
   <display:table name="${newspaper.articles}" id="row" requestURI="newspaper/info.do" pagesize="5">
 	
@@ -58,10 +57,29 @@
 		</a>
 	</display:column>
 	
+	<jstl:set var = "string1" value = "${row.summary}"/>
+	<jstl:set var = "string2" value = "${fn:substring(string1, 0, 5)} ..." />
+	<jstl:set var = "idS" value = "${row.id}"/>
 	
 	<spring:message code="newspaper.articles.summary" var="articleSummaryHeader" />
-	<display:column property="summary" title="${articleSummaryHeader}" />
+	<display:column title="${articleSummaryHeader}">
+
+	<p><a href="javascript:mostrar(${idS});">${string2}</a></p>
+	<div id="${idS}" style="display:none;">
+     ${string1}
+	</div>
+	
+	</display:column>
 	
   </display:table>
   
 </div>
+
+<script type="text/javascript">
+	function mostrar(id) {
+	    div = document.getElementById(id);
+	    div.style.display = '';
+	}
+
+</script>
+
