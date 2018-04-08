@@ -177,4 +177,8 @@ public class NewspaperService {
 		result = this.newspaperRepository.avgRatioOfPrivateVsPublicNewspaperPerPublisher();
 		return result;
 	}
+
+	public Collection<Newspaper> findAllNotPublishedAndPublic() {
+		return this.newspaperRepository.findAllNotPublishedAndPublic();
+	}
 }
