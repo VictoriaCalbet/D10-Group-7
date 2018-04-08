@@ -13,6 +13,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
+import cz.jirutka.validator.collection.constraints.EachEmail;
+import cz.jirutka.validator.collection.constraints.EachPattern;
+
 public class ActorForm {
 
 	// Attributes -------------------------------------------------------------
@@ -71,6 +74,7 @@ public class ActorForm {
 	@Valid
 	@NotNull
 	@ElementCollection
+	@EachPattern(regexp = "^\\+?\\d+", message = "{message.error.actor.phone.valid}")
 	public Collection<String> getPhoneNumbers() {
 		return this.phoneNumbers;
 	}
@@ -82,6 +86,7 @@ public class ActorForm {
 	@Valid
 	@NotEmpty
 	@ElementCollection
+	@EachEmail(message = "{message.error.actor.email.valid}")
 	public Collection<String> getEmailAddresses() {
 		return this.emailAddresses;
 	}

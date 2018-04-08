@@ -50,9 +50,11 @@ public class UserServiceTest extends AbstractTest {
 		// Customer: Name, surname, postal addresses, phone numbers, email addresses, username, password, expected exception.
 		final Object[][] testingData = {
 			{
-				"testUserName1", "testUserSurname1", new HashSet<>(Arrays.asList("testUserPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testUserEmailAddress1")), "testUser1", "testUser1", null
-			}, {
-				"testUserName1", "testUserSurname1", new HashSet<>(Arrays.asList("testUserPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testUserEmailAddress1")), "user1", "user1", IllegalArgumentException.class
+				"testUserName1", "testUserSurname1", new HashSet<>(Arrays.asList("testUserPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testUserEmailAddress1@testUserName1.com")), "testUser1", "testUser1", null
+			},
+			{
+				"testUserName1", "testUserSurname1", new HashSet<>(Arrays.asList("testUserPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testUserEmailAddress1@user1.com")), "user1", "user1",
+				IllegalArgumentException.class
 			}
 		};
 

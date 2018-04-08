@@ -18,6 +18,8 @@ import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
 import security.UserAccount;
+import cz.jirutka.validator.collection.constraints.EachEmail;
+import cz.jirutka.validator.collection.constraints.EachPattern;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -66,6 +68,7 @@ public abstract class Actor extends DomainEntity {
 	@Valid
 	@NotNull
 	@ElementCollection
+	@EachPattern(regexp = "^\\+?\\d+", message = "{message.error.actor.phone.valid}")
 	public Collection<String> getPhoneNumbers() {
 		return this.phoneNumbers;
 	}
@@ -77,6 +80,7 @@ public abstract class Actor extends DomainEntity {
 	@Valid
 	@NotEmpty
 	@ElementCollection
+	@EachEmail(message = "{message.error.actor.email.valid}")
 	public Collection<String> getEmailAddresses() {
 		return this.emailAddresses;
 	}
