@@ -50,10 +50,11 @@ public class AdministratorServiceTest extends AbstractTest {
 		// Administrator: Name, surname, postal addresses, phone numbers, email addresses, username, password, expected exception.
 		final Object[][] testingData = {
 			{
-				"testAdminName1", "testAdminSurname1", new HashSet<>(Arrays.asList("testAdminPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testAdminEmailAddress1")), "testAdmin1", "testAdmin1", null
+				"testAdminName1", "testAdminSurname1", new HashSet<>(Arrays.asList("testAdminPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testAdminEmailAddress1@testAdmin1.com")), "testAdmin1", "testAdmin1",
+				null
 			},
 			{
-				"testAdminName1", "testAdminSurname1", new HashSet<>(Arrays.asList("testAdminPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testAdminEmailAddress1")), "admin", "testAdmin1",
+				"testAdminName1", "testAdminSurname1", new HashSet<>(Arrays.asList("testAdminPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testAdminEmailAddress1@admin.com")), "admin", "testAdmin1",
 				IllegalArgumentException.class
 			}
 		};

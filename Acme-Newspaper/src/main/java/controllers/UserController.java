@@ -100,7 +100,6 @@ public class UserController extends AbstractController {
 
 		return result;
 	}
-
 	// Ancillary methods
 
 	public ModelAndView createEditModelAndView(final ActorForm actorForm) {
