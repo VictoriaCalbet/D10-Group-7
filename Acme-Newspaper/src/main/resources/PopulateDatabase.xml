@@ -389,7 +389,7 @@
 			</list>
 		</property>
 		<property name="writer" ref="user2"/>
-		<property name="newspaper" ref="newspaper3"/> 
+		<property name="newspaper" ref="newspaper4"/> 
 	</bean>
 	
 	<!-- #FollowUps Follow Ups -->
@@ -448,7 +448,7 @@
 	</bean>
 	
 	
-	<bean id="newspaper3" class="domain.Newspaper">
+	<bean id="newspaper4" class="domain.Newspaper">
 		<property name="title" value="The Washington D.C Times"/>
 		<property name="description" value="The most important news about Washington D.C are published in this newspaper."/>
 		<property name="picture"><null/></property>
