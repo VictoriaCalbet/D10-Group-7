@@ -60,7 +60,7 @@
 		<security:intercept-url pattern="/article/customer/**" access="hasRole('CUSTOMER')" />
 		<security:intercept-url pattern="/article/user/**" access="hasRole('USER')" />
 		<security:intercept-url pattern="/article/**" access="permitAll" />
-		
+			
 		<!-- Chirp -->
 		<security:intercept-url pattern="/chirp/administrator/**" access="hasRole('ADMIN')" />
 		<security:intercept-url pattern="/chirp/customer/**" access="hasRole('CUSTOMER')" />

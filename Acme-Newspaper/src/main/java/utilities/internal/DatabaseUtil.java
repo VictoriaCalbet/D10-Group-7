@@ -75,6 +75,10 @@ public class DatabaseUtil {
 		return this.databaseDialectName;
 	}
 
+	public EntityManager getEntityManager() {
+		return this.entityManager;
+	}
+
 	// Business methods -------------------------------------------------------
 
 	public void initialise() throws InstantiationException, IllegalAccessException, ClassNotFoundException {
