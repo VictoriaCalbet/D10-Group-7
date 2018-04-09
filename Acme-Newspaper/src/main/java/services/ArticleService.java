@@ -108,10 +108,14 @@ public class ArticleService {
 	// Other business methods -------------------------------------------------
 
 	public Collection<Article> findAllPublishedByUserId(final int userId) {
-		Collection<Article> result;
-
+		Collection<Article> result = null;
 		result = this.articleRepository.findAllPublishedByUserId(userId);
+		return result;
+	}
 
+	public Collection<Article> findAvailableArticlesToCreateFollowUps() {
+		Collection<Article> result = null;
+		result = this.articleRepository.findAvailableArticlesToCreateFollowUps();
 		return result;
 	}
 
