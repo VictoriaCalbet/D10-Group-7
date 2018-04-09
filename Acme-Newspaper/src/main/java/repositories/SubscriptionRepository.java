@@ -19,4 +19,7 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Inte
 	@Query("select news, news.subscriptions.size*1.0/(select count(cust) from Customer cust) from Newspaper news")
 	Collection<Double> ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
 
+	@Query("select case when (count(subs.newspaper) > 0) then true else false end from Customer c join c.subscriptions subs where c.id = ?1 and subs.newspaper.id = ?2")
+	boolean thisCustomerCanSeeThisNewspaper(int customerId, int newspaperId);
+
 }
