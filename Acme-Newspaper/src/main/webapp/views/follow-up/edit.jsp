@@ -1,5 +1,5 @@
-<%--
- * list.jsp
+<%-- 
+ * edit.jsp
  *
  * Copyright (C) 2017 Universidad de Sevilla
  * 
@@ -18,3 +18,83 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<security:authentication property="principal" var="loggedactor"/>
+
+<jstl:choose>
+	<jstl:when test="${followUp.id eq 0}"> <!-- Estoy creando un nuevo formulario -->
+		
+		<jstl:choose>
+			<jstl:when test="${empty availableArticles}">  <!-- No hay artículos disponibles -->
+				<jstl:set var="showForm" value="false"/>
+				<jstl:set var="noAvailableArticles" value="true"/>
+			</jstl:when>
+			
+			<jstl:otherwise>							   <!-- Hay artículos disponibles -->
+				<jstl:set var="showForm" value="true"/>
+				<jstl:set var="newForm" value="true"/>
+			</jstl:otherwise>
+		</jstl:choose>
+		
+	</jstl:when>
+	
+	<jstl:otherwise>						<!-- Estoy editando un formulario -->
+		<jstl:choose>
+			<jstl:when test="${followUp.user.userAccount.id ne loggedactor.id}">
+				<jstl:set var="showForm" value="false"/>
+				<jstl:set var="newForm" value="false"/>
+				<jstl:set var="youAreNotTheProperty" value="true"/>
+			</jstl:when>
+			<jstl:otherwise>
+				<jstl:set var="showForm" value="true"/>
+				<jstl:set var="newForm" value="false"/>
+			</jstl:otherwise>
+		</jstl:choose>
+	</jstl:otherwise>
+</jstl:choose>
+
+
+<jstl:choose>
+	<jstl:when test="${showForm eq true}">	<!-- Mostramos el formulario -->
+	
+		<form:form action="${actionURI}" modelAttribute="followUp">
+			<form:hidden path="id"/>
+			<form:hidden path="version"/>
+			<form:hidden path="user"/>
+			<form:hidden path="publicationMoment"/>
+			
+			<jstl:choose>
+				<jstl:when test="${newForm eq true}">
+					<acme:select items="${availableArticles}" itemLabel="title" code="follow-up.article.title" path="article"/>
+				</jstl:when>
+				<jstl:otherwise>
+					<form:hidden path="article"/>
+				</jstl:otherwise>
+			</jstl:choose>
+			
+			<acme:textbox code="follow-up.title" path="title"/>
+			<acme:textbox code="follow-up.summary" path="summary"/>
+			<acme:textarea code="follow-up.text" path="text"/>
+			<acme:textbox code="follow-up.pictures" path="pictures"/>
+			
+			<acme:submit name="save" code="follow-up.save"/> &nbsp;
+			<acme:cancel url="follow-up/user/list.do" code="follow-up.cancel"/>
+			<br/>
+		</form:form>
+		
+	</jstl:when>
+	
+	<jstl:otherwise>						<!-- No mostramos el formulario... -->
+		<!-- ...y mostramos los motivos -->
+
+		<jstl:if test="${noAvailableArticles eq true}">
+			<spring:message var="followUpEditArticlesNotAvailable" code="follow-up.edit.articles.notAvailable"/>
+			<b><jstl:out value="${followUpEditArticlesNotAvailable}"/></b>	
+		</jstl:if>
+		
+		<jstl:if test="${youAreNotTheProperty eq true}">
+			<spring:message var="followUpEditYouAreNotTheProperty" code="follow-up.edit.youAreNotTheProperty"/>
+			<b><jstl:out value="${followUpEditYouAreNotTheProperty}"/></b>	
+		</jstl:if>
+		
+	</jstl:otherwise>
+</jstl:choose>

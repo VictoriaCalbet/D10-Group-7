@@ -21,6 +21,16 @@
 		<put-attribute name="body" value="/views/follow-up/list.jsp" />
 	</definition>
 	
+	<definition name="follow-up/display" extends="master.page">	
+		<put-attribute name="title" value="Mostrar seguimiento" />
+		<put-attribute name="body" value="/views/follow-up/display.jsp" />
+	</definition>
+	
+	<definition name="follow-up/create" extends="master.page">	
+		<put-attribute name="title" value="Crear seguimiento" />
+		<put-attribute name="body" value="/views/follow-up/edit.jsp" />
+	</definition>
+	
 	<definition name="follow-up/edit" extends="master.page">	
 		<put-attribute name="title" value="Editar un seguimiento" />
 		<put-attribute name="body" value="/views/follow-up/edit.jsp" />
