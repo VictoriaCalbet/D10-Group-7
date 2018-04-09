@@ -15,6 +15,7 @@ import services.ArticleService;
 import services.CustomerService;
 import services.FollowUpService;
 import services.SubscriptionService;
+import services.forms.FollowUpFormService;
 import controllers.AbstractController;
 import domain.Article;
 import domain.Customer;
@@ -28,6 +29,9 @@ public class FollowUpCustomerController extends AbstractController {
 
 	@Autowired
 	private FollowUpService		followUpService;
+
+	@Autowired
+	private FollowUpFormService	followUpFormService;
 
 	@Autowired
 	private CustomerService		customerService;
@@ -48,7 +52,7 @@ public class FollowUpCustomerController extends AbstractController {
 	// Listing --------------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(final int articleId) {
+	public ModelAndView list(@RequestParam final int articleId) {
 		ModelAndView result = null;
 		Collection<FollowUp> followUps = null;
 		Article article = null;

@@ -34,7 +34,7 @@ public class FollowUpController extends AbstractController {
 	// Listing --------------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(final int articleId) {
+	public ModelAndView list(@RequestParam final int articleId) {
 		ModelAndView result = null;
 		Collection<FollowUp> followUps = null;
 		Article article = null;

@@ -51,7 +51,7 @@ public class FollowUpUserController extends AbstractController {
 	// Listing --------------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(final int articleId) {
+	public ModelAndView list(@RequestParam final int articleId) {
 		ModelAndView result = null;
 		Collection<FollowUp> followUps = null;
 		Article article = null;
@@ -174,8 +174,7 @@ public class FollowUpUserController extends AbstractController {
 
 		user = this.userService.findByPrincipal();
 
-		// TODO: revisar query (creo que está mal)
-		availableArticles = this.articleService.findAllPublishedByUserId(user.getId());
+		availableArticles = this.articleService.findAvailableArticlesToCreateFollowUps();
 
 		if (followUp.getId() == 0)
 			result = new ModelAndView("follow-up/create");
