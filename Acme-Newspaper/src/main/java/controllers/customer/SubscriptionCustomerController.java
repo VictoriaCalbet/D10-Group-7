@@ -125,6 +125,7 @@ public class SubscriptionCustomerController extends AbstractController {
 
 		return result;
 	}
+
 	// Other actions --------------------------------------------------------
 
 	protected ModelAndView createModelAndView(final Subscription subscription) {
