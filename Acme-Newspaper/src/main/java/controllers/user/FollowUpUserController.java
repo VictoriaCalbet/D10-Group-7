@@ -171,7 +171,7 @@ public class FollowUpUserController extends AbstractController {
 			result = new ModelAndView("follow-up/edit");
 
 		result.addObject("user", user);
-		result.addObject("follow-up", followUp);
+		result.addObject("followUp", followUp);
 		result.addObject("actionURI", actionURI);
 		result.addObject("availableArticles", availableArticles);
 		result.addObject("message", message);

@@ -83,7 +83,7 @@ public class FollowUpController extends AbstractController {
 
 		result = new ModelAndView("follow-up/display");
 		result.addObject("followup", followUp);
-		result.addObject("editURI", "/follow-up/edit.do?followUpId=" + followUpId);
+		result.addObject("editURI", "/follow-up/user/edit.do?followUpId=" + followUpId);
 		result.addObject("cancelURI", "/follow-up/list.do");
 
 		return result;
