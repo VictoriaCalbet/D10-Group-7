@@ -35,6 +35,8 @@ public class NewspaperService {
 	private ActorService		actorService;
 	@Autowired
 	private CustomerService		customerService;
+	@Autowired
+	private ArticleService		articleService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -135,17 +137,24 @@ public class NewspaperService {
 		this.newspaperRepository.flush();
 	}
 
-	public void publish(final int newspaperId, final Date publicationDate) {
+	public void publish(final int newspaperId) {
 		final Newspaper n = this.findOne(newspaperId);
-		n.setPublicationDate(publicationDate);
+		final Date d = new Date();
 
+		Assert.notNull(n, "message.error.newspaper.null");
 		Assert.isTrue(this.userService.findByPrincipal().equals(n.getPublisher()), "message.error.newspaper.user");
 		Assert.isTrue(n.getArticles().size() > 0, "message.error.newspaper.articles");
 		Assert.isTrue(n.getArticles().size() == this.numArticlesFinalOfNewspaper(n.getId()), "message.error.newspaper.articles.num");
+		Assert.isTrue(n.getPublicationDate() == null);
+		for (final Article a : n.getArticles()) {
+			Assert.isTrue(a.getPublicationMoment() == null);
+			a.setPublicationMoment(d);
+			this.articleService.save(a);
+		}
+		n.setPublicationDate(d);
 
 		this.save(n);
 	}
-
 	// Dashboard services ------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.1

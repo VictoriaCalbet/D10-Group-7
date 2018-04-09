@@ -63,7 +63,6 @@
 		codeError="newspaper.unspecifiedImage" height="60" width="60"/>	
 	</display:column>
 	
-<security:authorize access="hasAnyRole('USER, ADMIN') or isAnonymous()">	
 		<spring:message code="newspaper.moreInfo" var="moreInfoHeader" />	
 		<display:column title="${moreInfoHeader}">
 				<a href="newspaper/info.do?newspaperId=${row.id}">
@@ -71,7 +70,6 @@
 				</a>
 		</display:column>
 	
-
 		<spring:message code="newspaper.article" var="articleHeader" />	
 			<display:column title="${articleHeader}">			
 				<jstl:choose>
@@ -87,18 +85,8 @@
 					</jstl:otherwise>
 				</jstl:choose>
 		</display:column>
-</security:authorize>	
 	
 <security:authorize access="hasRole('CUSTOMER')">	
-		<spring:message code="newspaper.moreInfo" var="moreInfoHeader" />	
-		<display:column title="${moreInfoHeader}">
-			<jstl:if test="${ns.contains(row)}">
-				<a href="newspaper/info.do?newspaperId=${row.id}">
-				 	<spring:message code="newspaper.moreInfoButton" />
-				</a>
-			</jstl:if>
-		</display:column>
-	
 
 		<spring:message code="newspaper.article" var="articleHeader" />	
 			<display:column title="${articleHeader}">

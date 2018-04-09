@@ -43,7 +43,7 @@ public class NewspaperController extends AbstractController {
 
 		try {
 			final Actor a = this.actorService.findByPrincipal();
-			newspapers = this.newspaperService.findPublicatedAll();
+			newspapers = this.newspaperService.findPublicated();
 			ns = this.newspaperService.findNewspaperSubscribedOfCustomer(a.getId());
 		} catch (final Throwable oops) {
 			newspapers = this.newspaperService.findPublicated();

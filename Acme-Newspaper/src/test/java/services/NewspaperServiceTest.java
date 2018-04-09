@@ -240,24 +240,20 @@ public class NewspaperServiceTest extends AbstractTest {
 		final Object[][] testingData = {
 			// Publish: id, date, expected exception
 			{
-				"user1", "newspaper6", "description of newspaper6", "https://goo.gl/UscuZg", false, new DateTime().plusDays(-10).toDate(), "article6", new DateTime().plusDays(-10).toDate(), "summary of article6", "body of article6", false, null
-			},
-			{
-				"user1", "newspaper6", "description of newspaper6", "https://goo.gl/UscuZg", false, new DateTime().plusDays(-10).toDate(), "article6", new DateTime().plusDays(-10).toDate(), "summary of article6", "body of article6", true,
-				IllegalArgumentException.class
-			},
-			{
-				"user1", "newspaper6", "description of newspaper6", "https://goo.gl/UscuZg", false, new DateTime().plusDays(10).toDate(), "article6", new DateTime().plusDays(-10).toDate(), "summary of article6", "body of article6", false,
-				ConstraintViolationException.class
+				"user1", "newspaper6", "description of newspaper6", "https://goo.gl/UscuZg", false, "article6", new DateTime().plusDays(-10).toDate(), "summary of article6", "body of article6", false, null
+			}, {
+				"user1", "newspaper6", "description of newspaper6", "https://goo.gl/UscuZg", false, "article6", new DateTime().plusDays(-10).toDate(), "summary of article6", "body of article6", true, IllegalArgumentException.class
+			}, {
+				"user1", "newspaper6", "description of newspaper6", "https://goo.gl/UscuZg", false, "article6", new DateTime().plusDays(10).toDate(), "summary of article6", "body of article6", false, IllegalArgumentException.class
 			}
 		};
 
 		for (int i = 0; i < testingData.length; i++)
-			this.publishNewspaperTemplated((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (boolean) testingData[i][4], (Date) testingData[i][5], (String) testingData[i][6],
-				(Date) testingData[i][7], (String) testingData[i][8], (String) testingData[i][9], (boolean) testingData[i][10], (Class<?>) testingData[i][11]);
+			this.publishNewspaperTemplated((String) testingData[i][0], (String) testingData[i][1], (String) testingData[i][2], (String) testingData[i][3], (boolean) testingData[i][4], (String) testingData[i][5], (Date) testingData[i][6],
+				(String) testingData[i][7], (String) testingData[i][8], (boolean) testingData[i][9], (Class<?>) testingData[i][10]);
 	}
-	protected void publishNewspaperTemplated(final String principal, final String title, final String description, final String picture, final boolean isPrivate, final Date publicationDate, final String titleArticle, final Date publicationArticle,
-		final String summaryArticle, final String bodyArticle, final boolean isDraft, final Class<?> expectedException) {
+	protected void publishNewspaperTemplated(final String principal, final String title, final String description, final String picture, final boolean isPrivate, final String titleArticle, final Date publicationArticle, final String summaryArticle,
+		final String bodyArticle, final boolean isDraft, final Class<?> expectedException) {
 		Class<?> caught = null;
 
 		try {
@@ -280,7 +276,7 @@ public class NewspaperServiceTest extends AbstractTest {
 			a1.setPictures(new HashSet<String>());
 			final Article a2 = this.articleService.save(a1);
 			n1.getArticles().add(a2);
-			this.newspaperService.publish(n1.getId(), publicationDate);
+			this.newspaperService.publish(n1.getId());
 
 			this.unauthenticate();
 			this.newspaperService.flush();

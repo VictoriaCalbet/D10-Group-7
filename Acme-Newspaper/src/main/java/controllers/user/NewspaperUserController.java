@@ -17,28 +17,23 @@ import org.springframework.web.servlet.ModelAndView;
 import services.NewspaperService;
 import services.UserService;
 import services.forms.NewspaperFormService;
-import services.forms.NewspaperPublishFormService;
 import controllers.AbstractController;
 import domain.Newspaper;
 import domain.User;
 import domain.forms.NewspaperForm;
-import domain.forms.NewspaperPublishForm;
 
 @Controller
 @RequestMapping("/newspaper/user")
 public class NewspaperUserController extends AbstractController {
 
 	@Autowired
-	private NewspaperService			newspaperService;
+	private NewspaperService		newspaperService;
 
 	@Autowired
-	private NewspaperFormService		newspaperFormService;
+	private NewspaperFormService	newspaperFormService;
 
 	@Autowired
-	private NewspaperPublishFormService	newspaperPublishFormService;
-
-	@Autowired
-	private UserService					userService;
+	private UserService				userService;
 
 
 	public NewspaperUserController() {
@@ -99,42 +94,58 @@ public class NewspaperUserController extends AbstractController {
 	public ModelAndView publish(@RequestParam final int newspaperId) {
 		ModelAndView result;
 		try {
-
-			NewspaperPublishForm newspaperPublishForm;
-
-			newspaperPublishForm = this.newspaperPublishFormService.create(newspaperId);
-			result = this.createPublishModelAndView(newspaperPublishForm);
+			this.newspaperService.publish(newspaperId);
+			result = new ModelAndView("redirect:/newspaper/user/list.do");
 		} catch (final Throwable oops) {
-			String messageError = "";
+			String messageError = "newspaper.publish.error";
 			if (oops.getMessage().contains("message.error"))
 				messageError = oops.getMessage();
 			result = new ModelAndView("redirect:/newspaper/user/list.do");
 			result.addObject("message", messageError);
 		}
 		return result;
-
 	}
 
-	@RequestMapping(value = "/publish", method = RequestMethod.POST, params = "save")
-	public ModelAndView publish(@Valid final NewspaperPublishForm newspaperPublishForm, final BindingResult binding) {
-
-		ModelAndView result;
-
-		if (binding.hasErrors())
-			result = this.createPublishModelAndView(newspaperPublishForm);
-		else
-			try {
-				this.newspaperPublishFormService.publishTo(newspaperPublishForm);
-				result = new ModelAndView("redirect:/newspaper/user/list.do");
-			} catch (final Throwable oops) {
-				String messageError = "newspaper.commit.error";
-				if (oops.getMessage().contains("message.error"))
-					messageError = oops.getMessage();
-				result = this.createPublishModelAndView(newspaperPublishForm, messageError);
-			}
-
-		return result;
-	}
+	//	@RequestMapping(value = "/publish", method = RequestMethod.GET)
+	//	public ModelAndView publish(@RequestParam final int newspaperId) {
+	//		ModelAndView result;
+	//		try {
+	//
+	//			NewspaperPublishForm newspaperPublishForm;
+	//
+	//			newspaperPublishForm = this.newspaperPublishFormService.create(newspaperId);
+	//			result = this.createPublishModelAndView(newspaperPublishForm);
+	//		} catch (final Throwable oops) {
+	//			String messageError = "";
+	//			if (oops.getMessage().contains("message.error"))
+	//				messageError = oops.getMessage();
+	//			result = new ModelAndView("redirect:/newspaper/user/list.do");
+	//			result.addObject("message", messageError);
+	//		}
+	//		return result;
+	//
+	//	}
+	//
+	//	@RequestMapping(value = "/publish", method = RequestMethod.POST, params = "save")
+	//	public ModelAndView publish(@Valid final NewspaperPublishForm newspaperPublishForm, final BindingResult binding) {
+	//
+	//		ModelAndView result;
+	//
+	//		if (binding.hasErrors())
+	//			result = this.createPublishModelAndView(newspaperPublishForm);
+	//		else
+	//			try {
+	//				this.newspaperPublishFormService.publishTo(newspaperPublishForm);
+	//				result = new ModelAndView("redirect:/newspaper/user/list.do");
+	//			} catch (final Throwable oops) {
+	//				String messageError = "newspaper.commit.error";
+	//				if (oops.getMessage().contains("message.error"))
+	//					messageError = oops.getMessage();
+	//				result = this.createPublishModelAndView(newspaperPublishForm, messageError);
+	//			}
+	//
+	//		return result;
+	//	}
 
 	// Ancillaty methods
 	protected ModelAndView createModelAndView(final NewspaperForm newspaperForm) {
@@ -155,21 +166,21 @@ public class NewspaperUserController extends AbstractController {
 		return result;
 	}
 
-	protected ModelAndView createPublishModelAndView(final NewspaperPublishForm newspaperPublishForm) {
-		ModelAndView result;
+	//	protected ModelAndView createPublishModelAndView(final NewspaperPublishForm newspaperPublishForm) {
+	//		ModelAndView result;
+	//
+	//		result = this.createPublishModelAndView(newspaperPublishForm, null);
+	//
+	//		return result;
+	//	}
 
-		result = this.createPublishModelAndView(newspaperPublishForm, null);
-
-		return result;
-	}
-
-	protected ModelAndView createPublishModelAndView(final NewspaperPublishForm newspaperPublishForm, final String message) {
-		ModelAndView result;
-
-		result = new ModelAndView("newspaper/user/publish");
-		result.addObject("newspaperPublishForm", newspaperPublishForm);
-		result.addObject("message", message);
-		return result;
-	}
+	//	protected ModelAndView createPublishModelAndView(final NewspaperPublishForm newspaperPublishForm, final String message) {
+	//		ModelAndView result;
+	//
+	//		result = new ModelAndView("newspaper/user/publish");
+	//		result.addObject("newspaperPublishForm", newspaperPublishForm);
+	//		result.addObject("message", message);
+	//		return result;
+	//	}
 
 }
