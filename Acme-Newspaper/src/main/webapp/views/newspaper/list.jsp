@@ -70,6 +70,7 @@
 				</a>
 		</display:column>
 	
+<security:authorize access="hasAnyRole('USER, ADMIN') or isAnonymous()">	
 		<spring:message code="newspaper.article" var="articleHeader" />	
 			<display:column title="${articleHeader}">			
 				<jstl:choose>
@@ -85,12 +86,13 @@
 					</jstl:otherwise>
 				</jstl:choose>
 		</display:column>
+</security:authorize>
 	
 <security:authorize access="hasRole('CUSTOMER')">	
 
 		<spring:message code="newspaper.article" var="articleHeader" />	
 			<display:column title="${articleHeader}">
-				<jstl:if test="${ns.contains(row)}">
+				<jstl:if test="${ns.contains(row) && isPrivate or !isPrivate}">
 			
 				<jstl:choose>
 				

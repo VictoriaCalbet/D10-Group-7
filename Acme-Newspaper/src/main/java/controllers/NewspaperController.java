@@ -17,6 +17,7 @@ import services.ActorService;
 import services.CustomerService;
 import services.NewspaperService;
 import domain.Actor;
+import domain.Article;
 import domain.Customer;
 import domain.Newspaper;
 
@@ -93,26 +94,45 @@ public class NewspaperController extends AbstractController {
 		ModelAndView result = new ModelAndView();
 
 		final Newspaper newspaper = this.newspaperService.findOne(newspaperId);
-		result = this.infoModelAndView(newspaper);
+		Collection<Newspaper> ns = new ArrayList<Newspaper>();
+
+		boolean visible = true;
+
+		try {
+			if (this.actorService.checkAuthority(this.actorService.findByPrincipal(), "CUSTOMER")) {
+				final Customer c = this.customerService.findByPrincipal();
+				ns = this.newspaperService.findNewspaperSubscribedOfCustomer(c.getId());
+				if (!ns.contains(newspaper) && newspaper.getIsPrivate()==true)
+					visible = false;
+			}
+		} catch (final Throwable oops) {
+
+		}
+
+		result = this.infoModelAndView(newspaper, visible);
 		return result;
 	}
 
 	// Ancillary methods
-	protected ModelAndView infoModelAndView(final Newspaper newspaper) {
+	protected ModelAndView infoModelAndView(final Newspaper newspaper, final boolean visible) {
 		ModelAndView result;
 
-		result = this.infoModelAndView(newspaper, null);
+		result = this.infoModelAndView(newspaper, visible, null);
 
 		return result;
 	}
 
-	protected ModelAndView infoModelAndView(final Newspaper newspaper, final String message) {
+	protected ModelAndView infoModelAndView(final Newspaper newspaper, final boolean visible, final String message) {
 		ModelAndView result;
 
+		Collection<Article> articles = new ArrayList<Article>();
+		articles = newspaper.getArticles();
 		result = new ModelAndView("newspaper/info");
 
 		result.addObject("newspaper", newspaper);
 		result.addObject("message", message);
+		result.addObject("visible", visible);
+		result.addObject("articles", articles);
 
 		return result;
 	}

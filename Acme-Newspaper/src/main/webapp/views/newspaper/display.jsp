@@ -39,9 +39,9 @@
 			<spring:message code="newspaper.unspecifiedImage"/>
 		</jstl:if>
 
-
+<jstl:if test="${visible}">
   <h3><spring:message code="newspaper.articles"/></h3>
-  <display:table name="${newspaper.articles}" id="row" requestURI="newspaper/info.do" pagesize="5">
+  <display:table name="${articles}" id="row" requestURI="newspaper/info.do" pagesize="5">
 	
 	<spring:message code="newspaper.articles.title" var="articleTitleHeader" />	
 	<display:column title="${articleTitleHeader}">	
@@ -71,7 +71,8 @@
 	
 	</display:column>
 	
-  </display:table>  
+  </display:table>
+  </jstl:if>
 </div>
 
 <script type="text/javascript">
