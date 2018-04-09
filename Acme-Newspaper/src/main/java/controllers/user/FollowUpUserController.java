@@ -18,10 +18,12 @@ import services.ArticleService;
 import services.FollowUpService;
 import services.SubscriptionService;
 import services.UserService;
+import services.forms.FollowUpFormService;
 import controllers.AbstractController;
 import domain.Article;
 import domain.FollowUp;
 import domain.User;
+import domain.forms.FollowUpForm;
 
 @Controller
 @RequestMapping("/follow-up/user")
@@ -31,6 +33,9 @@ public class FollowUpUserController extends AbstractController {
 
 	@Autowired
 	private FollowUpService		followUpService;
+
+	@Autowired
+	private FollowUpFormService	followUpFormService;
 
 	@Autowired
 	private UserService			userService;
@@ -85,10 +90,10 @@ public class FollowUpUserController extends AbstractController {
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
 	public ModelAndView create() {
 		ModelAndView result = null;
-		FollowUp followUp = null;
+		FollowUpForm followUpForm = null;
 
-		followUp = this.followUpService.create();
-		result = this.createEditModelAndView(followUp);
+		followUpForm = this.followUpFormService.createFromCreate();
+		result = this.createEditModelAndView(followUpForm);
 
 		return result;
 	}
@@ -116,6 +121,7 @@ public class FollowUpUserController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public ModelAndView edit(@RequestParam final int followUpId) {
 		ModelAndView result = null;
+		FollowUpForm followUpForm = null;
 		FollowUp followUp = null;
 		User user = null;
 
@@ -124,31 +130,31 @@ public class FollowUpUserController extends AbstractController {
 
 		Assert.isTrue(followUp.getUser().equals(user));
 
-		result = this.createEditModelAndView(followUp);
+		followUpForm = this.followUpFormService.createFromEdit(followUpId);
+		result = this.createEditModelAndView(followUpForm);
 
 		return result;
 	}
-
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final FollowUp followUp, final BindingResult bindingResult) {
+	public ModelAndView save(@Valid final FollowUpForm followUpForm, final BindingResult bindingResult) {
 		ModelAndView result = null;
 
 		if (bindingResult.hasErrors())
-			result = this.createEditModelAndView(followUp);
+			result = this.createEditModelAndView(followUpForm);
 		else
 			try {
-				if (followUp.getId() == 0)
-					this.followUpService.saveFromCreate(followUp);
+				if (followUpForm.getId() == 0)
+					this.followUpFormService.saveFromCreate(followUpForm);
 				else
-					this.followUpService.saveFromEdit(followUp);
+					this.followUpFormService.saveFromEdit(followUpForm);
 
-				result = new ModelAndView("redirect:/follow-up/user/list.do");
+				result = new ModelAndView("redirect:/follow-up/user/list.do?articleId=" + followUpForm.getArticleId());
 
 			} catch (final Throwable oops) {
 				String messageError = "follow-up.commit.error";
 				if (oops.getMessage().contains("message.error"))
 					messageError = oops.getMessage();
-				result = this.createEditModelAndView(followUp, messageError);
+				result = this.createEditModelAndView(followUpForm, messageError);
 			}
 
 		return result;
@@ -156,15 +162,15 @@ public class FollowUpUserController extends AbstractController {
 
 	// Other actions --------------------------------------------------------
 
-	protected ModelAndView createEditModelAndView(final FollowUp followUp) {
+	protected ModelAndView createEditModelAndView(final FollowUpForm followUpForm) {
 		ModelAndView result = null;
 
-		result = this.createEditModelAndView(followUp, null);
+		result = this.createEditModelAndView(followUpForm, null);
 
 		return result;
 	}
 
-	protected ModelAndView createEditModelAndView(final FollowUp followUp, final String message) {
+	protected ModelAndView createEditModelAndView(final FollowUpForm followUpForm, final String message) {
 		ModelAndView result = null;
 		String actionURI = null;
 		Collection<Article> availableArticles = null;
@@ -176,13 +182,13 @@ public class FollowUpUserController extends AbstractController {
 
 		availableArticles = this.articleService.findAvailableArticlesToCreateFollowUps();
 
-		if (followUp.getId() == 0)
+		if (followUpForm.getId() == 0)
 			result = new ModelAndView("follow-up/create");
 		else
 			result = new ModelAndView("follow-up/edit");
 
 		result.addObject("user", user);
-		result.addObject("followUp", followUp);
+		result.addObject("followUpForm", followUpForm);
 		result.addObject("actionURI", actionURI);
 		result.addObject("availableArticles", availableArticles);
 		result.addObject("message", message);

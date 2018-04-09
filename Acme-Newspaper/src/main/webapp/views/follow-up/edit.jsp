@@ -21,7 +21,7 @@
 <security:authentication property="principal" var="loggedactor"/>
 
 <jstl:choose>
-	<jstl:when test="${followUp.id eq 0}"> <!-- Estoy creando un nuevo formulario -->
+	<jstl:when test="${followUpForm.id eq 0}"> <!-- Estoy creando un nuevo formulario -->
 		
 		<jstl:choose>
 			<jstl:when test="${empty availableArticles}">  <!-- No hay artículos disponibles -->
@@ -39,7 +39,7 @@
 	
 	<jstl:otherwise>						<!-- Estoy editando un formulario -->
 		<jstl:choose>
-			<jstl:when test="${followUp.user.userAccount.id ne loggedactor.id}">
+			<jstl:when test="${followUpForm.userId ne loggedactor.id}">
 				<jstl:set var="showForm" value="false"/>
 				<jstl:set var="newForm" value="false"/>
 				<jstl:set var="youAreNotTheProperty" value="true"/>
@@ -56,18 +56,16 @@
 <jstl:choose>
 	<jstl:when test="${showForm eq true}">	<!-- Mostramos el formulario -->
 	
-		<form:form action="${actionURI}" modelAttribute="followUp">
+		<form:form action="${actionURI}" modelAttribute="followUpForm">
 			<form:hidden path="id"/>
-			<form:hidden path="version"/>
-			<form:hidden path="user"/>
-			<form:hidden path="publicationMoment"/>
+			<form:hidden path="userId"/>
 			
 			<jstl:choose>
 				<jstl:when test="${newForm eq true}">
-					<acme:select items="${availableArticles}" itemLabel="title" code="follow-up.article.title" path="article"/>
+					<acme:select items="${availableArticles}" itemLabel="title" code="follow-up.article.title" path="articleId"/>
 				</jstl:when>
 				<jstl:otherwise>
-					<form:hidden path="article"/>
+					<form:hidden path="articleId"/>
 				</jstl:otherwise>
 			</jstl:choose>
 			

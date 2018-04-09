@@ -42,8 +42,11 @@ public class FollowUpFormService {
 
 	public FollowUpForm createFromCreate() {
 		FollowUpForm result = null;
+		User user = null;
 
 		result = new FollowUpForm();
+		user = this.userService.findByPrincipal();
+		result.setUserId(user.getId());
 
 		return result;
 	}
