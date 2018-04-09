@@ -73,7 +73,6 @@ public class ArticleService {
 		final User principal = this.userService.findByPrincipal();
 		final Newspaper newspaper = article.getNewspaper();
 		Assert.isTrue(principal == result.getWriter());
-		Assert.isTrue(result.getIsDraft() == true);
 		Assert.isTrue(newspaper.getPublicationDate() == null);
 		Assert.isTrue(result.getPublicationMoment() == null);
 		this.articleRepository.save(article);

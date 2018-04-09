@@ -58,17 +58,41 @@ public class ArticleUserController extends AbstractController {
 		User principal;
 
 		principal = this.userService.findByPrincipal();
+
+		Collection<Article> principalArticles = new ArrayList<Article>();
+		principalArticles = principal.getArticles();
 		final Newspaper newspaper = this.newsPaperService.findOne(newspaperId);
 		articles = newspaper.getArticles();
+
 		result = new ModelAndView("article/user/list");//tiles
 		result.addObject("articles", articles);
 		result.addObject("requestURI", "article/user/list.do");//view
 		result.addObject("principal", principal);
+		result.addObject("principalArticles", principalArticles);
 		result.addObject("newspaperId", newspaperId);
 		return result;
 
 	}
 
+	@RequestMapping(value = "/listOwnArticles", method = RequestMethod.GET)
+	public ModelAndView listOwnArticles() {
+		final ModelAndView result;
+		Collection<Article> articles = new ArrayList<Article>();
+		User principal;
+
+		principal = this.userService.findByPrincipal();
+		Collection<Article> principalArticles = new ArrayList<Article>();
+		principalArticles = principal.getArticles();
+
+		articles = principal.getArticles();
+		result = new ModelAndView("article/user/list");//tiles
+		result.addObject("articles", articles);
+		result.addObject("principalArticles", principalArticles);
+		result.addObject("requestURI", "article/user/list.do");//view
+		result.addObject("principal", principal);
+		return result;
+
+	}
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int articleId) {
 		final ModelAndView result;

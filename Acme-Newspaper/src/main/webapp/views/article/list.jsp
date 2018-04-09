@@ -96,7 +96,22 @@
 			</jstl:when>
 		</jstl:choose>
 	</display:column>
-
+	
+	<security:authorize access="hasRole('USER')">
+	<spring:message code="article.edit" var="editHeader" />
+		<display:column title="${editHeader}" style="${style}">
+			<jstl:choose>
+				<jstl:when test="${row.isDraft == true and fn:contains(principalArticles,row)}">
+					<spring:message var="articleEditLink" code="article.edit"/>
+					<a href="article/user/edit.do?articleId=${row.id}"><jstl:out value="${articleEditLink}"/></a>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code="article.notEditable" var="articleNotEditableMessage" />
+					<jstl:out value="${articleNotEditableMessage}"/>
+				</jstl:otherwise>
+			</jstl:choose>
+		</display:column>
+	</security:authorize>
 </display:table>
 
 <security:authorize access="isAuthenticated()">
