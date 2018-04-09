@@ -133,13 +133,16 @@ public class NewspaperService {
 
 	}
 
+	public Collection<Newspaper> findNewspaperByKeyWordNotPrivate(final String keyWord) {
+		return this.newspaperRepository.findNewspaperByKeyWordNotPrivate(keyWord);
+	}
+
 	public void flush() {
 		this.newspaperRepository.flush();
 	}
 
 	public void publish(final int newspaperId) {
 		final Newspaper n = this.findOne(newspaperId);
-		final Date d = new Date();
 
 		Assert.notNull(n, "message.error.newspaper.null");
 		Assert.isTrue(this.userService.findByPrincipal().equals(n.getPublisher()), "message.error.newspaper.user");
@@ -148,10 +151,10 @@ public class NewspaperService {
 		Assert.isTrue(n.getPublicationDate() == null);
 		for (final Article a : n.getArticles()) {
 			Assert.isTrue(a.getPublicationMoment() == null);
-			a.setPublicationMoment(d);
+			a.setPublicationMoment(new Date(System.currentTimeMillis() - 1000));
 			this.articleService.save(a);
 		}
-		n.setPublicationDate(d);
+		n.setPublicationDate(new Date(System.currentTimeMillis() - 1000));
 
 		this.save(n);
 	}

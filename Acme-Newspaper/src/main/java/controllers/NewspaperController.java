@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.CustomerService;
 import services.NewspaperService;
 import domain.Actor;
+import domain.Customer;
 import domain.Newspaper;
 
 @Controller
@@ -27,6 +29,8 @@ public class NewspaperController extends AbstractController {
 
 	@Autowired
 	private ActorService		actorService;
+	@Autowired
+	private CustomerService		customerService;
 
 
 	public NewspaperController() {
@@ -65,12 +69,20 @@ public class NewspaperController extends AbstractController {
 
 		ModelAndView result;
 
-		Collection<Newspaper> newspapers;
+		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
+		Collection<Newspaper> ns = new ArrayList<Newspaper>();
 
-		newspapers = this.newspaperService.findNewspaperByKeyWord(word);
+		try {
+			final Customer c = this.customerService.findByPrincipal();
+			newspapers = this.newspaperService.findNewspaperByKeyWord(word);
+			ns = this.newspaperService.findNewspaperSubscribedOfCustomer(c.getId());
+		} catch (final Throwable oops) {
+			newspapers = this.newspaperService.findNewspaperByKeyWordNotPrivate(word);
+		}
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
+		result.addObject("ns", ns);
 		result.addObject("requestURI", "newspaper/list.do");
 		return result;
 
