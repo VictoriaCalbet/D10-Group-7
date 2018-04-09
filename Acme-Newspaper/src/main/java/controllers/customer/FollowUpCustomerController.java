@@ -1,5 +1,5 @@
 
-package controllers;
+package controllers.customer;
 
 import java.util.Collection;
 
@@ -12,24 +12,38 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ArticleService;
+import services.CustomerService;
 import services.FollowUpService;
+import services.SubscriptionService;
+import controllers.AbstractController;
 import domain.Article;
+import domain.Customer;
 import domain.FollowUp;
 
 @Controller
-@RequestMapping("/follow-up")
-public class FollowUpController extends AbstractController {
+@RequestMapping("/follow-up/customer")
+public class FollowUpCustomerController extends AbstractController {
 
 	// Services -------------------------------------------------------------
 
 	@Autowired
-	private FollowUpService	followUpService;
+	private FollowUpService		followUpService;
 
 	@Autowired
-	private ArticleService	articleService;
+	private CustomerService		customerService;
+
+	@Autowired
+	private ArticleService		articleService;
+
+	@Autowired
+	private SubscriptionService	subscriptionService;
 
 
 	// Constructors ---------------------------------------------------------
+
+	public FollowUpCustomerController() {
+		super();
+	}
 
 	// Listing --------------------------------------------------------------
 
@@ -40,16 +54,20 @@ public class FollowUpController extends AbstractController {
 		Article article = null;
 		String requestURI = null;
 		String displayURI = null;
+		Customer customer = null;
+
+		customer = this.customerService.findByPrincipal();
+
+		Assert.notNull(customer);
 
 		article = this.articleService.findOne(articleId);
-
-		Assert.isTrue(!article.getNewspaper().getIsPrivate());
-		Assert.notNull(article.getNewspaper().getPublicationDate());
-
 		followUps = article.getFollowUps();
 
-		requestURI = "follow-up/list.do";
-		displayURI = "follow-up/display.do?followUpId=";
+		if (article.getNewspaper().getIsPrivate() && article.getNewspaper().getPublicationDate() != null)
+			Assert.isTrue(this.subscriptionService.thisCustomerCanSeeThisNewspaper(customer.getId(), article.getNewspaper().getId()));
+
+		requestURI = "follow-up/customer/list.do";
+		displayURI = "follow-up/customer/display.do?followUpId=";
 
 		result = new ModelAndView("follow-up/list");
 		result.addObject("follow-ups", followUps);
@@ -71,13 +89,11 @@ public class FollowUpController extends AbstractController {
 		followUp = this.followUpService.findOne(followUpId);
 
 		Assert.notNull(followUp);
-		Assert.isTrue(!followUp.getArticle().getNewspaper().getIsPrivate());
-		Assert.notNull(followUp.getArticle().getNewspaper().getPublicationDate());
 
 		result = new ModelAndView("follow-up/display");
 		result.addObject("followup", followUp);
-		result.addObject("editURI", "/follow-up/user/edit.do?followUpId=" + followUpId);
-		result.addObject("cancelURI", "/follow-up/list.do?articleId=" + followUp.getArticle().getId());
+		result.addObject("editURI", "/follow-up/customer/edit.do?followUpId=" + followUpId);
+		result.addObject("cancelURI", "/follow-up/customer/list.do?articleId=" + followUp.getArticle().getId());
 
 		return result;
 	}

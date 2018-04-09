@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.ArticleService;
 import services.FollowUpService;
+import services.SubscriptionService;
 import services.UserService;
 import controllers.AbstractController;
 import domain.Article;
@@ -29,13 +30,16 @@ public class FollowUpUserController extends AbstractController {
 	// Services -------------------------------------------------------------
 
 	@Autowired
-	private FollowUpService	followUpService;
+	private FollowUpService		followUpService;
 
 	@Autowired
-	private UserService		userService;
+	private UserService			userService;
 
 	@Autowired
-	private ArticleService	articleService;
+	private ArticleService		articleService;
+
+	@Autowired
+	private SubscriptionService	subscriptionService;
 
 
 	// Constructors ---------------------------------------------------------
@@ -47,16 +51,24 @@ public class FollowUpUserController extends AbstractController {
 	// Listing --------------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list() {
+	public ModelAndView list(final int articleId) {
 		ModelAndView result = null;
 		Collection<FollowUp> followUps = null;
-		User user = null;
+		Article article = null;
 		String requestURI = null;
 		String displayURI = null;
+		User user = null;
 
 		user = this.userService.findByPrincipal();
 
-		followUps = user.getFollowUps();
+		Assert.notNull(user);
+
+		article = this.articleService.findOne(articleId);
+		followUps = article.getFollowUps();
+
+		if (article.getNewspaper().getIsPrivate() && article.getNewspaper().getPublicationDate() != null)
+			Assert.isTrue(this.subscriptionService.thisCustomerCanSeeThisNewspaper(user.getId(), article.getNewspaper().getId()));
+
 		requestURI = "follow-up/user/list.do";
 		displayURI = "follow-up/user/display.do?followUpId=";
 
@@ -95,7 +107,7 @@ public class FollowUpUserController extends AbstractController {
 		result = new ModelAndView("follow-up/display");
 		result.addObject("followup", followUp);
 		result.addObject("editURI", "/follow-up/user/edit.do?followUpId=" + followUpId);
-		result.addObject("cancelURI", "/follow-up/user/list.do");
+		result.addObject("cancelURI", "/follow-up/user/list.do?articleId=" + followUp.getArticle().getId());
 
 		return result;
 	}
