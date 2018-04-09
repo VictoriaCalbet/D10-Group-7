@@ -62,7 +62,7 @@ public class ArticleService {
 		final Collection<Article> principalArticles = writer.getArticles();
 		principalArticles.add(result);
 		writer.setArticles(principalArticles);
-		this.userService.saveFromEdit(writer);
+		this.userService.save(writer);
 		result = this.articleRepository.save(result);
 
 		return result;
