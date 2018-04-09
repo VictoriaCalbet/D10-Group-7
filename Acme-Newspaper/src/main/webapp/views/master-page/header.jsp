@@ -91,25 +91,6 @@
 				</ul>
 			</li>
 		</security:authorize>
-		
-		<li>
-			<a class="fNiv"><spring:message	code="master.page.follow-up"/></a>
-			<ul>
-				<li class="arrow"></li>
-				<security:authorize access="hasRole('USER')">
-					<li>
-						<a href="follow-up/user/list.do">
-						<spring:message code="master.page.follow-up.myFollowUps"/>
-						</a>
-					</li>
-				</security:authorize>
-				<li>
-					<a href="follow-up/list.do">
-						<spring:message code="master.page.follow-up.publicFollowUps"/>
-					</a>
-				</li>
-			</ul>
-		</li>
 
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message
