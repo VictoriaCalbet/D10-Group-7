@@ -75,10 +75,10 @@
 		<security:intercept-url pattern="/customer/**" access="permitAll" />
 		
 		<!-- FollowUp -->
-		<security:intercept-url pattern="/followUp/administrator/**" access="hasRole('ADMIN')" />
-		<security:intercept-url pattern="/followUp/customer/**" access="hasRole('CUSTOMER')" />
-		<security:intercept-url pattern="/followUp/user/**" access="hasRole('USER')" />
-		<security:intercept-url pattern="/followUp/**" access="permitAll" />
+		<security:intercept-url pattern="/follow-up/administrator/**" access="hasRole('ADMIN')" />
+		<security:intercept-url pattern="/follow-up/customer/**" access="hasRole('CUSTOMER')" />
+		<security:intercept-url pattern="/follow-up/user/**" access="hasRole('USER')" />
+		<security:intercept-url pattern="/follow-up/**" access="permitAll" />
 		
 		<!-- Newspaper -->
 		<security:intercept-url pattern="/newspaper/administrator/**" access="hasRole('ADMIN')" />
