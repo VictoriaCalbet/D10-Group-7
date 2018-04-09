@@ -1,6 +1,8 @@
 
 package repositories;
 
+import java.util.Collection;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -29,5 +31,11 @@ public interface FollowUpRepository extends JpaRepository<FollowUp, Integer> {
 	// TODO
 	@Query("select count(f) from FollowUp f")
 	Double avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished();
+
+	@Query("select fol from FollowUp fol where fol.article.isDraft is false and fol.article.newspaper.isPrivate is false")
+	Collection<FollowUp> findPublicFollowUps();
+
+	@Query("select case when (count(news) > 0) then true else false end from Subscription subs where subs.newspaper.id = ?1 and subs.customer.id = ?2")
+	boolean canISeeDisplayThisFollowUp(int newspaperId, int customerId);
 
 }
