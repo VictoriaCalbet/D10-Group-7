@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,7 @@ import org.springframework.util.Assert;
 
 import repositories.FollowUpRepository;
 import domain.FollowUp;
+import domain.User;
 
 @Service
 @Transactional
@@ -20,8 +23,11 @@ public class FollowUpService {
 	@Autowired
 	private FollowUpRepository	followUpRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private UserService			userService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -31,11 +37,73 @@ public class FollowUpService {
 
 	// Simple CRUD methods ----------------------------------------------------
 
+	public FollowUp create() {
+		FollowUp result = null;
+		User user = null;
+
+		user = this.userService.findByPrincipal();
+
+		result = new FollowUp();
+		result.setPublicationMoment(new Date());
+		result.setUser(user);
+		result.setPictures(new ArrayList<String>());
+
+		return result;
+	}
+
 	// DO NOT MODIFY. ANY OTHER SAVE METHOD MUST BE NAMED DIFFERENT.
 	public FollowUp save(final FollowUp followUp) {
 		Assert.notNull(followUp);
 		FollowUp result;
 		result = this.followUpRepository.save(followUp);
+		return result;
+	}
+
+	public FollowUp saveFromCreate(final FollowUp followUp) {
+		FollowUp result = null;
+		User user = null;
+
+		user = this.userService.findByPrincipal();
+
+		Assert.notNull(followUp, "message.error.followUp.null");
+		Assert.notNull(user, "message.error.followUp.principal.null");
+		Assert.isTrue(followUp.getUser().equals(user));
+		Assert.isTrue(followUp.getArticle().getWriter().equals(user), "message.error.followUp.heDoesntWriteTheArticle");
+		Assert.isTrue(!followUp.getArticle().getIsDraft(), "message.error.followUp.articleIsDraft");
+		Assert.notNull(followUp.getArticle().getNewspaper().getPublicationDate(), "message.error.followUp.theNewspaperHasntBeenPublishedYet");
+
+		followUp.setPublicationMoment(new Date());
+
+		// Paso 1: realizo la entidad del servicio FollowUp
+
+		result = this.save(followUp);
+
+		// Paso 2: persisto el resto de relaciones a las que el objeto FollowUp está relacionada.
+
+		result.getUser().getFollowUps().add(result);
+		result.getArticle().getFollowUps().add(result);
+
+		return result;
+	}
+	public FollowUp saveFromEdit(final FollowUp followUp) {
+		FollowUp result = null;
+		User user = null;
+
+		user = this.userService.findByPrincipal();
+
+		System.out.println(followUp.getArticle().getNewspaper().getPublicationDate());
+		Assert.notNull(followUp, "message.error.followUp.null");
+		Assert.notNull(user, "message.error.followUp.principal.null");
+		Assert.isTrue(followUp.getUser().equals(user));
+		Assert.isTrue(followUp.getArticle().getWriter().equals(user), "message.error.followUp.heDoesntWriteTheArticle");
+		Assert.isTrue(!followUp.getArticle().getIsDraft(), "message.error.followUp.articleIsDraft");
+		Assert.notNull(followUp.getArticle().getNewspaper().getPublicationDate(), "message.error.followUp.theNewspaperHasntBeenPublishedYet");
+		Assert.isTrue(followUp.getArticle().getNewspaper().getPublicationDate().before(new Date()), "message.error.followUp.publicationDateIsPast");
+
+		// Paso 1: realizo la entidad del servicio FollowUp
+
+		result = this.save(followUp);
+
 		return result;
 	}
 
@@ -53,6 +121,11 @@ public class FollowUpService {
 
 	// Other business methods -------------------------------------------------
 
+	public Collection<FollowUp> findPublicFollowUps() {
+		Collection<FollowUp> result = null;
+		result = this.followUpRepository.findPublicFollowUps();
+		return result;
+	}
 	// Dashboard services ------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 17.6.1
@@ -76,6 +149,12 @@ public class FollowUpService {
 	public Double avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished() {
 		Double result = null;
 		result = this.followUpRepository.avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished();
+		return result;
+	}
+
+	public boolean canISeeDisplayThisFollowUp(final int newspaperId, final int customerId) {
+		boolean result = false;
+		result = this.followUpRepository.canISeeDisplayThisFollowUp(newspaperId, customerId);
 		return result;
 	}
 }
