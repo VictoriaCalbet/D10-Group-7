@@ -32,7 +32,7 @@ public interface FollowUpRepository extends JpaRepository<FollowUp, Integer> {
 	@Query("select count(f) from FollowUp f")
 	Double avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished();
 
-	@Query("select fol from FollowUp fol where fol.article.isDraft is false and fol.article.newspaper.isPrivate is false")
+	@Query("select fol from FollowUp fol where fol.article.isDraft is false and fol.article.newspaper.isPrivate is false and fol.article.newspaper.publicationDate is not null")
 	Collection<FollowUp> findPublicFollowUps();
 
 	@Query("select case when (count(news) > 0) then true else false end from Subscription subs where subs.newspaper.id = ?1 and subs.customer.id = ?2")
