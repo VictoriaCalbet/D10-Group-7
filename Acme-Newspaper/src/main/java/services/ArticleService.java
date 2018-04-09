@@ -63,6 +63,7 @@ public class ArticleService {
 		principalArticles.add(result);
 		writer.setArticles(principalArticles);
 		this.userService.save(writer);
+		Assert.isTrue(article.getPublicationMoment() == null);
 		result = this.articleRepository.save(result);
 
 		return result;
@@ -105,6 +106,9 @@ public class ArticleService {
 		return result;
 	}
 
+	public void flush() {
+		this.articleRepository.flush();
+	}
 	// Other business methods -------------------------------------------------
 
 	public Collection<Article> findAllPublishedByUserId(final int userId) {
