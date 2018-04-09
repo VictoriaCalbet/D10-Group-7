@@ -70,13 +70,13 @@
 				</a>
 		</display:column>
 	
-		<spring:message code="newspaper.article" var="articleHeader" />	
+		<spring:message code="newspaper.articles" var="articleHeader" />	
 			<display:column title="${articleHeader}">			
 				<jstl:choose>
 				
 					<jstl:when test="${fn:length(row.articles) !=0}">	
 						<a href="article/list.do?newspaperId=${row.id}">
-						 	<spring:message code="newspaper.articleButton" />
+						 	<spring:message code="newspaper.articlesButton" />
 						</a>
 					</jstl:when>
 					<jstl:otherwise>
@@ -88,7 +88,7 @@
 	
 <security:authorize access="hasRole('CUSTOMER')">	
 
-		<spring:message code="newspaper.article" var="articleHeader" />	
+		<spring:message code="newspaper.articles" var="articleHeader" />	
 			<display:column title="${articleHeader}">
 				<jstl:if test="${ns.contains(row)}">
 			
@@ -96,7 +96,7 @@
 				
 					<jstl:when test="${fn:length(row.articles) !=0}">	
 						<a href="article/list.do?newspaperId=${row.id}">
-						 	<spring:message code="newspaper.articleButton" />
+						 	<spring:message code="newspaper.articlesButton" />
 						</a>
 					</jstl:when>
 					<jstl:otherwise>
