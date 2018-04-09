@@ -32,6 +32,9 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	@Query("select sqrt(sum(news.articles.size * news.articles.size) / count(news.articles.size) - (avg(news.articles.size) * avg(news.articles.size))) from Newspaper news")
 	Double stdArticlesPerNewspaper();
 
+	@Query("select a from Article a where (a.title like %?1% or a.summary like %?1% or a.body like %?1%) and a.publicationMoment != null")
+	Collection<Article> findArticleByKeyword(String keyword);
+
 	// Acme-Newspaper 1.0 - Requisito 24.1.2
 
 	@Query("select avg(news.articles.size) from Newspaper news where news.isPrivate is true")

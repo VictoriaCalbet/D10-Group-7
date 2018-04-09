@@ -18,25 +18,45 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
+
+<form action="article/searchArticleByKeyword.do" method="post">
+			<label> <spring:message code="article.keyword" />
+			</label> <input type="text" name="word" /> <input type="submit"
+				name="searchArticleByKeyword" value="<spring:message code="article.search"/>" />
+		</form>
+		<br>
+		
 <display:table name="articles" id="row" requestURI="${requestURI}" pagesize="5">
 
 
+<jstl:set var="isDraft" value="${row.isDraft}" />		
+	
+	
+	<jstl:if test="${isDraft eq true}">
+		<jstl:set var="style" value="background-color:#ffad9b;" />
+	</jstl:if>
+	
+	<jstl:if test="${isDraft eq false}">
+		<jstl:set var="style" value="background-color:transparent;" />
+	</jstl:if>
+
 <spring:message code="article.title" var="titleHeader" />
-<display:column property="title" title="${titleHeader}" sortable="false" />
+<display:column property="title" title="${titleHeader}" sortable="false" style="${style}"/>
 	
 <spring:message code="article.body" var="bodyHeader" />
-<display:column property="body" title="${bodyHeader}" sortable="false" />
+<display:column property="body" title="${bodyHeader}" sortable="false" style="${style}"/>
 
 <spring:message code="article.summary" var="summaryHeader" />
-<display:column property="summary" title="${summaryHeader}" sortable="false" />
-
-
+<display:column property="summary" title="${summaryHeader}" sortable="false" style="${style}"/>
+<jstl:choose>
+<jstl:when test="${row.publicationMoment!= null}">
 <spring:message code="article.publicationMoment" var="publicationMomentHeader" />
-<display:column property="publicationMoment" title="${publicationMomentHeader}" sortable="false" />
+<display:column property="publicationMoment" title="${publicationMomentHeader}" sortable="false" style="${style}"/>
 
-
+</jstl:when>
+</jstl:choose>
 <spring:message code="article.pictures" var ="picturesHeader"/>		
-<display:column title="${picturesHeader}">			
+<display:column title="${picturesHeader}" style="${style}">			
 			<jstl:choose>
 	<jstl:when test="${fn:length(row.pictures)==0}">
 			 	<spring:message code="article.noPictures"  />
@@ -47,6 +67,9 @@
 
 
 </display:table>
-<security:authorize access="hasRole('USER')">
-<a href="article/user/create.do"> <spring:message code="article.write" /></a>
+
+<security:authorize access="isAuthenticated()">
+	<jstl:if test="${not empty articles}">
+		<span style="background-color:#ffad9b; border-radius: 15px 50px;">&nbsp;&nbsp;<spring:message code="article.isDraft"/>&nbsp;&nbsp;</span>
+	</jstl:if>
 </security:authorize>

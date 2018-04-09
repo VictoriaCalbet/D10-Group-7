@@ -4,6 +4,8 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,4 +66,19 @@ public class ArticleController extends AbstractController {
 	}
 	//Ancillary methods
 
+	@RequestMapping(value = "/searchArticleByKeyword", method = RequestMethod.POST)
+	public ModelAndView searchByKeyWord(@Valid final String word) {
+
+		ModelAndView result;
+
+		Collection<Article> articles;
+
+		articles = this.articleService.findArticleByKeyword(word);
+
+		result = new ModelAndView("article/list");
+		result.addObject("articles", articles);
+		result.addObject("requestURI", "article/list.do");
+		return result;
+
+	}
 }

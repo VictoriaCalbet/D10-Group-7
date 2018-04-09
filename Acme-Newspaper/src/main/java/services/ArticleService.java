@@ -159,4 +159,8 @@ public class ArticleService {
 		result = this.articleRepository.avgNoArticlesPerPublicNewspapers();
 		return result;
 	}
+
+	public Collection<Article> findArticleByKeyword(final String keyword) {
+		return this.articleRepository.findArticleByKeyword(keyword);
+	}
 }
