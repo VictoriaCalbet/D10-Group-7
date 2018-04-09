@@ -18,6 +18,9 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	@Query("select art from Article art where art.newspaper.publicationDate is not null and art.isDraft is false")
 	Collection<Article> findAvailableArticlesToCreateFollowUps();
 
+	@Query("select a from Article a where a.newspaper.id = ?1")
+	Collection<Article> findAllByNewspaperId(int newspaperId);
+
 	// Dashboard queries -------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.2

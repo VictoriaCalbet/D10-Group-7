@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.ActorService;
+import services.ArticleService;
 import services.CustomerService;
 import services.NewspaperService;
 import domain.Actor;
@@ -32,6 +33,9 @@ public class NewspaperController extends AbstractController {
 	private ActorService		actorService;
 	@Autowired
 	private CustomerService		customerService;
+
+	@Autowired
+	private ArticleService		articleService;
 
 
 	public NewspaperController() {
@@ -102,7 +106,7 @@ public class NewspaperController extends AbstractController {
 			if (this.actorService.checkAuthority(this.actorService.findByPrincipal(), "CUSTOMER")) {
 				final Customer c = this.customerService.findByPrincipal();
 				ns = this.newspaperService.findNewspaperSubscribedOfCustomer(c.getId());
-				if (!ns.contains(newspaper) && newspaper.getIsPrivate()==true)
+				if (!ns.contains(newspaper) && newspaper.getIsPrivate() == true)
 					visible = false;
 			}
 		} catch (final Throwable oops) {
@@ -123,10 +127,11 @@ public class NewspaperController extends AbstractController {
 	}
 
 	protected ModelAndView infoModelAndView(final Newspaper newspaper, final boolean visible, final String message) {
-		ModelAndView result;
+		final ModelAndView result;
 
 		Collection<Article> articles = new ArrayList<Article>();
-		articles = newspaper.getArticles();
+		articles = this.articleService.findAllByNewspaperId(newspaper.getId());
+
 		result = new ModelAndView("newspaper/info");
 
 		result.addObject("newspaper", newspaper);

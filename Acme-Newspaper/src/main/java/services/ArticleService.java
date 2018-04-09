@@ -119,6 +119,12 @@ public class ArticleService {
 		return result;
 	}
 
+	public Collection<Article> findAllByNewspaperId(final int newspaperId) {
+		Collection<Article> result = null;
+		result = this.articleRepository.findAllByNewspaperId(newspaperId);
+		return result;
+	}
+
 	// Dashboard services ------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.2
