@@ -206,7 +206,7 @@ public class NewspaperService {
 		return result;
 	}
 
-	public Collection<Newspaper> findAllNotPublishedAndPublic() {
-		return this.newspaperRepository.findAllNotPublishedAndPublic();
+	public Collection<Newspaper> findAllNotPublished() {
+		return this.newspaperRepository.findAllNotPublished();
 	}
 }

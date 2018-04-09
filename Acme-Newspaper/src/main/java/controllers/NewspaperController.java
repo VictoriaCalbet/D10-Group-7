@@ -97,7 +97,7 @@ public class NewspaperController extends AbstractController {
 		return result;
 	}
 
-	// Ancillaty methods
+	// Ancillary methods
 	protected ModelAndView infoModelAndView(final Newspaper newspaper) {
 		ModelAndView result;
 

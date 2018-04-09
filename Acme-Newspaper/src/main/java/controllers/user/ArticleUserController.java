@@ -86,7 +86,7 @@ public class ArticleUserController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		ArticleForm articleForm;
-		final Collection<Newspaper> availableNewspapers = this.newsPaperService.findAllNotPublishedAndPublic();
+		final Collection<Newspaper> availableNewspapers = this.newsPaperService.findAllNotPublished();
 
 		articleForm = this.articleFormService.create();
 		result = this.createEditModelAndView(articleForm);
@@ -106,7 +106,7 @@ public class ArticleUserController extends AbstractController {
 		final ArticleForm articleForm;
 		articleForm = this.articleFormService.create(articleId);
 		final User principal = this.userService.findByPrincipal();
-		final Collection<Newspaper> availableNewspapers = this.newsPaperService.findAllNotPublishedAndPublic();
+		final Collection<Newspaper> availableNewspapers = this.newsPaperService.findAllNotPublished();
 		result = this.createEditModelAndView(articleForm);
 		result.addObject("availableNewspapers", availableNewspapers);
 		result.addObject("principal", principal);
@@ -135,13 +135,12 @@ public class ArticleUserController extends AbstractController {
 				result = this.createEditModelAndView(articleForm, messageError);
 
 			}
-		final Collection<Newspaper> availableNewspapers = this.newsPaperService.findAllNotPublishedAndPublic();
+		final Collection<Newspaper> availableNewspapers = this.newsPaperService.findAllNotPublished();
 
 		result.addObject("availableNewspapers", availableNewspapers);
 
 		return result;
 	}
-
 	//Ancillary methods
 
 	protected ModelAndView createEditModelAndView(final ArticleForm articleForm) {

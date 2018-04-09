@@ -74,7 +74,7 @@
 	
 	
 	<spring:message code="article.follow-ups" var="articleFollowUpsHeader" />
-	<display:column title="${articleFollowUpsHeader}">
+	<display:column title="${articleFollowUpsHeader}" style="${style}" >
 		<spring:message code="article.follow-up.listFollow-ups" var="articleListFollowUpsLink"/>
 		
 		<security:authorize access="hasRole('CUSTOMER')">
