@@ -30,10 +30,15 @@ public class ChirpServiceTest extends AbstractTest{
 		@Autowired
 		private UserService	userService;
 
-		
+		/**
+		 * Acme-Newspaper Requirement 16.1
+		 * An actor who is authenticated as a user must be able to:
+		 * Post a chirp. Chirps may not be changed or deleted once they are posted.
+		 * 
+		 */
 		@Test
 		public void testSaveFromCreateChirp() {
-			// Chirp: Title, description, publicationMoment, user, expected exception.
+			// Chirp: title, description, publicationMoment, user, expected exception.
 			User user = this.userService.findOne(getEntityId("user1"));
 			final Object[][] testingData = {
 				{
@@ -82,6 +87,14 @@ public class ChirpServiceTest extends AbstractTest{
 
 		}
 		
+		/**
+		 * Acme-Newspaper Requirement 16.2
+		 * An actor who is authenticated as a user must be able to:
+		 * 
+		 * Follow or unfollow another user. This test will be dedicated to following users functionality.
+		 * 
+		 */
+		
 		@Test
 		public void testFollowUser() {
 			// Chirp: User, expected exception.
@@ -124,6 +137,14 @@ public class ChirpServiceTest extends AbstractTest{
 
 		}
 		
+		/**
+		 * Acme-Newspaper Requirement 16.2
+		 * An actor who is authenticated as a user must be able to:
+		 * 
+		 * Follow or unfollow another user. This test will be dedicated to unfollowing users functionality.
+		 * 
+		 */
+		
 		@Test
 		public void testUnfollowUser() {
 			// Chirp: User, expected exception.
@@ -164,6 +185,14 @@ public class ChirpServiceTest extends AbstractTest{
 			this.checkExceptions(expectedException, caught);
 
 		}
+		
+		/**
+		 * Acme-Newspaper Requirement 17.5
+		 * An actor who is authenticated as an administrator must be able to:
+		 * 
+		 * Remove a chirp that he or she thinks is inappropriate.
+		 * 
+		 */
 		
 		@Test
 		public void testDeleteChirp() {
