@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ArticleRepository;
+import domain.Actor;
 import domain.Article;
+import domain.Newspaper;
 import domain.User;
 
 @Service
@@ -23,6 +25,8 @@ public class ArticleService {
 
 	@Autowired
 	private UserService			userService;
+	@Autowired
+	private ActorService		actorService;
 
 
 	// Supporting services ----------------------------------------------------
@@ -39,7 +43,7 @@ public class ArticleService {
 		final Article result = new Article();
 		final User principal = this.userService.findByPrincipal();
 		result.setWriter(principal);
-		result.setIsDraft(false);
+		result.setIsDraft(true);
 		return result;
 	}
 	// DO NOT MODIFY. ANY OTHER SAVE METHOD MUST BE NAMED DIFFERENT.
@@ -66,27 +70,30 @@ public class ArticleService {
 	public Article saveFromEdit(final Article article) {
 		Assert.notNull(article);
 		final Article result = article;
-
+		final User principal = this.userService.findByPrincipal();
+		final Newspaper newspaper = article.getNewspaper();
+		Assert.isTrue(principal == result.getWriter());
+		Assert.isTrue(result.getIsDraft() == true);
+		Assert.isTrue(newspaper.getPublicationDate() == null);
+		Assert.isTrue(result.getPublicationMoment() == null);
 		this.articleRepository.save(article);
 		return result;
 	}
 	public void delete(final Article article) {
 
-		//		7. An actor who is authenticated as an administrator must be able to:
-		//		1. Remove an article that he or she thinks is inappropriate.
-		//		2. Remove a newspaper that he or she thinks is inappropriate. Removing a newspaper
-		//		implies removing all of the articles of which it is composed.
-		//Assert Draft false
 		Assert.notNull(article);
-		final User principal = this.userService.findByPrincipal();
+		final Article result = article;
+		final Actor principal = this.actorService.findByPrincipal();
+		Assert.isTrue(this.actorService.checkAuthority(principal, "ADMIN"));
+		final User writer = result.getWriter();
 
-		final Collection<Article> principalArticles = principal.getArticles();
+		final Collection<Article> writerArticles = writer.getArticles();
 
-		principalArticles.remove(article);
-		this.userService.saveFromEdit(principal);
-		this.articleRepository.delete(article);
+		writerArticles.remove(result);
+		writer.setArticles(writerArticles);
+
+		this.articleRepository.delete(result);
 	}
-
 	public Collection<Article> findAll() {
 		Collection<Article> result = null;
 		result = this.articleRepository.findAll();

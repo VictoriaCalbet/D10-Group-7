@@ -33,7 +33,7 @@
 	
 	<definition name="newspaper/info" extends="master.page">
 		<put-attribute name="title" value="Información de un periódico" />
-		<put-attribute name="body" value="/views/trip/display.jsp" />
+		<put-attribute name="body" value="/views/newspaper/display.jsp" />
 	</definition>
 	
 </tiles-definitions>

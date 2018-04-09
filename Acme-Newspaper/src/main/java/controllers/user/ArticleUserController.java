@@ -126,7 +126,7 @@ public class ArticleUserController extends AbstractController {
 
 				else
 					this.articleFormService.saveFromCreate(articleForm);
-				result = new ModelAndView("redirect:/");
+				result = new ModelAndView("redirect:/newspaper/user/list.do");
 
 			} catch (final Throwable oops) {
 				String messageError = "article.commit.error";
@@ -138,27 +138,6 @@ public class ArticleUserController extends AbstractController {
 		final Collection<Newspaper> availableNewspapers = this.newsPaperService.findAllNotPublishedAndPublic();
 
 		result.addObject("availableNewspapers", availableNewspapers);
-
-		return result;
-	}
-	//Deleting//TODO
-	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-	public ModelAndView delete(final Article article, final BindingResult binding) {
-		ModelAndView result;
-
-		try {
-			final User principal = this.userService.findByPrincipal();
-
-			Assert.isTrue(principal.getArticles().contains(article), "message.error.article");
-
-			this.articleService.delete(article);
-			result = new ModelAndView("redirect:newspaper/list.do");
-		} catch (final Throwable oops) {
-			String messageError = "article.commit.error";
-			if (oops.getMessage().contains("message.error"))
-				messageError = oops.getMessage();
-			result = new ModelAndView("redirect:/");
-		}
 
 		return result;
 	}

@@ -37,7 +37,7 @@ public class ArticleFormService {
 		ArticleForm result;
 
 		result = new ArticleForm();
-		result.setIsDraft(false);
+		result.setIsDraft(true);
 		final User principal = this.userService.findByPrincipal();
 		result.setWriter(principal);
 		return result;

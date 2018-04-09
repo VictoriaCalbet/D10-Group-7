@@ -38,11 +38,11 @@ public class ArticleController extends AbstractController {
 	//Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam final int newsPaperId) {
+	public ModelAndView list(@RequestParam final int newspaperId) {
 		final ModelAndView result;
 		Collection<Article> articles = new ArrayList<Article>();
 
-		final Newspaper newspaper = this.newsPaperService.findOne(newsPaperId);
+		final Newspaper newspaper = this.newsPaperService.findOne(newspaperId);
 		articles = newspaper.getArticles();
 		result = new ModelAndView("article/list");//tiles
 		result.addObject("articles", articles);
