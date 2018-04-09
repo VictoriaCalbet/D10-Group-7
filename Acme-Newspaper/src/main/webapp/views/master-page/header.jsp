@@ -76,12 +76,9 @@
 		</security:authorize>
 
 		<security:authorize access="hasRole('CUSTOMER')">
-		
-		<li><a class="fNiv" href="newspaper/customer/list.do"><spring:message code="master.page.newspaper.user.list" /></a></li>
-		
-		
-			<li><a class="fNiv"><spring:message
-						code="master.page.customer" /></a>
+			<li><a class="fNiv" href="newspaper/customer/list.do"><spring:message code="master.page.newspaper.user.list" /></a></li>
+			<li>
+				<a class="fNiv"><spring:message	code="master.page.customer"/></a>
 				<ul>
 					<li class="arrow"></li>
 					<li>
@@ -89,8 +86,28 @@
 							<spring:message code="master.page.subscription.mySubscriptions"/>
 						</a>
 					</li>
-				</ul></li>
+				</ul>
+			</li>
 		</security:authorize>
+		
+		<li>
+			<a class="fNiv"><spring:message	code="master.page.follow-up"/></a>
+			<ul>
+				<li class="arrow"></li>
+				<security:authorize access="hasRole('USER')">
+					<li>
+						<a href="follow-up/user/list.do">
+						<spring:message code="master.page.follow-up.myFollowUps"/>
+						</a>
+					</li>
+				</security:authorize>
+				<li>
+					<a href="follow-up/list.do">
+						<spring:message code="master.page.follow-up.publicFollowUps"/>
+					</a>
+				</li>
+			</ul>
+		</li>
 
 		<security:authorize access="isAnonymous()">
 			<li><a class="fNiv" href="security/login.do"><spring:message
