@@ -62,6 +62,7 @@
 		<security:authorize access="hasRole('ADMIN')">
 		
 			<li><a class="fNiv" href="newspaper/administrator/list.do"><spring:message code="master.page.newspaper.admin.list" /></a></li>
+			<li><a class="fNiv" href="chirp/administrator/list.do"><spring:message code="master.page.chirp.administrator.list" /></a></li>
 		
 			<li><a class="fNiv"><spring:message
 						code="master.page.administrator" /></a>
