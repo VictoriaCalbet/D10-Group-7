@@ -93,6 +93,12 @@ public class SubscriptionService {
 
 	// Other business methods -------------------------------------------------
 
+	public boolean thisCustomerCanSeeThisNewspaper(final int customerId, final int newspaperId) {
+		boolean result = false;
+		result = this.subscriptionRepository.thisCustomerCanSeeThisNewspaper(customerId, newspaperId);
+		return result;
+	}
+
 	private boolean checkCreditCard(final CreditCard creditCard) {
 		Assert.notNull(creditCard);
 		Assert.notNull(creditCard.getHolderName());
