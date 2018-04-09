@@ -374,6 +374,24 @@
 		<property name="newspaper" ref="newspaper2"/> 
 	</bean>
 	
+	<bean id="article4" class="domain.Article">
+		<property name="title" value="Title of Article 4"/>
+		<property name="summary" value="65% of Washington DC inhabitants assure to have smoked cannabis in last month"/>
+		<property name="body" value="A recent study has been published about our people bad habits. Datum are really unfavourable, and our mayoress Muriel Bowser, after noticing, declared:'The law is the law, and everybody must obey it. Our laws about drugs are going to be stronger soon'." />
+		<property name="publicationMoment"><null/></property>
+		<property name="pictures">
+			<list>			
+			</list>
+		</property>
+		<property name="isDraft" value="true"/>
+		<property name="followUps">
+			<list>
+			</list>
+		</property>
+		<property name="writer" ref="user2"/>
+		<property name="newspaper" ref="newspaper4"/> 
+	</bean>
+	
 	<!-- #FollowUps Follow Ups -->
 	
 	<bean id="followUp1" class="domain.FollowUp">
@@ -429,6 +447,24 @@
 		</property> 
 	</bean>
 	
+	
+	<bean id="newspaper4" class="domain.Newspaper">
+		<property name="title" value="The Washington D.C Times"/>
+		<property name="description" value="The most important news about Washington D.C are published in this newspaper."/>
+		<property name="picture"><null/></property>
+		<property name="publicationDate"><null/></property>
+		<property name="isPrivate" value="false"/>
+		<property name="publisher" ref="user2"/>
+		<property name="articles">
+			<list>
+				<ref bean="article4"/>
+			</list>
+		</property>
+		<property name="subscriptions">
+			<list>
+			</list>
+		</property> 
+	</bean>
 	<!-- #Subscriptions Subcriptions -->
 	
 	<bean id="subscription1" class="domain.Subscription">
