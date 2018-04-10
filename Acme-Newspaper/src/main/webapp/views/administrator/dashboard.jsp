@@ -18,3 +18,98 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+
+<security:authorize access="hasRole('ADMIN')">
+
+	<spring:message code="dashboard.avg" var="dashboardAvg"/>
+	<spring:message code="dashboard.std" var="dashboardStd"/>
+	<spring:message code="dashboard.min" var="dashboardMin"/>
+	<spring:message code="dashboard.max" var="dashboardMax"/>
+	<spring:message code="dashboard.ratio" var="dashboardRatio"/>
+	<spring:message code="dashboard.newspaper.title" var="newspaperTitle"/>
+	<spring:message code="dashboard.article.title" var="articleTitle"/>
+	
+	<!-- Dashboard 1 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.avgNewspaperCreatedPerUser"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgNewspaperCreatedPerUser}"/></td>
+			<td> <b> <jstl:out value="${dashboardStd}"/>:&nbsp; </b> <jstl:out value="${stdNewspaperCreatedPerUser}"/></td>
+		</tr>
+	</table>
+	
+	<!-- Dashboard 2 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.avgArticlesWrittenByWriter"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgArticlesWrittenByWriter}"/></td>
+			<td> <b> <jstl:out value="${dashboardStd}"/>:&nbsp; </b> <jstl:out value="${stdArticlesWrittenyByWriter}"/></td>
+		</tr>
+	</table>
+	
+	<!-- Dashboard 3 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.avgArticlesPerNewspaper"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgArticlesPerNewspaper}"/></td>
+			<td> <b> <jstl:out value="${dashboardStd}"/>:&nbsp; </b> <jstl:out value="${stdArticlesPerNewspaper}"/></td>
+		</tr>
+	</table>
+	
+	<!-- Dashboard 4 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${newspaperTitle}"/>:&nbsp; </b> </td>
+		</tr>
+		<jstl:forEach items="${newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg}" var="news">
+			<tr>
+				<td> <jstl:out value="${news.title}"/></td>
+			</tr>
+		</jstl:forEach>
+	</table>
+	
+	<!-- Dashboard 5 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${newspaperTitle}"/>:&nbsp; </b> </td>
+		</tr>
+		<jstl:forEach items="${newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg}" var="news">
+			<tr>
+				<td> <jstl:out value="${news.title}"/></td>
+			</tr>
+		</jstl:forEach>
+	</table>
+	
+	<!-- Dashboard 6 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.ratioOfUsersWhoHaveEverCreatedANewspaper"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardRatio}"/>:&nbsp; </b> <jstl:out value="${ratioOfUsersWhoHaveEverCreatedANewspaper}"/></td>
+		</tr>
+	</table>
+	
+	<!-- Dashboard 6 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.ratioOfUsersWhoHaveEverWrittenAnArticle"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardRatio}"/>:&nbsp; </b> <jstl:out value="${ratioOfUsersWhoHaveEverWrittenAnArticle}"/></td>
+		</tr>
+	</table>
+
+</security:authorize>

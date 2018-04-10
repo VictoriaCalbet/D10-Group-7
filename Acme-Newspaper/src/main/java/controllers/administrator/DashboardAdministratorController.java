@@ -66,9 +66,9 @@ public class DashboardAdministratorController extends AbstractController {
 
 		// Requisito 7.3.2 - OK
 		final Double avgArticlesWrittenByWriter = this.articleService.avgArticlesWrittenByWriter();
-		final Double stdArticlesWrittenyWriter = this.articleService.stdArticlesWrittenByWriter();
+		final Double stdArticlesWrittenyByWriter = this.articleService.stdArticlesWrittenByWriter();
 		result.addObject("avgArticlesWrittenByWriter", avgArticlesWrittenByWriter);
-		result.addObject("stdArticlesWrittenyWriter", stdArticlesWrittenyWriter);
+		result.addObject("stdArticlesWrittenyByWriter", stdArticlesWrittenyByWriter);
 
 		// Requisito 7.3.3 - OK
 		final Double avgArticlesPerNewspaper = this.articleService.avgArticlesPerNewspaper();
@@ -76,11 +76,11 @@ public class DashboardAdministratorController extends AbstractController {
 		result.addObject("avgArticlesPerNewspaper", avgArticlesPerNewspaper);
 		result.addObject("stdArticlesPerNewspaper", stdArticlesPerNewspaper);
 
-		// Requisito 7.3.4
+		// Requisito 7.3.4 - OK
 		final Collection<Newspaper> newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg = this.newspaperService.newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg();
 		result.addObject("newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg", newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg);
 
-		// Requisito 7.3.5
+		// Requisito 7.3.5 - OK
 		final Collection<Newspaper> newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg = this.newspaperService.newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg();
 		result.addObject("newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg", newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg);
 
@@ -92,45 +92,45 @@ public class DashboardAdministratorController extends AbstractController {
 		final Double ratioOfUsersWhoHaveEverWrittenAnArticle = this.userService.ratioOfUsersWhoHaveEverWrittenAnArticle();
 		result.addObject("ratioOfUsersWhoHaveEverWrittenAnArticle", ratioOfUsersWhoHaveEverWrittenAnArticle);
 
-		// Requisito 17.6.1 - OK
-		final Double avgFollowUpsPerArticle = this.followUpService.avgFollowUpsPerArticle();
-		result.addObject("avgFollowUpsPerArticle", avgFollowUpsPerArticle);
-
-		// Requisito 17.6.2
-		final Double avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished = this.followUpService.avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished();
-		result.addObject("avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished", avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished);
-
-		// Requisito 17.6.3
-		final Double avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished = this.followUpService.avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished();
-		result.addObject("avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished", avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished);
-
-		// Requisito 17.6.4 - OK
-		final Double avgNoChirpsPerUser = this.chirpService.avgNoChirpsPerUser();
-		result.addObject("avgNoChirpsPerUser", avgNoChirpsPerUser);
-
-		// Requisito 17.6.5
-		final Double ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser = this.userService.ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser();
-		result.addObject("ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser", ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser);
-
-		// Requisito 24.1.1 - OK
-		final Double ratioOfPublicVsPrivateNewspapers = this.newspaperService.ratioOfPublicVsPrivateNewspapers();
-		result.addObject("ratioOfPublicVsPrivateNewspapers", ratioOfPublicVsPrivateNewspapers);
-
-		// Requisito 24.1.2 - OK
-		final Double avgNoArticlesPerPrivateNewspapers = this.articleService.avgNoArticlesPerPrivateNewspapers();
-		result.addObject("avgNoArticlesPerPrivateNewspapers", avgNoArticlesPerPrivateNewspapers);
-
-		// Requisito 24.1.3 - OK
-		final Double avgNoArticlesPerPublicNewspapers = this.articleService.avgNoArticlesPerPublicNewspapers();
-		result.addObject("avgNoArticlesPerPublicNewspapers", avgNoArticlesPerPublicNewspapers);
-
-		// Requisito 24.1.4 - OK
-		final Collection<Double> ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers = this.subscriptionService.ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
-		result.addObject("ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers", ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers);
-
-		// Requisito 24.1.5
-		final Double avgRatioOfPrivateVsPublicNewspaperPerPublisher = this.newspaperService.avgRatioOfPrivateVsPublicNewspaperPerPublisher();
-		result.addObject("avgRatioOfPrivateVsPublicNewspaperPerPublisher", avgRatioOfPrivateVsPublicNewspaperPerPublisher);
+		//		// Requisito 17.6.1 - OK
+		//		final Double avgFollowUpsPerArticle = this.followUpService.avgFollowUpsPerArticle();
+		//		result.addObject("avgFollowUpsPerArticle", avgFollowUpsPerArticle);
+		//
+		//		// Requisito 17.6.2
+		//		final Double avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished = this.followUpService.avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished();
+		//		result.addObject("avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished", avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished);
+		//
+		//		// Requisito 17.6.3
+		//		final Double avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished = this.followUpService.avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished();
+		//		result.addObject("avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished", avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished);
+		//
+		//		// Requisito 17.6.4 - OK
+		//		final Double avgNoChirpsPerUser = this.chirpService.avgNoChirpsPerUser();
+		//		result.addObject("avgNoChirpsPerUser", avgNoChirpsPerUser);
+		//
+		//		// Requisito 17.6.5
+		//		final Double ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser = this.userService.ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser();
+		//		result.addObject("ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser", ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser);
+		//
+		//		// Requisito 24.1.1 - OK
+		//		final Double ratioOfPublicVsPrivateNewspapers = this.newspaperService.ratioOfPublicVsPrivateNewspapers();
+		//		result.addObject("ratioOfPublicVsPrivateNewspapers", ratioOfPublicVsPrivateNewspapers);
+		//
+		//		// Requisito 24.1.2 - OK
+		//		final Double avgNoArticlesPerPrivateNewspapers = this.articleService.avgNoArticlesPerPrivateNewspapers();
+		//		result.addObject("avgNoArticlesPerPrivateNewspapers", avgNoArticlesPerPrivateNewspapers);
+		//
+		//		// Requisito 24.1.3 - OK
+		//		final Double avgNoArticlesPerPublicNewspapers = this.articleService.avgNoArticlesPerPublicNewspapers();
+		//		result.addObject("avgNoArticlesPerPublicNewspapers", avgNoArticlesPerPublicNewspapers);
+		//
+		//		// Requisito 24.1.4 - OK
+		//		final Collection<Double> ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers = this.subscriptionService.ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
+		//		result.addObject("ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers", ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers);
+		//
+		//		// Requisito 24.1.5
+		//		final Double avgRatioOfPrivateVsPublicNewspaperPerPublisher = this.newspaperService.avgRatioOfPrivateVsPublicNewspaperPerPublisher();
+		//		result.addObject("avgRatioOfPrivateVsPublicNewspaperPerPublisher", avgRatioOfPrivateVsPublicNewspaperPerPublisher);
 
 		result.addObject("requestURI", "administrator/dashboard.do");
 
