@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import services.AdministratorService;
 import services.ChirpService;
 import controllers.AbstractController;
 import domain.Chirp;
@@ -21,10 +20,7 @@ import domain.Chirp;
 public class ChirpAdministratorController extends AbstractController {
 
 	@Autowired
-	private AdministratorService	administratorService;
-
-	@Autowired
-	private ChirpService			chirpService;
+	private ChirpService	chirpService;
 
 
 	public ChirpAdministratorController() {
