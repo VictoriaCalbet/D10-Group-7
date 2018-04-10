@@ -41,9 +41,6 @@
 	<jstl:if test="${isPrivate eq false}">
 		<jstl:set var="style" value="background-color:transparent;" />
 	</jstl:if>
-	
-	
-	
 
 	<spring:message code="newspaper.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}" style="${style}" />
@@ -64,7 +61,7 @@
 	</display:column>
 	
 		<spring:message code="newspaper.moreInfo" var="moreInfoHeader" />	
-		<display:column title="${moreInfoHeader}">
+		<display:column title="${moreInfoHeader}" style="${style}">
 				<a href="newspaper/info.do?newspaperId=${row.id}">
 				 	<spring:message code="newspaper.moreInfoButton" />
 				</a>
@@ -73,7 +70,7 @@
 
 <security:authorize access="hasAnyRole('USER, ADMIN') or isAnonymous()">	
 		<spring:message code="newspaper.articles" var="articleHeader" />	
-			<display:column title="${articleHeader}">			
+			<display:column title="${articleHeader}" style="${style}">			
 				<jstl:choose>
 				
 					<jstl:when test="${fn:length(row.articles) !=0}">	
@@ -92,7 +89,7 @@
 <security:authorize access="hasRole('CUSTOMER')">	
 
 		<spring:message code="newspaper.articles" var="articleHeader" />	
-			<display:column title="${articleHeader}">
+			<display:column title="${articleHeader}" style="${style}">
 				<jstl:if test="${ns.contains(row) && isPrivate or !isPrivate}">
 			
 				<jstl:choose>
@@ -114,7 +111,7 @@
 	<security:authorize access="hasRole('USER')">
 		
 		<spring:message code="newspaper.published" var="publishedHeader" />	
-		<display:column title="${publishedHeader}">	
+		<display:column title="${publishedHeader}" style="${style}">	
 			<jstl:choose>
 				<jstl:when test="${row.publicationDate == null && row.publisher.userAccount.username==loggedactor.username && fn:length(row.articles)!=0}">	
 					<a href="newspaper/user/publish.do?newspaperId=${row.id}">
@@ -136,7 +133,7 @@
 	
 	<security:authorize access="hasRole('ADMIN')">
 		<spring:message code="newspaper.delete" var="deleteHeader" />	
-		<display:column title="${deleteHeader}">	
+		<display:column title="${deleteHeader}" style="${style}">	
 			<a href="newspaper/administrator/delete.do?newspaperId=${row.id}">
 			 	<spring:message code="newspaper.deleteButton" />
 			</a>
