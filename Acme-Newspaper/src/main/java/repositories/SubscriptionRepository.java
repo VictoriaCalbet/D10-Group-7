@@ -22,4 +22,7 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, Inte
 	@Query("select case when (count(subs.newspaper) > 0) then true else false end from Customer c join c.subscriptions subs where c.id = ?1 and subs.newspaper.id = ?2")
 	boolean thisCustomerCanSeeThisNewspaper(int customerId, int newspaperId);
 
+	@Query("select case when (count(subs) > 0) then true else false end from Subscription subs where subs.customer.id = ?1 and subs.newspaper.id = ?2")
+	boolean isThisCustomerSubscribeOnThisNewspaper(int customerId, int newspaperId);
+
 }
