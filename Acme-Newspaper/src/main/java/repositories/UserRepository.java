@@ -16,19 +16,15 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	// Dashboard queries -------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.6
-
-	@Query("select count(usr)*1.0/(select count(u) from User u where u.newspapers is empty) from User usr where usr.newspapers is not empty")
+	@Query("select count(u1)*1.0/(select count(u2) from User u2) from User u1 where u1.newspapers is not empty")
 	public Double ratioOfUsersWhoHaveEverCreatedANewspaper();
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.7
-
-	@Query("select count(usr)*1.0/(select count(u) from User u where u.articles is not empty) from User usr where usr.articles is not empty")
+	@Query("select count(u1)*1.0/(select count(u2) from User u2) from User u1 where u1.articles is not empty")
 	public Double ratioOfUsersWhoHaveEverWrittenAnArticle();
 
 	// Acme-Newspaper 1.0 - Requisito 17.6.5
-
-	// TODO
-	@Query("select count(u) from User u")
+	@Query("select count(u1)*1.0/(select count(u2) from User u2) from User u1 where u1.chirps.size >= (select 0.75*avg(u3.chirps.size) from User u3)")
 	public Double ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser();
 
 }

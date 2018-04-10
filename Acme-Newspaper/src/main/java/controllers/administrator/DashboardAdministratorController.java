@@ -66,9 +66,9 @@ public class DashboardAdministratorController extends AbstractController {
 
 		// Requisito 7.3.2 - OK
 		final Double avgArticlesWrittenByWriter = this.articleService.avgArticlesWrittenByWriter();
-		final Double stdArticlesWrittenyWriter = this.articleService.stdArticlesWrittenByWriter();
+		final Double stdArticlesWrittenyByWriter = this.articleService.stdArticlesWrittenByWriter();
 		result.addObject("avgArticlesWrittenByWriter", avgArticlesWrittenByWriter);
-		result.addObject("stdArticlesWrittenyWriter", stdArticlesWrittenyWriter);
+		result.addObject("stdArticlesWrittenyByWriter", stdArticlesWrittenyByWriter);
 
 		// Requisito 7.3.3 - OK
 		final Double avgArticlesPerNewspaper = this.articleService.avgArticlesPerNewspaper();
@@ -76,11 +76,11 @@ public class DashboardAdministratorController extends AbstractController {
 		result.addObject("avgArticlesPerNewspaper", avgArticlesPerNewspaper);
 		result.addObject("stdArticlesPerNewspaper", stdArticlesPerNewspaper);
 
-		// Requisito 7.3.4
+		// Requisito 7.3.4 - OK
 		final Collection<Newspaper> newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg = this.newspaperService.newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg();
 		result.addObject("newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg", newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg);
 
-		// Requisito 7.3.5
+		// Requisito 7.3.5 - OK
 		final Collection<Newspaper> newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg = this.newspaperService.newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg();
 		result.addObject("newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg", newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg);
 
@@ -101,14 +101,16 @@ public class DashboardAdministratorController extends AbstractController {
 		result.addObject("avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished", avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished);
 
 		// Requisito 17.6.3
-		final Double avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished = this.followUpService.avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished();
+		final Double avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished = this.followUpService.avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished();
 		result.addObject("avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished", avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished);
 
 		// Requisito 17.6.4 - OK
 		final Double avgNoChirpsPerUser = this.chirpService.avgNoChirpsPerUser();
+		final Double stdNoChirpsPerUser = this.chirpService.stdNoChirpsPerUser();
 		result.addObject("avgNoChirpsPerUser", avgNoChirpsPerUser);
+		result.addObject("stdNoChirpsPerUser", stdNoChirpsPerUser);
 
-		// Requisito 17.6.5
+		// Requisito 17.6.5 - OK
 		final Double ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser = this.userService.ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser();
 		result.addObject("ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser", ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser);
 
@@ -125,10 +127,10 @@ public class DashboardAdministratorController extends AbstractController {
 		result.addObject("avgNoArticlesPerPublicNewspapers", avgNoArticlesPerPublicNewspapers);
 
 		// Requisito 24.1.4 - OK
-		final Collection<Double> ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers = this.subscriptionService.ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
+		final Double ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers = this.subscriptionService.ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
 		result.addObject("ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers", ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers);
 
-		// Requisito 24.1.5
+		// Requisito 24.1.5 - OK
 		final Double avgRatioOfPrivateVsPublicNewspaperPerPublisher = this.newspaperService.avgRatioOfPrivateVsPublicNewspaperPerPublisher();
 		result.addObject("avgRatioOfPrivateVsPublicNewspaperPerPublisher", avgRatioOfPrivateVsPublicNewspaperPerPublisher);
 

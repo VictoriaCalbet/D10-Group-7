@@ -67,6 +67,7 @@ public class SubscriptionService {
 		customer = this.customerService.findByPrincipal();
 		Assert.notNull(customer);
 		Assert.isTrue(customer.equals(subscription.getCustomer()));
+		Assert.isTrue(!this.subscriptionRepository.isThisCustomerSubscribeOnThisNewspaper(subscription.getCustomer().getId(), subscription.getNewspaper().getId()));
 
 		// Paso 1: realizo la entidad del servicio Subscription
 
@@ -77,6 +78,10 @@ public class SubscriptionService {
 		result.getNewspaper().getSubscriptions().add(result);
 
 		return result;
+	}
+
+	public void flush() {
+		this.subscriptionRepository.flush();
 	}
 
 	public Collection<Subscription> findAll() {
@@ -134,8 +139,8 @@ public class SubscriptionService {
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.4
 
-	public Collection<Double> ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers() {
-		Collection<Double> result = null;
+	public Double ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers() {
+		Double result = null;
 		result = this.subscriptionRepository.ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
 		return result;
 	}

@@ -36,7 +36,6 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	// Dashboard queries -------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.1
-
 	@Query("select avg(usr.newspapers.size) from User usr")
 	Double avgNewspaperCreatedPerUser();
 
@@ -44,26 +43,19 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	Double stdNewspapercreatedPerUser();
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.4
-
-	// TODO
-	@Query("select n from Newspaper n")
+	@Query("select n1 from Newspaper n1 where n1.articles.size >= 1.1*(select avg(n1.articles.size) from Newspaper n1)")
 	Collection<Newspaper> newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg();
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.5
-
-	// TODO
-	@Query("select n from Newspaper n")
+	@Query("select n1 from Newspaper n1 where n1.articles.size >= 0.9*(select avg(n1.articles.size) from Newspaper n1)")
 	Collection<Newspaper> newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg();
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.1
-
-	@Query("select count(news)*1.0/(select nws from Newspaper nws where nws.isPrivate is false) from Newspaper news where news.isPrivate is true")
+	@Query("select count(n1)*1.0/(select count(n2)*1.0 from Newspaper n2 where n2.isPrivate is true) from Newspaper n1 where n1.isPrivate is false")
 	Double ratioOfPublicVsPrivateNewspapers();
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.5
-
-	// TODO
-	@Query("select count(n) from Newspaper n")
+	@Query("select count(n1)*1.0/(select count(n2)*1.0 * (select count(u) from User u where u.newspapers is not empty) from Newspaper n2 where n2.isPrivate is true) from Newspaper n1 where n1.isPrivate is false")
 	Double avgRatioOfPrivateVsPublicNewspaperPerPublisher();
 
 	// Not publicated yet and public newspapers
