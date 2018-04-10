@@ -97,6 +97,11 @@
 		</jstl:choose>
 	</display:column>
 	
+	<spring:message code="article.newspaper" var="newspaperHeader" />
+	<display:column property="newspaper.title" title="${newspaperHeader}"
+		sortable="false" style="${style}" />
+		
+	
 	<security:authorize access="hasRole('USER')">
 	<spring:message code="article.edit" var="editHeader" />
 		<display:column title="${editHeader}" style="${style}">

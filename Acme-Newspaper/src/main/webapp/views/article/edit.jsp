@@ -21,9 +21,7 @@
 <form:form action="${requestURI}" modelAttribute="articleForm">
 	
 	<form:hidden path="id"/>
-	<form:hidden path="writer"/>
-	<form:hidden path="followUps"/>
-	<form:hidden path="publicationMoment"/>
+	
 <security:authorize access="hasRole('USER')">
 
 <acme:textbox code="article.title" path="title"/>

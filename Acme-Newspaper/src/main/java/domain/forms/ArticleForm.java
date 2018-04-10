@@ -2,42 +2,30 @@
 package domain.forms;
 
 import java.util.Collection;
-import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import cz.jirutka.validator.collection.constraints.EachURL;
-import domain.FollowUp;
 import domain.Newspaper;
-import domain.User;
 
 public class ArticleForm {
 
 	// Attributes -------------------------------------------------------------
 
-	private int						id;
-	private String					title;
-	private Date					publicationMoment;
-	private String					summary;
-	private String					body;
-	private Collection<String>		pictures;
-	private boolean					isDraft;
-	private Newspaper				newspaper;
-	private User					writer;
-	private Collection<FollowUp>	followUps;
+	private int					id;
+	private String				title;
+	private String				summary;
+	private String				body;
+	private Collection<String>	pictures;
+	private boolean				isDraft;
+	private Newspaper			newspaper;
 
 
 	public int getId() {
@@ -55,16 +43,6 @@ public class ArticleForm {
 	}
 	public void setTitle(final String title) {
 		this.title = title;
-	}
-
-	@Past
-	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "dd/MM/yyyy HH:mm")
-	public Date getPublicationMoment() {
-		return this.publicationMoment;
-	}
-	public void setPublicationMoment(final Date publicationMoment) {
-		this.publicationMoment = publicationMoment;
 	}
 
 	@NotBlank
@@ -115,23 +93,4 @@ public class ArticleForm {
 		this.newspaper = newspaper;
 	}
 
-	@Valid
-	@NotNull
-	@ManyToOne(optional = false)
-	public User getWriter() {
-		return this.writer;
-	}
-	public void setWriter(final User writer) {
-		this.writer = writer;
-	}
-	@Valid
-	@NotNull
-	@OneToMany(mappedBy = "article", cascade = CascadeType.REMOVE)
-	public Collection<FollowUp> getFollowUps() {
-		return this.followUps;
-	}
-
-	public void setFollowUps(final Collection<FollowUp> followUps) {
-		this.followUps = followUps;
-	}
 }

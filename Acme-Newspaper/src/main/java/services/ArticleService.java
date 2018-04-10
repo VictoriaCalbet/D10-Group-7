@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.util.Assert;
 import repositories.ArticleRepository;
 import domain.Actor;
 import domain.Article;
+import domain.FollowUp;
 import domain.Newspaper;
 import domain.User;
 
@@ -63,6 +65,8 @@ public class ArticleService {
 		principalArticles.add(result);
 		writer.setArticles(principalArticles);
 		this.userService.save(writer);
+		final Collection<FollowUp> followUps = new ArrayList<FollowUp>();
+		result.setFollowUps(followUps);
 		Assert.isTrue(article.getPublicationMoment() == null);
 		result = this.articleRepository.save(result);
 

@@ -10,7 +10,6 @@ import org.springframework.util.Assert;
 import services.ArticleService;
 import services.UserService;
 import domain.Article;
-import domain.User;
 import domain.forms.ArticleForm;
 
 @Service
@@ -38,8 +37,6 @@ public class ArticleFormService {
 
 		result = new ArticleForm();
 		result.setIsDraft(true);
-		final User principal = this.userService.findByPrincipal();
-		result.setWriter(principal);
 		return result;
 	}
 
@@ -51,9 +48,6 @@ public class ArticleFormService {
 		articleForm.setPictures(a.getPictures());
 		articleForm.setTitle(a.getTitle());
 		articleForm.setSummary(a.getSummary());
-		articleForm.setFollowUps(a.getFollowUps());
-		articleForm.setWriter(a.getWriter());
-		articleForm.setPublicationMoment(a.getPublicationMoment());
 		articleForm.setNewspaper(a.getNewspaper());
 		articleForm.setId(a.getId());
 		articleForm.setIsDraft(a.getIsDraft());
@@ -66,14 +60,12 @@ public class ArticleFormService {
 		final Article a = this.articleService.findOne(articleForm.getId());
 		a.setTitle(articleForm.getTitle());
 		a.setBody(articleForm.getBody());
-		a.setFollowUps(articleForm.getFollowUps());
 		a.setId(articleForm.getId());
+		a.setWriter(this.userService.findByPrincipal());
 		a.setIsDraft(articleForm.getIsDraft());
 		a.setNewspaper(articleForm.getNewspaper());
 		a.setPictures(articleForm.getPictures());
-		a.setPublicationMoment(articleForm.getPublicationMoment());
 		a.setSummary(articleForm.getSummary());
-		a.setWriter(articleForm.getWriter());
 		this.articleService.saveFromEdit(a);
 
 		return a;
@@ -84,7 +76,6 @@ public class ArticleFormService {
 		final Article a = this.articleService.create();
 
 		a.setTitle(articleForm.getTitle());
-		a.setPublicationMoment(articleForm.getPublicationMoment());
 		a.setId(articleForm.getId());
 		a.setSummary(articleForm.getSummary());
 		a.setBody(articleForm.getBody());
@@ -92,7 +83,7 @@ public class ArticleFormService {
 		a.setWriter(this.userService.findByPrincipal());
 		a.setNewspaper(articleForm.getNewspaper());
 		a.setIsDraft(articleForm.getIsDraft());
-		a.setFollowUps(articleForm.getFollowUps());
+
 		final Article articleSave = this.articleService.saveFromCreate(a);
 
 		return articleSave;
