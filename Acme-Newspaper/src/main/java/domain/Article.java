@@ -44,6 +44,7 @@ public class Article extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getTitle() {
 		return this.title;
 	}
@@ -63,6 +64,7 @@ public class Article extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
+	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getSummary() {
 		return this.summary;
 	}
