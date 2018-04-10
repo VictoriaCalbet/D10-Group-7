@@ -17,10 +17,12 @@ import services.ActorService;
 import services.ArticleService;
 import services.CustomerService;
 import services.NewspaperService;
+import services.UserService;
 import domain.Actor;
 import domain.Article;
 import domain.Customer;
 import domain.Newspaper;
+import domain.User;
 
 @Controller
 @RequestMapping("/newspaper")
@@ -36,6 +38,9 @@ public class NewspaperController extends AbstractController {
 
 	@Autowired
 	private ArticleService		articleService;
+
+	@Autowired
+	private UserService			userService;
 
 
 	public NewspaperController() {
@@ -108,15 +113,21 @@ public class NewspaperController extends AbstractController {
 				ns = this.newspaperService.findNewspaperSubscribedOfCustomer(c.getId());
 				if (!ns.contains(newspaper) && newspaper.getIsPrivate() == true)
 					visible = false;
+			} else if (this.actorService.checkAuthority(this.actorService.findByPrincipal(), "USER")) {
+				final User u = this.userService.findByPrincipal();
+				if (!u.getNewspapers().contains(newspaper) && newspaper.getIsPrivate())
+					return result = new ModelAndView("redirect:/newspaper/list.do");
 			}
+
 		} catch (final Throwable oops) {
+			if (newspaper.getIsPrivate())
+				return result = new ModelAndView("redirect:/newspaper/list.do");
 
 		}
 
 		result = this.infoModelAndView(newspaper, visible);
 		return result;
 	}
-
 	// Ancillary methods
 	protected ModelAndView infoModelAndView(final Newspaper newspaper, final boolean visible) {
 		ModelAndView result;
