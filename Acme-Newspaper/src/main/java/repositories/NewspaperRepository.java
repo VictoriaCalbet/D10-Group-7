@@ -46,13 +46,13 @@ public interface NewspaperRepository extends JpaRepository<Newspaper, Integer> {
 	// Acme-Newspaper 1.0 - Requisito 7.3.4
 
 	// TODO
-	@Query("select n from Newspaper n")
+	@Query("select n1 from Newspaper n1 where n1.articles.size >= 1.1*(select avg(n1.articles.size) from Newspaper n1)")
 	Collection<Newspaper> newspapersThatHaveAtLeast10PerCentMoreArticlesThatTheAvg();
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.5
 
 	// TODO
-	@Query("select n from Newspaper n")
+	@Query("select n1 from Newspaper n1 where n1.articles.size >= 0.9*(select avg(n1.articles.size) from Newspaper n1)")
 	Collection<Newspaper> newspapersThatHaveAtLeast10PerCentFewerArticlesThatTheAvg();
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.1
