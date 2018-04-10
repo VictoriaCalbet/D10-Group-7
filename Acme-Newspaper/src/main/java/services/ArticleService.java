@@ -117,9 +117,9 @@ public class ArticleService {
 		return result;
 	}
 
-	public Collection<Article> findAvailableArticlesToCreateFollowUps() {
+	public Collection<Article> findAvailableArticlesToCreateFollowUps(final int userId) {
 		Collection<Article> result = null;
-		result = this.articleRepository.findAvailableArticlesToCreateFollowUps();
+		result = this.articleRepository.findAvailableArticlesToCreateFollowUps(userId);
 		return result;
 	}
 

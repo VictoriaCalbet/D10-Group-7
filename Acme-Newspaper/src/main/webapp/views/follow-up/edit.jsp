@@ -38,17 +38,10 @@
 	</jstl:when>
 	
 	<jstl:otherwise>						<!-- Estoy editando un formulario -->
-		<jstl:choose>
-			<jstl:when test="${followUpForm.userId ne loggedactor.id}">
-				<jstl:set var="showForm" value="false"/>
-				<jstl:set var="newForm" value="false"/>
-				<jstl:set var="youAreNotTheProperty" value="true"/>
-			</jstl:when>
-			<jstl:otherwise>
-				<jstl:set var="showForm" value="true"/>
-				<jstl:set var="newForm" value="false"/>
-			</jstl:otherwise>
-		</jstl:choose>
+
+		<jstl:set var="showForm" value="true"/>
+		<jstl:set var="newForm" value="false"/>
+
 	</jstl:otherwise>
 </jstl:choose>
 

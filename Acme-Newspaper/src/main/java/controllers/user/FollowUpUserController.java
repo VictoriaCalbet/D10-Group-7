@@ -180,7 +180,7 @@ public class FollowUpUserController extends AbstractController {
 
 		user = this.userService.findByPrincipal();
 
-		availableArticles = this.articleService.findAvailableArticlesToCreateFollowUps();
+		availableArticles = this.articleService.findAvailableArticlesToCreateFollowUps(user.getId());
 
 		if (followUpForm.getId() == 0)
 			result = new ModelAndView("follow-up/create");
