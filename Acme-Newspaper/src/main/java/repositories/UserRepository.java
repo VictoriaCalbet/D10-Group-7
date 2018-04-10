@@ -22,7 +22,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.7
 
-	@Query("select count(u1)*1.0/(select count(u2) from User u2) from User u1 where u1.articles is not empty;")
+	@Query("select count(u1)*1.0/(select count(u2) from User u2) from User u1 where u1.articles is not empty")
 	public Double ratioOfUsersWhoHaveEverWrittenAnArticle();
 
 	// Acme-Newspaper 1.0 - Requisito 17.6.5
