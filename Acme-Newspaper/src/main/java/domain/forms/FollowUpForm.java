@@ -11,6 +11,8 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
+import cz.jirutka.validator.collection.constraints.EachURL;
+
 public class FollowUpForm {
 
 	// Form attributes
@@ -62,6 +64,7 @@ public class FollowUpForm {
 	@Valid
 	@NotNull
 	@ElementCollection
+	@EachURL
 	public Collection<String> getPictures() {
 		return this.pictures;
 	}

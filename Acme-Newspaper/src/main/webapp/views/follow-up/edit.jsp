@@ -65,7 +65,7 @@
 			<acme:textbox code="follow-up.title" path="title"/>
 			<acme:textbox code="follow-up.summary" path="summary"/>
 			<acme:textarea code="follow-up.text" path="text"/>
-			<acme:textbox code="follow-up.pictures" path="pictures"/>
+			<acme:textarea code="follow-up.pictures" path="pictures"/>
 			
 			<acme:submit name="save" code="follow-up.save"/> &nbsp;
 			<acme:cancel url="follow-up/user/list.do" code="follow-up.cancel"/>

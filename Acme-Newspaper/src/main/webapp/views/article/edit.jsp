@@ -31,7 +31,7 @@
 <acme:select code="article.newspaper" path="newspaper" items="${availableNewspapers}" itemLabel="title"/><br/>
 <acme:textbox code="article.summary" path="summary"/>
 <acme:textarea code="article.body" path="body"/>
-<acme:textbox code="article.pictures" path="pictures"/>
+<acme:textarea code="article.pictures" path="pictures"/>
 <jstl:choose>
 		<jstl:when test="${article.id!=0 or article.isDraft==false}">
 			<form:label path="isDraft">

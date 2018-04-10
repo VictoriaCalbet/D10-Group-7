@@ -27,6 +27,8 @@ import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import cz.jirutka.validator.collection.constraints.EachURL;
+
 @Entity
 @Access(AccessType.PROPERTY)
 @Indexed
@@ -85,6 +87,7 @@ public class Article extends DomainEntity {
 	@Valid
 	@NotNull
 	@ElementCollection
+	@EachURL
 	public Collection<String> getPictures() {
 		return this.pictures;
 	}

@@ -74,7 +74,7 @@ public class ActorForm {
 	@Valid
 	@NotNull
 	@ElementCollection
-	@EachPattern(regexp = "^\\+?\\d+", message = "{message.error.actor.phone.valid}")
+	@EachPattern(regexp = "^\\+?\\d+")
 	public Collection<String> getPhoneNumbers() {
 		return this.phoneNumbers;
 	}
@@ -86,7 +86,7 @@ public class ActorForm {
 	@Valid
 	@NotEmpty
 	@ElementCollection
-	@EachEmail(message = "{message.error.actor.email.valid}")
+	@EachEmail
 	public Collection<String> getEmailAddresses() {
 		return this.emailAddresses;
 	}
