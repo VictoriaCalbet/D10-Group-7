@@ -114,25 +114,25 @@ public class DashboardAdministratorController extends AbstractController {
 		final Double ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser = this.userService.ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser();
 		result.addObject("ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser", ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser);
 
-		//		// Requisito 24.1.1 - OK
-		//		final Double ratioOfPublicVsPrivateNewspapers = this.newspaperService.ratioOfPublicVsPrivateNewspapers();
-		//		result.addObject("ratioOfPublicVsPrivateNewspapers", ratioOfPublicVsPrivateNewspapers);
-		//
-		//		// Requisito 24.1.2 - OK
-		//		final Double avgNoArticlesPerPrivateNewspapers = this.articleService.avgNoArticlesPerPrivateNewspapers();
-		//		result.addObject("avgNoArticlesPerPrivateNewspapers", avgNoArticlesPerPrivateNewspapers);
-		//
-		//		// Requisito 24.1.3 - OK
-		//		final Double avgNoArticlesPerPublicNewspapers = this.articleService.avgNoArticlesPerPublicNewspapers();
-		//		result.addObject("avgNoArticlesPerPublicNewspapers", avgNoArticlesPerPublicNewspapers);
-		//
-		//		// Requisito 24.1.4 - OK
-		//		final Collection<Double> ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers = this.subscriptionService.ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
-		//		result.addObject("ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers", ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers);
-		//
-		//		// Requisito 24.1.5
-		//		final Double avgRatioOfPrivateVsPublicNewspaperPerPublisher = this.newspaperService.avgRatioOfPrivateVsPublicNewspaperPerPublisher();
-		//		result.addObject("avgRatioOfPrivateVsPublicNewspaperPerPublisher", avgRatioOfPrivateVsPublicNewspaperPerPublisher);
+		// Requisito 24.1.1 - OK
+		final Double ratioOfPublicVsPrivateNewspapers = this.newspaperService.ratioOfPublicVsPrivateNewspapers();
+		result.addObject("ratioOfPublicVsPrivateNewspapers", ratioOfPublicVsPrivateNewspapers);
+
+		// Requisito 24.1.2 - OK
+		final Double avgNoArticlesPerPrivateNewspapers = this.articleService.avgNoArticlesPerPrivateNewspapers();
+		result.addObject("avgNoArticlesPerPrivateNewspapers", avgNoArticlesPerPrivateNewspapers);
+
+		// Requisito 24.1.3 - OK
+		final Double avgNoArticlesPerPublicNewspapers = this.articleService.avgNoArticlesPerPublicNewspapers();
+		result.addObject("avgNoArticlesPerPublicNewspapers", avgNoArticlesPerPublicNewspapers);
+
+		// Requisito 24.1.4 - OK
+		final Double ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers = this.subscriptionService.ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
+		result.addObject("ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers", ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers);
+
+		// Requisito 24.1.5 - OK
+		final Double avgRatioOfPrivateVsPublicNewspaperPerPublisher = this.newspaperService.avgRatioOfPrivateVsPublicNewspaperPerPublisher();
+		result.addObject("avgRatioOfPrivateVsPublicNewspaperPerPublisher", avgRatioOfPrivateVsPublicNewspaperPerPublisher);
 
 		result.addObject("requestURI", "administrator/dashboard.do");
 

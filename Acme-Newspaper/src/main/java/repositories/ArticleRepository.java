@@ -24,7 +24,6 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	// Dashboard queries -------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.2
-
 	@Query("select avg(usr.articles.size) from User usr")
 	Double avgArticlesWrittenByWriter();
 
@@ -42,13 +41,11 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	Collection<Article> findArticleByKeyword(String keyword);
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.2
-
-	@Query("select avg(news.articles.size) from Newspaper news where news.isPrivate is true")
+	@Query("select avg(n.articles.size) from Newspaper n where n.isPrivate is true")
 	Double avgNoArticlesPerPrivateNewspapers();
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.3
-
-	@Query("select avg(news.articles.size) from Newspaper news where news.isPrivate is false")
+	@Query("select avg(n.articles.size) from Newspaper n where n.isPrivate is false")
 	Double avgNoArticlesPerPublicNewspapers();
 
 }

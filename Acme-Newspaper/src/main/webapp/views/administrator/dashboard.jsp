@@ -163,4 +163,54 @@
 		</tr>
 	</table>
 
+	<!-- Dashboard 12 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.ratioOfPublicVsPrivateNewspapers"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardRatio}"/>:&nbsp; </b> <jstl:out value="${ratioOfPublicVsPrivateNewspapers}"/></td>
+		</tr>
+	</table>
+	
+	<!-- Dashboard 13 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.avgNoArticlesPerPrivateNewspapers"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgNoArticlesPerPrivateNewspapers}"/></td>
+		</tr>
+	</table>
+	
+
+	<!-- Dashboard 13 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.avgNoArticlesPerPublicNewspapers"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgNoArticlesPerPublicNewspapers}"/></td>
+		</tr>
+	</table>
+	
+	<!-- Dashboard 14 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardRatio}"/>:&nbsp; </b> <jstl:out value="${ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers}"/></td>
+		</tr>
+	</table>
+	
+	<!-- Dashboard 15 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.avgRatioOfPrivateVsPublicNewspaperPerPublisher"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardRatio}"/>:&nbsp; </b> <jstl:out value="${avgRatioOfPrivateVsPublicNewspaperPerPublisher}"/></td>
+		</tr>
+	</table>
 </security:authorize>

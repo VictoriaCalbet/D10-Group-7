@@ -139,8 +139,8 @@ public class SubscriptionService {
 
 	// Acme-Newspaper 1.0 - Requisito 24.1.4
 
-	public Collection<Double> ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers() {
-		Collection<Double> result = null;
+	public Double ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers() {
+		Double result = null;
 		result = this.subscriptionRepository.ratioOfSubscribersPerPrivateNewspaperVsTotalNumberOfCustomers();
 		return result;
 	}
