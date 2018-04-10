@@ -27,8 +27,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	// Acme-Newspaper 1.0 - Requisito 17.6.5
 
-	// TODO
-	@Query("select count(u) from User u")
+	@Query("select count(u1)*1.0/(select count(u2) from User u2) from User u1 where u1.chirps.size >= (select 0.75*avg(u3.chirps.size) from User u3)")
 	public Double ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser();
 
 }

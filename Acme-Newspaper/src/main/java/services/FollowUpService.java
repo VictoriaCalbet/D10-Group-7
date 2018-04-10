@@ -146,9 +146,9 @@ public class FollowUpService {
 
 	// Acme-Newspaper 1.0 - Requisito 17.6.3
 
-	public Double avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished() {
+	public Double avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished() {
 		Double result = null;
-		result = this.followUpRepository.avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished();
+		result = this.followUpRepository.avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished();
 		return result;
 	}
 

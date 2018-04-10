@@ -92,26 +92,28 @@ public class DashboardAdministratorController extends AbstractController {
 		final Double ratioOfUsersWhoHaveEverWrittenAnArticle = this.userService.ratioOfUsersWhoHaveEverWrittenAnArticle();
 		result.addObject("ratioOfUsersWhoHaveEverWrittenAnArticle", ratioOfUsersWhoHaveEverWrittenAnArticle);
 
-		//		// Requisito 17.6.1 - OK
-		//		final Double avgFollowUpsPerArticle = this.followUpService.avgFollowUpsPerArticle();
-		//		result.addObject("avgFollowUpsPerArticle", avgFollowUpsPerArticle);
-		//
-		//		// Requisito 17.6.2
-		//		final Double avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished = this.followUpService.avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished();
-		//		result.addObject("avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished", avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished);
-		//
-		//		// Requisito 17.6.3
-		//		final Double avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished = this.followUpService.avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished();
-		//		result.addObject("avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished", avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished);
-		//
-		//		// Requisito 17.6.4 - OK
-		//		final Double avgNoChirpsPerUser = this.chirpService.avgNoChirpsPerUser();
-		//		result.addObject("avgNoChirpsPerUser", avgNoChirpsPerUser);
-		//
-		//		// Requisito 17.6.5
-		//		final Double ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser = this.userService.ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser();
-		//		result.addObject("ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser", ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser);
-		//
+		// Requisito 17.6.1 - OK
+		final Double avgFollowUpsPerArticle = this.followUpService.avgFollowUpsPerArticle();
+		result.addObject("avgFollowUpsPerArticle", avgFollowUpsPerArticle);
+
+		// Requisito 17.6.2
+		final Double avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished = this.followUpService.avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished();
+		result.addObject("avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished", avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished);
+
+		// Requisito 17.6.3
+		final Double avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished = this.followUpService.avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished();
+		result.addObject("avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished", avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished);
+
+		// Requisito 17.6.4 - OK
+		final Double avgNoChirpsPerUser = this.chirpService.avgNoChirpsPerUser();
+		final Double stdNoChirpsPerUser = this.chirpService.stdNoChirpsPerUser();
+		result.addObject("avgNoChirpsPerUser", avgNoChirpsPerUser);
+		result.addObject("stdNoChirpsPerUser", stdNoChirpsPerUser);
+
+		// Requisito 17.6.5 - OK
+		final Double ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser = this.userService.ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser();
+		result.addObject("ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser", ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser);
+
 		//		// Requisito 24.1.1 - OK
 		//		final Double ratioOfPublicVsPrivateNewspapers = this.newspaperService.ratioOfPublicVsPrivateNewspapers();
 		//		result.addObject("ratioOfPublicVsPrivateNewspapers", ratioOfPublicVsPrivateNewspapers);

@@ -111,5 +111,56 @@
 			<td> <b> <jstl:out value="${dashboardRatio}"/>:&nbsp; </b> <jstl:out value="${ratioOfUsersWhoHaveEverWrittenAnArticle}"/></td>
 		</tr>
 	</table>
+	
+	<!-- Dashboard 7 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.avgFollowUpsPerArticle"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgFollowUpsPerArticle}"/></td>
+		</tr>
+	</table>
+	
+	<!-- Dashboard 8 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished}"/></td>
+		</tr>
+	</table>
+	
+	<!-- Dashboard 9 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished}"/></td>
+		</tr>
+	</table>
+	
+	<!-- Dashboard 10 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.avgNoChirpsPerUser"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardAvg}"/>:&nbsp; </b> <jstl:out value="${avgNoChirpsPerUser}"/></td>
+			<td> <b> <jstl:out value="${dashboardStd}"/>:&nbsp; </b> <jstl:out value="${stdNoChirpsPerUser}"/></td>
+		</tr>
+	</table>
+	
+	<!-- Dashboard 11 -->
+	<table border="1">
+		<tr>
+			<td colspan="2"> <b> <spring:message code="administrator.ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser"/>:&nbsp; </b> </td>
+		</tr>
+		<tr>
+			<td> <b> <jstl:out value="${dashboardRatio}"/>:&nbsp; </b> <jstl:out value="${ratioOfUsersWhoHavePostedAbove75PerCentTheAvgNoOfChirpsPerUser}"/></td>
+		</tr>
+	</table>
 
 </security:authorize>

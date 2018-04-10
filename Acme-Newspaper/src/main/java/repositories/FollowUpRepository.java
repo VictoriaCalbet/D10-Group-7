@@ -15,22 +15,16 @@ public interface FollowUpRepository extends JpaRepository<FollowUp, Integer> {
 	// Dashboard queries -------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 17.6.1
-
-	// TODO
 	@Query("select avg(art.followUps.size) from Article art")
 	Double avgFollowUpsPerArticle();
 
 	// Acme-Newspaper 1.0 - Requisito 17.6.2
-
-	// TODO
-	@Query("select count(f) from FollowUp f")
+	@Query("select count(f)*1.0/(select count(a)*1.0 from Article a) from FollowUp f where f.publicationMoment <= f.article.newspaper.publicationDate + 604800000")
 	Double avgNoFollowUpsPerArticleUpToOneWeekAfterTheCorrespondingNewspapersBeenPublished();
 
 	// Acme-Newspaper 1.0 - Requisito 17.6.3
-
-	// TODO
-	@Query("select count(f) from FollowUp f")
-	Double avgNoFollowUpsPerArticleUpToOneWeeksAfterTheCorrespondingNewspapersBeenPublished();
+	@Query("select count(f)*1.0/(select count(a)*1.0 from Article a) from FollowUp f where f.publicationMoment <= f.article.newspaper.publicationDate + 2*604800000")
+	Double avgNoFollowUpsPerArticleUpToTwoWeeksAfterTheCorrespondingNewspapersBeenPublished();
 
 	@Query("select fol from FollowUp fol where fol.article.isDraft is false and fol.article.newspaper.isPrivate is false and fol.article.newspaper.publicationDate is not null")
 	Collection<FollowUp> findPublicFollowUps();
