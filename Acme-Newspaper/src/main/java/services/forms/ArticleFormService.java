@@ -54,6 +54,7 @@ public class ArticleFormService {
 		articleForm.setFollowUps(a.getFollowUps());
 		articleForm.setWriter(a.getWriter());
 		articleForm.setPublicationMoment(a.getPublicationMoment());
+		articleForm.setNewspaper(a.getNewspaper());
 		articleForm.setId(a.getId());
 		articleForm.setIsDraft(a.getIsDraft());
 
