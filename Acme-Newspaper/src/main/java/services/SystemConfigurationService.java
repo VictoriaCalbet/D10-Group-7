@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
@@ -35,7 +37,64 @@ public class SystemConfigurationService {
 	}
 
 	// Simple CRUD methods ----------------------------------------------------
-
+	private SystemConfiguration create() {
+		SystemConfiguration result;
+		result = new SystemConfiguration();
+		List<String> tabooWords;
+		tabooWords = new ArrayList<String>();
+		result.setTabooWords(tabooWords);
+		return result;
+	}
+	public SystemConfiguration saveTabooWord(final String tabooWord) {
+		SystemConfiguration sysConfiguration;
+		Collection<SystemConfiguration> configuration;
+		configuration = this.findAll();
+		if (configuration.isEmpty() || configuration == null)
+			sysConfiguration = this.create();
+		else
+			sysConfiguration = configuration.iterator().next();
+		String tabooWordTrim;
+		tabooWordTrim = tabooWord.trim();
+		this.checkTabooWord(tabooWordTrim);
+		Assert.isTrue(!sysConfiguration.getTabooWords().contains(tabooWord), "message.error.systemconfiguration.iscreate");
+		sysConfiguration.getTabooWords().add(tabooWord);
+		SystemConfiguration sysConfigurationInDB;
+		sysConfigurationInDB = this.systemConfigurationRepository.save(sysConfiguration);
+		return sysConfigurationInDB;
+	}
+	public SystemConfiguration editTabooWord(final String oldTabooWord, final String tabooWord) {
+		SystemConfiguration sysConfiguration;
+		Collection<SystemConfiguration> configuration;
+		configuration = this.findAll();
+		if (configuration.isEmpty() || configuration == null)
+			sysConfiguration = this.create();
+		else
+			sysConfiguration = configuration.iterator().next();
+		String tabooWordTrim;
+		tabooWordTrim = tabooWord.trim();
+		this.checkTabooWord(tabooWordTrim);
+		Assert.isTrue(sysConfiguration.getTabooWords().contains(tabooWord), "message.error.systemconfiguration.isnotcreate");
+		List<String> tabooWords;
+		tabooWords = new ArrayList<String>(sysConfiguration.getTabooWords());
+		tabooWords.set(tabooWords.indexOf(oldTabooWord), tabooWord);
+		sysConfiguration.setTabooWords(tabooWords);
+		SystemConfiguration sysConfigurationInDB;
+		sysConfigurationInDB = this.systemConfigurationRepository.save(sysConfiguration);
+		return sysConfigurationInDB;
+	}
+	public SystemConfiguration deleteTabooWord(final String tabooWord) {
+		SystemConfiguration result;
+		result = null;
+		Collection<SystemConfiguration> configuration;
+		configuration = this.findAll();
+		if (!(configuration.isEmpty() || configuration == null)) {
+			SystemConfiguration sysConfigurationInDB;
+			sysConfigurationInDB = configuration.iterator().next();
+			sysConfigurationInDB.getTabooWords().remove(tabooWord);
+			result = this.systemConfigurationRepository.save(sysConfigurationInDB);
+		}
+		return result;
+	}
 	// DO NOT MODIFY. ANY OTHER SAVE METHOD MUST BE NAMED DIFFERENT.
 	public SystemConfiguration save(final SystemConfiguration systemConfiguration) {
 		Assert.notNull(systemConfiguration);
@@ -96,5 +155,10 @@ public class SystemConfigurationService {
 		databaseUtil.getEntityManager().close();
 
 		return result;
+	}
+	//Auxiliars methods
+	private void checkTabooWord(final String taboo) {
+		final String[] words = taboo.split(" ");
+		Assert.isTrue(!(words.length > 1), "message.error.systemconfiguration.multiplewords");
 	}
 }
