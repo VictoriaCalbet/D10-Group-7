@@ -67,7 +67,7 @@ public class FollowUpCustomerController extends AbstractController {
 		article = this.articleService.findOne(articleId);
 		followUps = article.getFollowUps();
 
-		if (article.getNewspaper().getIsPrivate() && article.getNewspaper().getPublicationDate() != null)
+		if (article.getNewspaper().getIsPrivate())
 			Assert.isTrue(this.subscriptionService.thisCustomerCanSeeThisNewspaper(customer.getId(), article.getNewspaper().getId()));
 
 		requestURI = "follow-up/customer/list.do";
