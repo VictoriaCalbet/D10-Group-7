@@ -413,7 +413,7 @@
 		<property name="title" value="Difficult to believe (yet true)"/>
 		<property name="description" value="A newspaper dedicated to inform about ridiculously hard to believe yet true news."/>
 		<property name="picture"><null/></property>
-		<property name="publicationDate" value="01/11/2016 11:00" />
+		<property name="publicationDate" value="01/11/2016" />
 		<property name="isPrivate" value="false"/>
 		<property name="publisher" ref="user1"/>
 		<property name="articles">
@@ -432,7 +432,7 @@
 		<property name="title" value="The World Hoy"/>
 		<property name="description" value="A newspaper dedicated to inform about shocking news that happen around the globe."/>
 		<property name="picture"><null/></property>
-		<property name="publicationDate" value="01/11/2016 12:00" />
+		<property name="publicationDate" value="01/11/2016" />
 		<property name="isPrivate" value="true"/>
 		<property name="publisher" ref="user2"/>
 		<property name="articles">
