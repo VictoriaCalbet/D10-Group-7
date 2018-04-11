@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
 import org.hibernate.search.query.dsl.QueryBuilder;
@@ -125,19 +129,21 @@ public class SystemConfigurationService {
 	}
 
 	// Other business methods -------------------------------------------------
-	public Collection<?> search() {
+
+	public Collection<?> search() {//final Class<?> class_) {
 
 		SystemConfiguration systemConfiguration;
 		systemConfiguration = this.findMain();
 
-		final Collection<String> tabooWords = systemConfiguration.getTabooWords();
+		List<String> tabooWords;
+		tabooWords = new ArrayList<String>(systemConfiguration.getTabooWords());
 
 		final DatabaseUtil databaseUtil = new DatabaseUtil();
 
 		try {
 			databaseUtil.initialise();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
 
@@ -146,8 +152,18 @@ public class SystemConfigurationService {
 		databaseUtil.getEntityManager().getTransaction().begin();
 
 		final QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Article.class).get();
-
-		final org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("title", "summary", "body").matching("student").createQuery();
+		final String[] s = {
+			"title", "summary", "body"
+		};
+		List<String> search;
+		search = new ArrayList<String>();
+		search.add("chaos");//addAll(tabooWords);
+		System.out.println(tabooWords);
+		//@SuppressWarnings("rawtypes")
+		//BooleanJunction booleanJunction = queryBuilder.bool().should(queryBuilder.keyword().onFields("title", "summary", "body").matching(search.get(0)).createQuery());
+		//for (int i = 1; i < search.size(); i++)
+		//	booleanJunction = booleanJunction.should(queryBuilder.keyword().onFields(s).matching(search.get(i)).createQuery());
+		final org.apache.lucene.search.Query luceneQuery = queryBuilder.keyword().onFields("title", "summary", "body").matching("sex").createQuery();//booleanJunction.createQuery();
 		final javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Article.class);
 
 		final Collection<?> result = jpaQuery.getResultList();
@@ -156,6 +172,37 @@ public class SystemConfigurationService {
 		databaseUtil.getEntityManager().close();
 
 		return result;
+	}
+	public Collection<Article> getArticlesWithSpamWords() {
+
+		final EntityManagerFactory factory = Persistence.createEntityManagerFactory("Acme-Newspaper");
+
+		final EntityManager em = factory.createEntityManager();
+
+		final FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+
+		em.getTransaction().begin();
+
+		String regexp = "";
+
+		for (final String sp : this.findMain().getTabooWords())
+
+			regexp += sp + "|";
+
+		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Article.class).get();
+
+		final org.apache.lucene.search.Query luceneQuery = qb.keyword().onFields("title", "summary", "body").ignoreFieldBridge().matching(regexp).createQuery();
+
+		final javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Article.class);
+
+		final List result = jpaQuery.getResultList();
+
+		em.getTransaction().commit();
+
+		em.close();
+
+		return result;
+
 	}
 	//Auxiliars methods
 	private void checkTabooWord(final String taboo) {
