@@ -15,7 +15,6 @@ import services.ArticleService;
 import services.CustomerService;
 import services.FollowUpService;
 import services.SubscriptionService;
-import services.forms.FollowUpFormService;
 import controllers.AbstractController;
 import domain.Article;
 import domain.Customer;
@@ -29,9 +28,6 @@ public class FollowUpCustomerController extends AbstractController {
 
 	@Autowired
 	private FollowUpService		followUpService;
-
-	@Autowired
-	private FollowUpFormService	followUpFormService;
 
 	@Autowired
 	private CustomerService		customerService;
@@ -96,8 +92,8 @@ public class FollowUpCustomerController extends AbstractController {
 
 		result = new ModelAndView("follow-up/display");
 		result.addObject("followup", followUp);
-		result.addObject("editURI", "/follow-up/customer/edit.do?followUpId=" + followUpId);
-		result.addObject("cancelURI", "/follow-up/customer/list.do?articleId=" + followUp.getArticle().getId());
+		result.addObject("editURI", "follow-up/customer/edit.do?followUpId=" + followUpId);
+		result.addObject("cancelURI", "follow-up/customer/list.do?articleId=" + followUp.getArticle().getId());
 
 		return result;
 	}

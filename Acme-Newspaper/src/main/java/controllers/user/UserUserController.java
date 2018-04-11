@@ -77,7 +77,7 @@ public class UserUserController extends AbstractController {
 		result = new ModelAndView("actorForm/edit");
 		result.addObject("actorForm", actorForm);
 		result.addObject("message", message);
-		result.addObject("requestURI", "user/edit.do");
+		result.addObject("requestURI", "user/user/edit.do");
 
 		return result;
 	}

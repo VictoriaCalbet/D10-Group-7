@@ -60,7 +60,7 @@ public class ArticleController extends AbstractController {
 
 		result = new ModelAndView("article/user/display");
 		result.addObject("article", article);
-		result.addObject("requestURI", "article/user/display.do");
+		result.addObject("requestURI", "article/display.do");
 		return result;
 
 	}
@@ -77,7 +77,7 @@ public class ArticleController extends AbstractController {
 
 		result = new ModelAndView("article/list");
 		result.addObject("articles", articles);
-		result.addObject("requestURI", "article/list.do");
+		result.addObject("requestURI", "article/searchArticleByKeyword.do");
 		return result;
 
 	}

@@ -77,7 +77,7 @@ public class CustomerCustomerController extends AbstractController {
 		result = new ModelAndView("actorForm/edit");
 		result.addObject("actorForm", actorForm);
 		result.addObject("message", message);
-		result.addObject("requestURI", "customer/edit.do");
+		result.addObject("requestURI", "customer/customer/edit.do");
 
 		return result;
 	}

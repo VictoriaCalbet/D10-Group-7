@@ -20,12 +20,12 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-		<form action="newspaper/searchWord.do" method="post">
-			<label> <spring:message code="newspaper.keyWord" />
-			</label> <input type="text" name="word" /> <input type="submit"
-				name="searchWord" value="<spring:message code="newspaper.KeyWord.filter"/>" />
-		</form>
-		<br>
+<form action="newspaper/searchWord.do" method="post">
+	<label> <spring:message code="newspaper.keyWord" />
+	</label> <input type="text" name="word" /> <input type="submit"
+		name="searchWord" value="<spring:message code="newspaper.KeyWord.filter"/>" />
+</form>
+<br>
 
 <security:authentication property="principal" var="loggedactor"/>
 
