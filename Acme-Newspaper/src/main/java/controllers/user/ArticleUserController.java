@@ -75,16 +75,21 @@ public class ArticleUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/listOwnArticles", method = RequestMethod.GET)
-	public ModelAndView listOwnArticles() {
+	public ModelAndView listOwnArticles(@RequestParam(required = false) final String word) {
 		final ModelAndView result;
 		Collection<Article> articles = new ArrayList<Article>();
+		Collection<Article> principalArticles = new ArrayList<Article>();
 		User principal;
 
 		principal = this.userService.findByPrincipal();
-		Collection<Article> principalArticles = new ArrayList<Article>();
+
+		if (word == null || word.equals(""))
+			articles = principal.getArticles();
+		else
+			articles = this.articleService.findArticleByKeywordByUser(word, principal.getId());
+
 		principalArticles = principal.getArticles();
 
-		articles = principal.getArticles();
 		result = new ModelAndView("article/user/list");
 		result.addObject("articles", articles);
 		result.addObject("principalArticles", principalArticles);

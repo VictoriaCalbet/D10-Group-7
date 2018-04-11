@@ -191,4 +191,8 @@ public class ArticleService {
 	public Collection<Article> findArticleByKeyword(final String keyword) {
 		return this.articleRepository.findArticleByKeyword(keyword);
 	}
+
+	public Collection<Article> findArticleByKeywordByUser(final String keyword, final int userId) {
+		return this.articleRepository.findArticleByKeywordByUser(keyword, userId);
+	}
 }

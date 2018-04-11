@@ -43,6 +43,9 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	@Query("select a from Article a where (a.title like %?1% or a.summary like %?1% or a.body like %?1% and a.publicationMoment != null ) and a.isDraft is false and a.newspaper.isPrivate = false and a.newspaper.publicationDate != null)")
 	Collection<Article> findArticleByKeyword(String keyword);
 
+	@Query("select a from Article a where (a.title like %?1% or a.summary like %?1% or a.body like %?1%) and a.writer.id = ?2")
+	Collection<Article> findArticleByKeywordByUser(String keyword, int userId);
+
 	// Acme-Newspaper 1.0 - Requisito 24.1.2
 	@Query("select avg(n.articles.size) from Newspaper n where n.isPrivate is true")
 	Double avgNoArticlesPerPrivateNewspapers();
