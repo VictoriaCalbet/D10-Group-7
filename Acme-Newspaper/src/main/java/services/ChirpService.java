@@ -135,6 +135,16 @@ public class ChirpService {
 
 	}
 
+	public Collection<Chirp> getTabooChirps(final String keyword) {
+		Assert.notNull(keyword);
+
+		Collection<Chirp> result;
+
+		result = this.chirpRepository.getTabooChirps(keyword);
+
+		return result;
+	}
+
 	//Other services required
 
 	public void followUser(final int userId) {

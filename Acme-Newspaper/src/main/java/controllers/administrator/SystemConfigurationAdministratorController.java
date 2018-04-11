@@ -1,6 +1,8 @@
 
 package controllers.administrator;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import services.SystemConfigurationService;
 import controllers.AbstractController;
+import domain.Article;
+import domain.Chirp;
+import domain.Newspaper;
 import domain.SystemConfiguration;
 
 @Controller
@@ -34,11 +39,17 @@ public class SystemConfigurationAdministratorController extends AbstractControll
 	public ModelAndView info() {
 		ModelAndView result;
 		SystemConfiguration systemConfiguration;
+		final Collection<Newspaper> tabooNewspapers = this.systemConfigurationService.getTabooNewspapers();
+		final Collection<Article> tabooArticles = this.systemConfigurationService.getTabooArticles();
+		final Collection<Chirp> tabooChirps = this.systemConfigurationService.getTabooChirps();
 
 		systemConfiguration = this.systemConfigurationService.findMain();
 
 		result = new ModelAndView("systemConfiguration/list");
 		result.addObject("systemConfiguration", systemConfiguration);
+		result.addObject("tabooNewspapers", tabooNewspapers);
+		result.addObject("tabooArticles", tabooArticles);
+		result.addObject("tabooChirps", tabooChirps);
 		result.addObject("requestURI", "systemConfiguration/administrator/list.do");
 
 		return result;

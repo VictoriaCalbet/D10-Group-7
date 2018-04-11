@@ -20,8 +20,60 @@
 <div>
 	<b><spring:message code="systemConfiguration.tabooWords" />: </b>
 	<jstl:out value="${systemConfiguration.tabooWords}" />
+</div><br>
+
+<div>
+	<b><spring:message code="systemConfiguration.newspaper.taboo" />: </b>
 </div>
 
-	<security:authorize access="hasRole('ADMIN')">
+<display:table name="tabooNewspapers" id="row" pagesize="5">
+
+	<spring:message code="newspaper.title" var="titleHeader" />
+	<display:column property="title" title="${titleHeader}"
+		sortable="true" style="${style}" />
+		
+	<spring:message code="newspaper.description" var="descriptionHeader" />
+	<display:column property="description" title="${descriptionHeader}"
+		sortable="true" style="${style}" />
+		
+</display:table>
+
+<div>
+	<b><spring:message code="systemConfiguration.article.taboo" />: </b>
+</div>
+
+<display:table name="tabooArticles" id="row" pagesize="5">
+
+	<spring:message code="article.title" var="titleHeader" />
+	<display:column property="title" title="${titleHeader}"
+		sortable="true" style="${style}" />
+		
+	<spring:message code="article.summary" var="summaryHeader" />
+	<display:column property="summary" title="${summaryHeader}"
+		sortable="true" style="${style}" />
+		
+	<spring:message code="article.body" var="bodyHeader" />
+	<display:column property="body" title="${bodyHeader}"
+		sortable="true" style="${style}" />
+		
+</display:table>
+
+<div>
+	<b><spring:message code="systemConfiguration.chirp.taboo" />: </b>
+</div>
+
+<display:table name="tabooChirps" id="row" pagesize="5">
+
+	<spring:message code="chirp.title" var="titleHeader" />
+	<display:column property="title" title="${titleHeader}"
+		sortable="true" style="${style}" />
+		
+	<spring:message code="chirp.description" var="descriptionHeader" />
+	<display:column property="description" title="${descriptionHeader}"
+		sortable="true" style="${style}" />
+		
+</display:table>
+
+<security:authorize access="hasRole('ADMIN')">
 	<br><a href="systemConfiguration/administrator/edit.do"> <spring:message code="systemConfiguration.edit" /></a>
-	</security:authorize>
+</security:authorize>

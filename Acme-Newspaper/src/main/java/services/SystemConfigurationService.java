@@ -11,6 +11,9 @@ import org.springframework.util.Assert;
 
 import repositories.SystemConfigurationRepository;
 import domain.Administrator;
+import domain.Article;
+import domain.Chirp;
+import domain.Newspaper;
 import domain.SystemConfiguration;
 
 @Service
@@ -24,6 +27,15 @@ public class SystemConfigurationService {
 
 	@Autowired
 	private AdministratorService			administratorService;
+
+	@Autowired
+	private ArticleService					articleService;
+
+	@Autowired
+	private NewspaperService				newspaperService;
+
+	@Autowired
+	private ChirpService					chirpService;
 
 
 	// Supporting services ----------------------------------------------------
@@ -99,4 +111,72 @@ public class SystemConfigurationService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	public Collection<Newspaper> getTabooNewspapers() {
+		final Collection<Newspaper> result = new HashSet<>();
+		SystemConfiguration systemConfiguration;
+
+		systemConfiguration = this.findMain();
+
+		for (final String tabooWord : systemConfiguration.getTabooWords())
+			result.addAll(this.newspaperService.getTabooNewspapers(tabooWord));
+
+		return result;
+	}
+
+	public Collection<Article> getTabooArticles() {
+		final Collection<Article> result = new HashSet<>();
+		SystemConfiguration systemConfiguration;
+
+		systemConfiguration = this.findMain();
+
+		for (final String tabooWord : systemConfiguration.getTabooWords())
+			result.addAll(this.articleService.getTabooArticles(tabooWord));
+
+		return result;
+	}
+
+	public Collection<Chirp> getTabooChirps() {
+		final Collection<Chirp> result = new HashSet<>();
+		SystemConfiguration systemConfiguration;
+
+		systemConfiguration = this.findMain();
+
+		for (final String tabooWord : systemConfiguration.getTabooWords())
+			result.addAll(this.chirpService.getTabooChirps(tabooWord));
+
+		return result;
+	}
+
+	//	public Collection<Article> getTabooArticles() {
+	//
+	//		final EntityManagerFactory factory = Persistence.createEntityManagerFactory("Acme-Newspaper");
+	//
+	//		final EntityManager em = factory.createEntityManager();
+	//
+	//		final FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+	//
+	//		em.getTransaction().begin();
+	//
+	//		String regexp = "";
+	//
+	//		for (final String spamWord : this.findMain().getTabooWords())
+	//
+	//			regexp += spamWord + "|";
+	//
+	//		final QueryBuilder qb = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Article.class).get();
+	//
+	//		final org.apache.lucene.search.Query luceneQuery = qb.keyword().onFields("title", "summary", "body").matching(regexp).createQuery();
+	//
+	//		final javax.persistence.Query jpaQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Article.class);
+	//
+	//		final List result = jpaQuery.getResultList();
+	//
+	//		em.getTransaction().commit();
+	//
+	//		em.close();
+	//
+	//		return result;
+	//
+	//	}
 }

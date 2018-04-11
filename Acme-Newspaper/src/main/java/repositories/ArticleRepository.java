@@ -21,6 +21,9 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	@Query("select a from Article a where a.newspaper.id = ?1")
 	Collection<Article> findAllByNewspaperId(int newspaperId);
 
+	@Query("select a from Article a where (a.title like %?1% or a.summary like %?1% or a.body like %?1%)")
+	Collection<Article> getTabooArticles(String tabooWord);
+
 	// Dashboard queries -------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.2

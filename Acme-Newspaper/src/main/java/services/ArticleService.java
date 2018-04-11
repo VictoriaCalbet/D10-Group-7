@@ -133,6 +133,16 @@ public class ArticleService {
 		return result;
 	}
 
+	public Collection<Article> getTabooArticles(final String keyword) {
+		Assert.notNull(keyword);
+
+		Collection<Article> result;
+
+		result = this.articleRepository.getTabooArticles(keyword);
+
+		return result;
+	}
+
 	// Dashboard services ------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.2
