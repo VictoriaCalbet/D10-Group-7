@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -73,9 +74,12 @@ public class ArticleController extends AbstractController {
 			if (this.actorService.checkAuthority(actor, "USER")) {
 				principal = (User) actor;
 				principalArticles = principal.getArticles();
-			} else if (this.actorService.checkAuthority(actor, "CUSTOMER") && newspaper.getIsPrivate())
+			} else if (this.actorService.checkAuthority(actor, "CUSTOMER") && newspaper.getIsPrivate()) {
 				showFollowUps = this.subscriptionService.thisCustomerCanSeeThisNewspaper(actor.getId(), newspaperId);
-		}
+				Assert.isTrue(showFollowUps);	// Si es false, significa que no está suscrito
+			}
+		} else
+			Assert.isTrue(!newspaper.getIsPrivate());
 
 		result.addObject("principalArticles", principalArticles);
 		result.addObject("showFollowUps", showFollowUps);
