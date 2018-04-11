@@ -20,19 +20,18 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
 
-		<form action="${requestURI}">
-			<label> <spring:message code="newspaper.keyWord" />
-			</label> <input type="text" name="word" /> <input type="submit"
-				name="searchWord" value="<spring:message code="newspaper.KeyWord.filter"/>" />
-		</form>
-		<br>
+<form action="${requestURI}" method="get">
+	<label><b><spring:message code="newspaper.keyWord"/>:&nbsp;</b></label>
+	<input type="text" name="word" placeholder="<spring:message code="newspaper.KeyWord.filter"/>"/> 
+	<input type="submit" value="<spring:message code="newspaper.KeyWord.filter"/>"/>
+</form>
+<br/>
 
 <security:authentication property="principal" var="loggedactor"/>
 
 <display:table name="newspapers" id="row" requestURI="${requestURI}" pagesize="5">
 
 	<jstl:set var="isPrivate" value="${row.isPrivate}" />		
-	
 	
 	<jstl:if test="${isPrivate eq true}">
 		<jstl:set var="style" value="background-color:PaleVioletRed;" />
@@ -59,16 +58,16 @@
 		<acme:image imageURL="${row.picture}" imageNotFoundLocation="images/fotoNotFound.png" 
 		codeError="newspaper.unspecifiedImage" height="60" width="60"/>	
 	</display:column>
-	
-		<spring:message code="newspaper.moreInfo" var="moreInfoHeader" />	
-		<display:column title="${moreInfoHeader}" style="${style}">
-				<a href="newspaper/info.do?newspaperId=${row.id}">
-				 	<spring:message code="newspaper.moreInfoButton" />
-				</a>
-		</display:column>
+
+	<spring:message code="newspaper.moreInfo" var="moreInfoHeader" />	
+	<display:column title="${moreInfoHeader}" style="${style}">
+			<a href="newspaper/info.do?newspaperId=${row.id}">
+			 	<spring:message code="newspaper.moreInfoButton" />
+			</a>
+	</display:column>
 	
 
-<security:authorize access="hasAnyRole('USER, ADMIN') or isAnonymous()">	
+	<security:authorize access="hasAnyRole('USER, ADMIN') or isAnonymous()">	
 		<spring:message code="newspaper.articles" var="articleHeader" />	
 			<display:column title="${articleHeader}" style="${style}">			
 				<jstl:choose>
@@ -84,9 +83,9 @@
 					</jstl:otherwise>
 				</jstl:choose>
 		</display:column>
-</security:authorize>
+	</security:authorize>
 	
-<security:authorize access="hasRole('CUSTOMER')">	
+	<security:authorize access="hasRole('CUSTOMER')">	
 
 		<spring:message code="newspaper.articles" var="articleHeader" />	
 			<display:column title="${articleHeader}" style="${style}">
@@ -106,10 +105,9 @@
 				</jstl:choose>
 				</jstl:if>
 		</display:column>
-</security:authorize>	
+	</security:authorize>	
 	
 	<security:authorize access="hasRole('USER')">
-		
 		<spring:message code="newspaper.published" var="publishedHeader" />	
 		<display:column title="${publishedHeader}" style="${style}">	
 			<jstl:choose>
@@ -138,10 +136,8 @@
 			 	<spring:message code="newspaper.deleteButton" />
 			</a>
 		</display:column>
-		
 	</security:authorize>
 	
-
 </display:table>
 
 <security:authorize access="isAuthenticated()">
