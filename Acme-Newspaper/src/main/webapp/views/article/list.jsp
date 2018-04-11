@@ -72,28 +72,35 @@
 	
 	
 	<spring:message code="article.follow-ups" var="articleFollowUpsHeader" />
+	<spring:message code="article.follow-up.listFollow-ups" var="articleListFollowUpsLink"/>
 	<display:column title="${articleFollowUpsHeader}" style="${style}" >
+		<security:authorize access="hasRole('USER')">
+			<a href="follow-up/user/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
+		</security:authorize>
 		<security:authorize access="hasRole('CUSTOMER')">
 			<jstl:choose>
 				<jstl:when test="${showFollowUps eq true and not empty row.newspaper.publicationDate and row.isDraft eq false}">
 					<spring:message code="article.follow-up.listFollow-ups" var="articleListFollowUpsLink"/>
-			
-					<security:authorize access="hasRole('CUSTOMER')">
-						<a href="follow-up/customer/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
-					</security:authorize>
-					<security:authorize access="hasRole('USER')">
-						<a href="follow-up/user/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
-					</security:authorize>
-					<security:authorize access="isAnonymous()">
-						<a href="follow-up/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
-					</security:authorize>
+					<a href="follow-up/customer/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
 				</jstl:when>
-				
 				<jstl:otherwise>
 					<spring:message code="article.follow-up.cantShowFollowUps" var="articleCantShowFollowUps"/>
 					<jstl:out value="${articleCantShowFollowUps}"/>
 				</jstl:otherwise>
-			</jstl:choose>		
+			</jstl:choose>
+		</security:authorize>
+		<security:authorize access="isAnonymous()">
+			
+			<jstl:choose>
+				<jstl:when test="${row.newspaper.isPrivate eq false}">
+					
+					<a href="follow-up/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code="article.follow-up.cantShowFollowUps" var="articleCantShowFollowUps"/>
+					<jstl:out value="${articleCantShowFollowUps}"/>
+				</jstl:otherwise>
+			</jstl:choose>
 		</security:authorize>
 	</display:column>
 	
