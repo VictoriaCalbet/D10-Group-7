@@ -35,6 +35,10 @@ public class ChirpServiceTest extends AbstractTest{
 		 * An actor who is authenticated as a user must be able to:
 		 * Post a chirp. Chirps may not be changed or deleted once they are posted.
 		 * 
+		 * Test 1: Positive case.
+		 * Test 2: Negative case; the title is null
+		 * Test 3: negative case; the description is null
+		 * 
 		 */
 		@Test
 		public void testSaveFromCreateChirp() {
@@ -49,9 +53,6 @@ public class ChirpServiceTest extends AbstractTest{
 				},
 				{
 					"Title", null, user, IllegalArgumentException.class
-				},
-				{
-					"Title", "Description", user, null
 				}
 			};
 
@@ -92,6 +93,9 @@ public class ChirpServiceTest extends AbstractTest{
 		 * An actor who is authenticated as a user must be able to:
 		 * 
 		 * Follow or unfollow another user. This test will be dedicated to following users functionality.
+		 * 
+		 * Test 1: positive case
+		 * Test 2: negative case; the user tries to follow itself
 		 * 
 		 */
 		
@@ -143,19 +147,18 @@ public class ChirpServiceTest extends AbstractTest{
 		 * 
 		 * Follow or unfollow another user. This test will be dedicated to unfollowing users functionality.
 		 * 
+		 * Test 1: positive case
+		 * 
 		 */
 		
 		@Test
 		public void testUnfollowUser() {
 			// Chirp: User, expected exception.
-			User user = this.userService.findOne(getEntityId("user1"));
+			
 			User user2 = this.userService.findOne(getEntityId("user2"));
 			final Object[][] testingData = {
 				{
 					user2, null
-				},
-				{
-					user, null
 				}
 			};
 
@@ -192,6 +195,8 @@ public class ChirpServiceTest extends AbstractTest{
 		 * 
 		 * Remove a chirp that he or she thinks is inappropriate.
 		 * 
+		 * Test 1: positive case
+		 * Test 2: negative case; the chirp to delete is null
 		 */
 		
 		@Test
