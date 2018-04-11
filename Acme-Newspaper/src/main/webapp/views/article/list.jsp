@@ -20,14 +20,11 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-
-<form action="article/searchArticleByKeyword.do" method="post">
+<form action="${requestURI}">
 	<label> <spring:message code="article.keyword" />
-	</label> <input type="text" name="word" /> <input type="submit"
-		name="searchArticleByKeyword"
-		value="<spring:message code="article.search"/>" />
+	</label> <input type="text" name="word"> <input type="submit"
+		value="<spring:message code="article.search" />" />&nbsp;
 </form>
-<br>
 
 <display:table name="articles" id="row" requestURI="${requestURI}" pagesize="5">
 

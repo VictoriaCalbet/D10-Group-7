@@ -51,7 +51,7 @@ public class ArticleController extends AbstractController {
 	//Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam final int newspaperId) {
+	public ModelAndView list(@RequestParam(required = false) final Integer newspaperId, @RequestParam(required = false, defaultValue = "") final String word) {
 		ModelAndView result = null;
 		Collection<Article> articles = new ArrayList<Article>();
 		Actor actor = null;
@@ -60,8 +60,15 @@ public class ArticleController extends AbstractController {
 		Newspaper newspaper = null;
 		boolean showFollowUps = true;
 
-		newspaper = this.newsPaperService.findOne(newspaperId);
-		articles = newspaper.getArticles();
+		articles = this.articleService.findArticleByKeyword("");
+
+		if (newspaperId != null) {
+			newspaper = this.newsPaperService.findOne(newspaperId);
+			articles = newspaper.getArticles();
+		}
+
+		if (!(word == null || word.equals("")))
+			articles = this.articleService.findArticleByKeyword(word);
 
 		result = new ModelAndView("article/list");
 
@@ -74,11 +81,14 @@ public class ArticleController extends AbstractController {
 			if (this.actorService.checkAuthority(actor, "USER")) {
 				principal = (User) actor;
 				principalArticles = principal.getArticles();
-			} else if (this.actorService.checkAuthority(actor, "CUSTOMER") && newspaper.getIsPrivate()) {
-				showFollowUps = this.subscriptionService.thisCustomerCanSeeThisNewspaper(actor.getId(), newspaperId);
-				Assert.isTrue(showFollowUps);	// Si es false, significa que no está suscrito
+			} else if (this.actorService.checkAuthority(actor, "CUSTOMER") && newspaperId != null) {
+				newspaper = this.newsPaperService.findOne(newspaperId);
+				if (newspaper != null && newspaper.getIsPrivate()) {
+					showFollowUps = this.subscriptionService.thisCustomerCanSeeThisNewspaper(actor.getId(), newspaperId);
+					Assert.isTrue(showFollowUps);	// Si es false, significa que no está suscrito
+				}
 			}
-		} else
+		} else if (newspaperId != null)
 			Assert.isTrue(!newspaper.getIsPrivate());
 
 		result.addObject("principalArticles", principalArticles);
