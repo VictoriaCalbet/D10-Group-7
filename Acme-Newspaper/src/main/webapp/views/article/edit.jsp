@@ -24,20 +24,25 @@
 	
 <security:authorize access="hasRole('USER')">
 
-<acme:textbox code="article.title" path="title"/>
-
 <acme:select code="article.newspaper" path="newspaper" items="${availableNewspapers}" itemLabel="title"/><br/>
-<acme:textbox code="article.summary" path="summary"/>
-<acme:textarea code="article.body" path="body"/>
-<acme:textarea code="article.pictures" path="pictures"/>
-<jstl:choose>
+
+<fieldset> 
+	<spring:message code="article.edit.legend" var="articleLegend"/>
+	<spring:message code="article.isDraft.yes" var="articleIsDraftYes"/>
+	<spring:message code="article.isDraft.no" var="articleIsDraftNo"/>
+	<legend><b><jstl:out value="${articleLegend}"/>:&nbsp;</b></legend>
+	
+	<acme:textbox code="article.title" path="title"/>
+	<acme:textbox code="article.summary" path="summary"/>
+	<acme:textarea code="article.body" path="body"/>
+	<acme:textarea code="article.pictures" path="pictures"/>
+	<jstl:choose>
 		<jstl:when test="${article.id!=0 or article.isDraft==false}">
-			<form:label path="isDraft">
-				<spring:message code="article.isDraft"/>
-			</form:label>
-			<form:select path="isDraft">					
-				<form:option label="True" value="true"/>
-				<form:option label="False" value="false"/>
+			<br>
+			<b><form:label path="isDraft"><spring:message code="article.isDraft"/></form:label> </b>
+			<form:select path="isDraft">				
+				<form:option label="${articleIsDraftYes}" value="true"/>
+				<form:option label="${articleIsDraftNo}" value="false"/>
 				<form:errors cssClass="error" path="isDraft"/>
 				<br>
 			</form:select>
@@ -46,10 +51,10 @@
 			<form:hidden path="isDraft"/>
 		</jstl:otherwise>
 	</jstl:choose>	
-	<br><br>
-<br/>
-<input type="submit" name="save" value="<spring:message code="article.write"/>"/>
-<acme:cancel url="newspaper/list.do" code="article.cancel" /> <br/>
+	<br/> <br/>
+	<input type="submit" name="save" value="<spring:message code="article.write"/>"/>
+	<acme:cancel url="newspaper/list.do" code="article.cancel" /> <br/>
+</fieldset>
 
 </security:authorize>
 
