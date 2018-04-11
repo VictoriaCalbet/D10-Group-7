@@ -67,8 +67,7 @@ public class SystemConfigurationService {
 	public SystemConfiguration saveFromCreate(final SystemConfiguration systemConfiguration) {
 		Assert.notNull(systemConfiguration);
 
-		final Administrator principal = this.administratorService.findByPrincipal();
-		Assert.notNull(principal);
+		this.checkAdmin();
 
 		SystemConfiguration result;
 
@@ -80,8 +79,7 @@ public class SystemConfigurationService {
 	public SystemConfiguration saveFromEdit(final SystemConfiguration systemConfiguration) {
 		Assert.notNull(systemConfiguration);
 
-		final Administrator principal = this.administratorService.findByPrincipal();
-		Assert.notNull(principal);
+		this.checkAdmin();
 
 		SystemConfiguration result;
 
@@ -104,7 +102,7 @@ public class SystemConfigurationService {
 
 	public SystemConfiguration findMain() {
 		SystemConfiguration result;
-
+		this.checkAdmin();
 		result = this.findAll().iterator().next();
 
 		return result;
@@ -147,7 +145,16 @@ public class SystemConfigurationService {
 
 		return result;
 	}
-
+	//Auxiliar method
+	private void checkAdmin() {
+		Administrator actor;
+		actor = this.administratorService.findByPrincipal();
+		Assert.notNull(actor);
+		String authority;
+		authority = actor.getUserAccount().getAuthorities().iterator().next().getAuthority();
+		Assert.isTrue(authority.equals("ADMIN"));
+	}
+	//-------------------------------------------
 	//	public Collection<Article> getTabooArticles() {
 	//
 	//		final EntityManagerFactory factory = Persistence.createEntityManagerFactory("Acme-Newspaper");

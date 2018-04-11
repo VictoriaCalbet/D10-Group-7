@@ -26,7 +26,7 @@
 	<b><spring:message code="systemConfiguration.newspaper.taboo" />: </b>
 </div>
 
-<display:table name="tabooNewspapers" id="row" pagesize="5">
+<display:table name="tabooNewspapers" requestURI="${requestURI}" id="row" pagesize="5">
 
 	<spring:message code="newspaper.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}"
@@ -42,7 +42,7 @@
 	<b><spring:message code="systemConfiguration.article.taboo" />: </b>
 </div>
 
-<display:table name="tabooArticles" id="row" pagesize="5">
+<display:table name="tabooArticles" requestURI="${requestURI}" id="row" pagesize="5">
 
 	<spring:message code="article.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}"
@@ -62,7 +62,7 @@
 	<b><spring:message code="systemConfiguration.chirp.taboo" />: </b>
 </div>
 
-<display:table name="tabooChirps" id="row" pagesize="5">
+<display:table name="tabooChirps" requestURI="${requestURI}" id="row" pagesize="5">
 
 	<spring:message code="chirp.title" var="titleHeader" />
 	<display:column property="title" title="${titleHeader}"
