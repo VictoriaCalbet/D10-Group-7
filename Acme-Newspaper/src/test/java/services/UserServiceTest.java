@@ -44,6 +44,15 @@ public class UserServiceTest extends AbstractTest {
 	// JUnit works well in this project.  Just righ-click this class and run 
 	// it using JUnit.
 
+	/**
+	 * Acme-Newspaper: Requirement 4.1:
+	 * 
+	 * An actor who is not authenticated must be able to:
+	 * Register to the system as a user.
+	 * 
+	 * Positive test1: Correct registration
+	 * Negative test2: A user tries to register with a used username
+	 */
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testSaveFromCreateUser() {
