@@ -119,6 +119,10 @@ public class FollowUpService {
 		return result;
 	}
 
+	public void flush() {
+		this.followUpRepository.flush();
+	}
+
 	// Other business methods -------------------------------------------------
 
 	public Collection<FollowUp> findPublicFollowUps() {
