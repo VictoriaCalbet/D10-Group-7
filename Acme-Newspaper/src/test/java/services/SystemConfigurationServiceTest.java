@@ -11,7 +11,6 @@
 package services;
 
 import java.util.Collection;
-import java.util.HashSet;
 
 import javax.transaction.Transactional;
 
@@ -42,7 +41,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 	public void test1() {
 		Collection<Article> articles;
 
-		articles = new HashSet<Article>((Collection<? extends Article>) this.systemConfigurationService.search());
+		articles = this.systemConfigurationService.getArticlesWithSpamWords();
 
 		System.out.println(articles);
 	}
@@ -51,7 +50,7 @@ public class SystemConfigurationServiceTest extends AbstractTest {
 	public void test2() {
 		Collection<Article> articles;
 
-		articles = new HashSet<Article>((Collection<? extends Article>) this.systemConfigurationService.search());
+		articles = this.systemConfigurationService.getArticlesWithSpamWords();
 
 		System.out.println(articles);
 	}
