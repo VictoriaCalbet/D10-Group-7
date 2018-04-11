@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.NewspaperService;
 import services.UserService;
 import services.forms.NewspaperFormService;
@@ -34,6 +35,8 @@ public class NewspaperUserController extends AbstractController {
 
 	@Autowired
 	private UserService				userService;
+	@Autowired
+	private ActorService			actorService;
 
 
 	public NewspaperUserController() {
@@ -41,20 +44,23 @@ public class NewspaperUserController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) final String message) {
+	public ModelAndView list(@RequestParam(required = false, defaultValue = "") final String word, @RequestParam(required = false) final String message) {
 		ModelAndView result;
 		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
 		final User u = this.userService.findByPrincipal();
-		newspapers = u.getNewspapers();
+
+		if (word == null || word.equals(""))
+			newspapers = u.getNewspapers();
+		else
+			newspapers = this.newspaperService.findNewspaperByKeyWordNotPrivate(word);
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
 		result.addObject("message", message);
-		result.addObject("requestURI", "newspaper/user/list.do");
+		result.addObject("requestURI", "newspaper/user/list.do?");
 
 		return result;
 	}
-
 	// Creation ----------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)

@@ -28,15 +28,19 @@ public class NewspaperAdministratorController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) final String message) {
+	public ModelAndView list(@RequestParam(required = false, defaultValue = "") final String word, @RequestParam(required = false) final String message) {
 		ModelAndView result;
 		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
-		newspapers = this.newspaperService.findAll();
+
+		if (word == null || word.equals(""))
+			newspapers = this.newspaperService.findAll();
+		else
+			newspapers = this.newspaperService.findNewspaperByKeyWordNotPrivate(word);
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
 		result.addObject("message", message);
-		result.addObject("requestURI", "newspaper/administrator/list.do");
+		result.addObject("requestURI", "newspaper/administrator/list.do?");
 
 		return result;
 	}

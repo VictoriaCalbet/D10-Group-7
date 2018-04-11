@@ -4,8 +4,6 @@ package controllers;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,53 +49,64 @@ public class NewspaperController extends AbstractController {
 	//Listing 
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) final String message) {
+	public ModelAndView list(@RequestParam(required = false, defaultValue = "") final String word, @RequestParam(required = false) final String message) {
 		ModelAndView result;
 		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
 		Collection<Newspaper> ns = new ArrayList<Newspaper>();
 
 		try {
-			final Actor a = this.actorService.findByPrincipal();
-			newspapers = this.newspaperService.findPublicated();
-			ns = this.newspaperService.findNewspaperSubscribedOfCustomer(a.getId());
+			if (word == null || word.equals("")) {
+
+				final Actor a = this.actorService.findByPrincipal();
+				newspapers = this.newspaperService.findPublicated();
+				ns = this.newspaperService.findNewspaperSubscribedOfCustomer(a.getId());
+			} else {
+				final Customer c = this.customerService.findByPrincipal();
+				newspapers = this.newspaperService.findNewspaperByKeyWord(word);
+				ns = this.newspaperService.findNewspaperSubscribedOfCustomer(c.getId());
+			}
 		} catch (final Throwable oops) {
-			newspapers = this.newspaperService.findPublicated();
+			if (word == null || word.equals(""))
+				newspapers = this.newspaperService.findPublicated();
+			else
+				newspapers = this.newspaperService.findNewspaperByKeyWordNotPrivate(word);
 		}
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
 		result.addObject("ns", ns);
 		result.addObject("message", message);
-		result.addObject("requestURI", "newspaper/list.do");
+		result.addObject("requestURI", "newspaper/list.do?");
 
 		return result;
 	}
 
 	// Search by key word
 
-	@RequestMapping(value = "/searchWord", method = RequestMethod.POST)
-	public ModelAndView searchByKeyWord(@Valid final String word) {
-
-		ModelAndView result;
-
-		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
-		Collection<Newspaper> ns = new ArrayList<Newspaper>();
-
-		try {
-			final Customer c = this.customerService.findByPrincipal();
-			newspapers = this.newspaperService.findNewspaperByKeyWord(word);
-			ns = this.newspaperService.findNewspaperSubscribedOfCustomer(c.getId());
-		} catch (final Throwable oops) {
-			newspapers = this.newspaperService.findNewspaperByKeyWordNotPrivate(word);
-		}
-
-		result = new ModelAndView("newspaper/list");
-		result.addObject("newspapers", newspapers);
-		result.addObject("ns", ns);
-		result.addObject("requestURI", "newspaper/searchWord.do");
-		return result;
-
-	}
+	//	@RequestMapping(value = "/searchWord", method = RequestMethod.POST)
+	//	public ModelAndView searchByKeyWord(@Valid final String word) {
+	//
+	//		ModelAndView result;
+	//
+	//		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
+	//		Collection<Newspaper> ns = new ArrayList<Newspaper>();
+	//
+	//		try {
+	//			final Customer c = this.customerService.findByPrincipal();
+	//			newspapers = this.newspaperService.findNewspaperByKeyWord(word);
+	//			ns = this.newspaperService.findNewspaperSubscribedOfCustomer(c.getId());
+	//		} catch (final Throwable oops) {
+	//			newspapers = this.newspaperService.findNewspaperByKeyWordNotPrivate(word);
+	//
+	//		}
+	//
+	//		result = new ModelAndView("newspaper/list");
+	//		result.addObject("newspapers", newspapers);
+	//		result.addObject("ns", ns);
+	//		result.addObject("requestURI", "newspaper/searchWord.do");
+	//		return result;
+	//
+	//	}
 
 	@RequestMapping(value = "/info", method = RequestMethod.GET)
 	public ModelAndView info(@RequestParam final int newspaperId) {

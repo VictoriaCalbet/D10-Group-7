@@ -32,22 +32,24 @@ public class NewspaperCustomerController extends AbstractController {
 	}
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) final String message) {
+	public ModelAndView list(@RequestParam(required = false, defaultValue = "") final String word, @RequestParam(required = false) final String message) {
 		ModelAndView result;
 		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
 		Collection<Newspaper> ns = new ArrayList<Newspaper>();
 		final Actor a = this.actorService.findByPrincipal();
 
-		newspapers = this.newspaperService.findNewspaperSubscribedOfCustomer();
-		ns = this.newspaperService.findNewspaperSubscribedOfCustomer(a.getId());
+		if (word == null || word.equals("")) {
+			newspapers = this.newspaperService.findNewspaperSubscribedOfCustomer();
+			ns = this.newspaperService.findNewspaperSubscribedOfCustomer(a.getId());
+		} else
+			newspapers = this.newspaperService.findNewspaperByKeyWordNotPrivate(word);
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
 		result.addObject("message", message);
 		result.addObject("ns", ns);
-		result.addObject("requestURI", "newspaper/customer/list.do");
+		result.addObject("requestURI", "newspaper/customer/list.do?");
 
 		return result;
 	}
-
 }
