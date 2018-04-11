@@ -45,7 +45,7 @@ public class Newspaper extends DomainEntity {
 	}
 
 	@Past
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	public Date getPublicationDate() {
 		return this.publicationDate;
