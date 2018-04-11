@@ -111,16 +111,22 @@ public class NewspaperController extends AbstractController {
 			if (this.actorService.checkAuthority(this.actorService.findByPrincipal(), "CUSTOMER")) {
 				final Customer c = this.customerService.findByPrincipal();
 				ns = this.newspaperService.findNewspaperSubscribedOfCustomer(c.getId());
-				if (!ns.contains(newspaper) && newspaper.getIsPrivate() == true)
+				if (!ns.contains(newspaper) && newspaper.getIsPrivate() == true && newspaper.getPublicationDate() != null)
 					visible = false;
+				else if (!ns.contains(newspaper) && newspaper.getIsPrivate() == true && newspaper.getPublicationDate() == null)
+					return result = new ModelAndView("redirect:/newspaper/list.do");
+				else if (!ns.contains(newspaper) && newspaper.getIsPrivate() == false && newspaper.getPublicationDate() == null)
+					return result = new ModelAndView("redirect:/newspaper/list.do");
 			} else if (this.actorService.checkAuthority(this.actorService.findByPrincipal(), "USER")) {
 				final User u = this.userService.findByPrincipal();
-				if (!u.getNewspapers().contains(newspaper) && newspaper.getIsPrivate())
+				if (!u.getNewspapers().contains(newspaper) && newspaper.getIsPrivate() && newspaper.getPublicationDate() == null)
+					return result = new ModelAndView("redirect:/newspaper/list.do");
+				else if (!u.getNewspapers().contains(newspaper) && !newspaper.getIsPrivate() && newspaper.getPublicationDate() == null)
 					return result = new ModelAndView("redirect:/newspaper/list.do");
 			}
 
 		} catch (final Throwable oops) {
-			if (newspaper.getIsPrivate())
+			if (newspaper.getIsPrivate() || newspaper.getPublicationDate() == null)
 				return result = new ModelAndView("redirect:/newspaper/list.do");
 
 		}
