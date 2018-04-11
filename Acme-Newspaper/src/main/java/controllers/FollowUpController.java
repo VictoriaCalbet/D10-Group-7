@@ -48,6 +48,8 @@ public class FollowUpController extends AbstractController {
 
 		followUps = article.getFollowUps();
 
+		Assert.isTrue(!article.getNewspaper().getIsPrivate() && article.getNewspaper().getPublicationDate() != null && article.getIsDraft() == false);
+
 		requestURI = "follow-up/list.do";
 		displayURI = "follow-up/display.do?followUpId=";
 

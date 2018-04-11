@@ -44,6 +44,16 @@ public class CustomerServiceTest extends AbstractTest {
 	// JUnit works well in this project.  Just righ-click this class and run 
 	// it using JUnit.
 
+	/**
+	 * Acme-Newspaper: Requirement 21.1:
+	 * 
+	 * An actor who is not authenticated must be able to:
+	 * Register to the system as a customer.
+	 * 
+	 * Positive test1: Correct registration
+	 * Negative test2: A customer tries to register with a used username
+	 * Negative test3: A customer tries to register with a invalid email
+	 */
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testSaveFromCreateCustomer() {
@@ -56,6 +66,10 @@ public class CustomerServiceTest extends AbstractTest {
 			{
 				"testCustomerName1", "testCustomerSurname1", new HashSet<>(Arrays.asList("testCustomerPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testCustomerEmailAddress1@customer1.com")), "customer1",
 				"customer1", IllegalArgumentException.class
+			},
+			{
+				"testCustomerName1", "testCustomerSurname1", new HashSet<>(Arrays.asList("testCustomerPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testCustomerEmailAddress1")), "testCustomer1", "customer1",
+				IllegalArgumentException.class
 			}
 		};
 

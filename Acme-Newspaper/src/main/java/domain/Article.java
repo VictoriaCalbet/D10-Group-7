@@ -9,19 +9,16 @@ import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Index;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
-import org.hibernate.search.annotations.Analyze;
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Index;
-import org.hibernate.search.annotations.Indexed;
-import org.hibernate.search.annotations.Store;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
@@ -31,7 +28,9 @@ import cz.jirutka.validator.collection.constraints.EachURL;
 
 @Entity
 @Access(AccessType.PROPERTY)
-@Indexed
+@Table(indexes = {
+	@Index(columnList = "title"), @Index(columnList = "summary"), @Index(columnList = "body"), @Index(columnList = "isDraft"), @Index(columnList = "publicationMoment")
+})
 public class Article extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
@@ -46,7 +45,6 @@ public class Article extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getTitle() {
 		return this.title;
 	}
@@ -66,7 +64,6 @@ public class Article extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getSummary() {
 		return this.summary;
 	}
@@ -76,7 +73,6 @@ public class Article extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@Field(index = Index.YES, analyze = Analyze.YES, store = Store.NO)
 	public String getBody() {
 		return this.body;
 	}

@@ -44,6 +44,16 @@ public class AdministratorServiceTest extends AbstractTest {
 	// JUnit works well in this project.  Just righ-click this class and run 
 	// it using JUnit.
 
+	/**
+	 * Acme-Newspaper: Requirement not listed:
+	 * 
+	 * An actor who is not authenticated must be able to:
+	 * Register to the system as a customer.
+	 * 
+	 * Positive test1: Correct registration
+	 * Negative test2: An admin tries to register with a used username
+	 * Negative test3: An admin tries to register with a invalid email
+	 */
 	@SuppressWarnings("unchecked")
 	@Test
 	public void testSaveFromCreateAdmin() {
@@ -56,6 +66,10 @@ public class AdministratorServiceTest extends AbstractTest {
 			{
 				"testAdminName1", "testAdminSurname1", new HashSet<>(Arrays.asList("testAdminPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testAdminEmailAddress1@admin.com")), "admin", "testAdmin1",
 				IllegalArgumentException.class
+			},
+			{
+				"testAdminName1", "testAdminSurname1", new HashSet<>(Arrays.asList("testAdminPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testAdminEmailAddress1")), "testAdmin1", "testAdmin1",
+				IllegalArgumentException.class
 			}
 		};
 
@@ -64,7 +78,6 @@ public class AdministratorServiceTest extends AbstractTest {
 				(String) testingData[i][6], (Class<?>) testingData[i][7]);
 
 	}
-
 	protected void testSaveFromCreateAdminTemplate(final String name, final String surname, final Collection<String> postalAddresses, final Collection<String> phoneNumbers, final Collection<String> emailAddresses, final String username,
 		final String password, final Class<?> expectedException) {
 

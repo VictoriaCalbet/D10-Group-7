@@ -18,6 +18,9 @@ public interface ChirpRepository extends JpaRepository<Chirp, Integer> {
 	@Query("select c from Chirp c, User u where u.id = ?1 and c.user in elements(u.followed)")
 	public Collection<Chirp> listAllChirpsByFollowedUsers(int id);
 
+	@Query("select c from Chirp c where (c.title like %?1% or c.description like %?1%)")
+	Collection<Chirp> getTabooChirps(String tabooWord);
+
 	// Dashboard queries -------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 17.6.4

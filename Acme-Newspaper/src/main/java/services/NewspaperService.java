@@ -137,6 +137,16 @@ public class NewspaperService {
 		return this.newspaperRepository.findNewspaperByKeyWordNotPrivate(keyWord);
 	}
 
+	public Collection<Newspaper> getTabooNewspapers(final String keyword) {
+		Assert.notNull(keyword);
+
+		Collection<Newspaper> result;
+
+		result = this.newspaperRepository.getTabooNewspapers(keyword);
+
+		return result;
+	}
+
 	public void flush() {
 		this.newspaperRepository.flush();
 	}

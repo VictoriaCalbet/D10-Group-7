@@ -72,18 +72,55 @@
 	
 	
 	<spring:message code="article.follow-ups" var="articleFollowUpsHeader" />
+	<spring:message code="article.follow-up.listFollow-ups" var="articleListFollowUpsLink"/>
+	<spring:message code="article.follow-up.cantShowFollowUps" var="articleCantShowFollowUps"/>
+	<spring:message code="article.follow-up.noFollowUps" var="articleNoFollowUps"/>
 	<display:column title="${articleFollowUpsHeader}" style="${style}" >
-		<spring:message code="article.follow-up.listFollow-ups" var="articleListFollowUpsLink"/>
-		
-		<security:authorize access="hasRole('CUSTOMER')">
-			<a href="follow-up/customer/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
-		</security:authorize>
-		<security:authorize access="hasRole('USER')">
-			<a href="follow-up/user/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
-		</security:authorize>
-		<security:authorize access="isAnonymous()">
-			<a href="follow-up/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
-		</security:authorize>
+		<jstl:choose>
+			<jstl:when test="${not empty row.newspaper.publicationDate and row.isDraft eq false}">
+			
+				<security:authorize access="hasRole('USER')">
+					<a href="follow-up/user/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
+				</security:authorize>
+				<security:authorize access="hasRole('CUSTOMER')">
+					<jstl:choose>
+						<jstl:when test="${showFollowUps eq true and not empty row.newspaper.publicationDate and row.isDraft eq false and not empty row.followUps}">
+							<a href="follow-up/customer/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
+						</jstl:when>
+						<jstl:otherwise>
+							<jstl:choose>
+								<jstl:when test="${empty row.followUps}">
+									<jstl:out value="${articleNoFollowUps}"/>
+								</jstl:when>
+								<jstl:otherwise>
+									<jstl:out value="${articleCantShowFollowUps}"/>
+								</jstl:otherwise>
+							</jstl:choose>
+						</jstl:otherwise>
+					</jstl:choose>
+				</security:authorize>
+				<security:authorize access="isAnonymous()">
+					<jstl:choose>
+						<jstl:when test="${row.newspaper.isPrivate eq false and not empty row.followUps}">
+							<a href="follow-up/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
+						</jstl:when>
+						<jstl:otherwise>
+							<jstl:choose>
+								<jstl:when test="${empty row.followUps}">
+									<jstl:out value="${articleNoFollowUps}"/>
+								</jstl:when>
+								<jstl:otherwise>
+									<jstl:out value="${articleCantShowFollowUps}"/>
+								</jstl:otherwise>
+							</jstl:choose>
+						</jstl:otherwise>
+					</jstl:choose>
+				</security:authorize>
+			</jstl:when>
+			<jstl:otherwise>
+				<jstl:out value="${articleCantShowFollowUps}"/>
+			</jstl:otherwise>
+		</jstl:choose>
 	</display:column>
 	
 	<spring:message code="article.pictures" var="picturesHeader" />
@@ -104,7 +141,7 @@
 	<spring:message code="article.edit" var="editHeader" />
 		<display:column title="${editHeader}" style="${style}">
 			<jstl:choose>
-				<jstl:when test="${row.isDraft == true and fn:contains(principalArticles,row)}">
+				<jstl:when test="${(row.isDraft == true) and (fn:contains(principalArticles,row))}">
 					<spring:message var="articleEditLink" code="article.edit"/>
 					<a href="article/user/edit.do?articleId=${row.id}"><jstl:out value="${articleEditLink}"/></a>
 				</jstl:when>

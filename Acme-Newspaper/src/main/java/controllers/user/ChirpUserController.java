@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.ChirpService;
 import services.UserService;
 import services.forms.ChirpFormService;
@@ -36,7 +37,9 @@ public class ChirpUserController extends AbstractController {
 	@Autowired
 	private ChirpService		chirpService;
 
-
+	@Autowired
+	private ActorService		actorService;
+	
 	public ChirpUserController() {
 
 		super();
@@ -74,7 +77,22 @@ public class ChirpUserController extends AbstractController {
 			String messageError = "chirp.commit.error";
 			if (oops.getMessage().contains("message.error"))
 				messageError = oops.getMessage();
-			result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
+			Collection<User> users;
+
+			users = this.userService.findAll();
+
+			result = new ModelAndView("user/list");
+			result.addObject("users", users);
+			result.addObject("requestURI", "user/list.do");
+			
+			if(this.actorService.checkLogin() && actorService.checkAuthority(this.actorService.findByPrincipal(), "USER")){
+				
+				User user = this.userService.findByPrincipal();
+
+				result.addObject("loggedUser",user);
+		}
+			
+			
 			result.addObject("message", messageError);
 
 		}
@@ -97,7 +115,21 @@ public class ChirpUserController extends AbstractController {
 			String messageError = "chirp.commit.error";
 			if (oops.getMessage().contains("message.error"))
 				messageError = oops.getMessage();
-			result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
+			Collection<User> users;
+
+			users = this.userService.findAll();
+
+			result = new ModelAndView("user/list");
+			result.addObject("users", users);
+			result.addObject("requestURI", "user/list.do");
+			
+			if(this.actorService.checkLogin() && actorService.checkAuthority(this.actorService.findByPrincipal(), "USER")){
+				
+				User user = this.userService.findByPrincipal();
+
+				result.addObject("loggedUser",user);
+		}
+			
 			result.addObject("message", messageError);
 
 		}

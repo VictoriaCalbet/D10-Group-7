@@ -1,8 +1,7 @@
 
 package controllers.administrator;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 import javax.validation.Valid;
 
@@ -11,153 +10,102 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import services.SystemConfigurationService;
 import controllers.AbstractController;
+import domain.Article;
+import domain.Chirp;
+import domain.Newspaper;
 import domain.SystemConfiguration;
-import domain.forms.TabooWordForm;
 
 @Controller
-@RequestMapping("/system-configuration/administrator")
+@RequestMapping("/systemConfiguration/administrator")
 public class SystemConfigurationAdministratorController extends AbstractController {
 
-	//Service
 	@Autowired
-	SystemConfigurationService	sysConfService;
+	private SystemConfigurationService	systemConfigurationService;
 
+
+	// Constructors -----------------------------------------------------------
+
+	public SystemConfigurationAdministratorController() {
+		super();
+	}
+
+	// Info -------------------------------------------------------------------
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView listTabooWords() {
-		final ModelAndView result;
-		List<String> tabooWords;
-		tabooWords = new ArrayList<String>();
-		SystemConfiguration sysConf;
-		sysConf = this.sysConfService.findMain();
-		if (sysConf != null)
-			tabooWords.addAll(sysConf.getTabooWords());
+	public ModelAndView info() {
+		ModelAndView result;
+		SystemConfiguration systemConfiguration;
+		final Collection<Newspaper> tabooNewspapers = this.systemConfigurationService.getTabooNewspapers();
+		final Collection<Article> tabooArticles = this.systemConfigurationService.getTabooArticles();
+		final Collection<Chirp> tabooChirps = this.systemConfigurationService.getTabooChirps();
+
+		systemConfiguration = this.systemConfigurationService.findMain();
+
 		result = new ModelAndView("systemConfiguration/list");
-		List<TabooWordForm> listOfTabooForms;
-		listOfTabooForms = new ArrayList<TabooWordForm>();
-		for (final String word : tabooWords) {
-			TabooWordForm tbf;
-			tbf = new TabooWordForm();
-			tbf.setTabooWord(word);
-			listOfTabooForms.add(tbf);
-		}
-		result.addObject("tabooWords", listOfTabooForms);
-		result.addObject("requestURI", "system-configuration/administrator/list.do");
+		result.addObject("systemConfiguration", systemConfiguration);
+		result.addObject("tabooNewspapers", tabooNewspapers);
+		result.addObject("tabooArticles", tabooArticles);
+		result.addObject("tabooChirps", tabooChirps);
+		result.addObject("requestURI", "systemConfiguration/administrator/list.do");
 
 		return result;
 	}
-	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView createTabooWord() {
-		final ModelAndView result;
-		TabooWordForm tabooWordForm;
-		tabooWordForm = new TabooWordForm();
-		tabooWordForm.setTabooWord(" ");
-		tabooWordForm.setOldTabooWord("none");
-		result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/create.do");
-		return result;
 
-	}
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	public ModelAndView deleteTabooWord(@RequestParam final String tabooWord) {
-		final ModelAndView result;
-		result = new ModelAndView("systemConfiguration/list");
-		try {
-			this.sysConfService.deleteTabooWord(tabooWord);
+	// Edition ----------------------------------------------------------------
 
-		} catch (final Throwable oops) {
-			String messageError = "systemconfiguration.commit.error";
-			if (oops.getMessage().contains("message.error"))
-				messageError = oops.getMessage();
-			result.addObject("message", messageError);
-		}
-		List<String> tabooWords;
-		tabooWords = new ArrayList<String>();
-		SystemConfiguration sysConf;
-		sysConf = this.sysConfService.findMain();
-		if (sysConf != null)
-			tabooWords.addAll(sysConf.getTabooWords());
-		List<TabooWordForm> listOfTabooForms;
-		listOfTabooForms = new ArrayList<TabooWordForm>();
-		for (final String word : tabooWords) {
-			TabooWordForm tbf;
-			tbf = new TabooWordForm();
-			tbf.setTabooWord(word);
-			listOfTabooForms.add(tbf);
-		}
-		result.addObject("tabooWords", listOfTabooForms);
-		result.addObject("requestURI", "system-configuration/administrator/list.do");
-		return result;
-	}
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView editTabooWord(@RequestParam final String tabooWord) {
+	public ModelAndView edit() {
 		final ModelAndView result;
-		TabooWordForm tabooWordForm;
-		tabooWordForm = new TabooWordForm();
-		tabooWordForm.setOldTabooWord(tabooWord);
-		tabooWordForm.setTabooWord(tabooWord);
-		result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/edit.do");
+		SystemConfiguration systemConfiguration;
+
+		systemConfiguration = this.systemConfigurationService.findMain();
+		result = this.createEditModelAndView(systemConfiguration);
+
 		return result;
+
 	}
 
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveFromEdit(@Valid final TabooWordForm tabooWordForm, final BindingResult binding) {
+	public ModelAndView save(@Valid final SystemConfiguration systemConfiguration, final BindingResult binding) {
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/edit.do");
+			result = this.createEditModelAndView(systemConfiguration);
 		else
 			try {
-				this.sysConfService.editTabooWord(tabooWordForm.getOldTabooWord(), tabooWordForm.getTabooWord());
-				result = new ModelAndView("redirect:/system-configuration/administrator/list.do");
+				this.systemConfigurationService.saveFromEdit(systemConfiguration);
+				result = new ModelAndView("redirect:list.do");
 			} catch (final Throwable oops) {
-				String messageError = "systemconfiguration.commit.error";
+				String messageError = "systemConfiguration.commit.error";
 				if (oops.getMessage().contains("message.error"))
 					messageError = oops.getMessage();
-				result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/edit.do", messageError);
+				result = this.createEditModelAndView(systemConfiguration, messageError);
 			}
+
 		return result;
 	}
-	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView saveFromCreate(@Valid final TabooWordForm tabooWordForm, final BindingResult binding) {
+
+	// Ancillary method --------------------------------------------------------
+
+	public ModelAndView createEditModelAndView(final SystemConfiguration systemConfiguration) {
 		ModelAndView result;
 
-		if (binding.hasErrors())
-			result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/create.do");
-		else
-			try {
-				this.sysConfService.saveTabooWord(tabooWordForm.getTabooWord());
-				result = new ModelAndView("redirect:/system-configuration/administrator/list.do");
-			} catch (final Throwable oops) {
-				String messageError = "systemconfiguration.commit.error";
-				if (oops.getMessage().contains("message.error"))
-					messageError = oops.getMessage();
-				result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/create.do", messageError);
-			}
-		return result;
-	}
-
-	// Ancillary methods
-
-	public ModelAndView createEditModelAndViewForm(final TabooWordForm tabooWordForm, final String requestURI) {
-		ModelAndView result;
-
-		result = this.createEditModelAndViewForm(tabooWordForm, requestURI, null);
+		result = this.createEditModelAndView(systemConfiguration, null);
 
 		return result;
 	}
 
-	public ModelAndView createEditModelAndViewForm(final TabooWordForm tabooWordForm, final String requestURI, final String message) {
+	public ModelAndView createEditModelAndView(final SystemConfiguration systemConfiguration, final String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("systemConfiguration/edit");
-		result.addObject("tabooWordForm", tabooWordForm);
+		result.addObject("systemConfiguration", systemConfiguration);
 		result.addObject("message", message);
-		result.addObject("requestURI", requestURI);
+		result.addObject("requestURI", "systemConfiguration/administrator/edit.do");
 
 		return result;
 	}

@@ -135,6 +135,16 @@ public class ChirpService {
 
 	}
 
+	public Collection<Chirp> getTabooChirps(final String keyword) {
+		Assert.notNull(keyword);
+
+		Collection<Chirp> result;
+
+		result = this.chirpRepository.getTabooChirps(keyword);
+
+		return result;
+	}
+
 	//Other services required
 
 	public void followUser(final int userId) {
@@ -158,8 +168,16 @@ public class ChirpService {
 	}
 
 	public void unfollowUser(final int userId) {
+		
 		final User u = this.userService.findByPrincipal();
+		
+		Assert.notNull(u);
+		
 		final User followed = this.userService.findOne(userId);
+		
+		Assert.notNull(followed);
+		Assert.isTrue(u.getFollowed().contains(followed),"message.error.chirp.userNotFollowed");
+		
 		final Collection<User> followedUsers = u.getFollowed();
 		final Collection<User> followedUserFollowers = followed.getFollowers();
 

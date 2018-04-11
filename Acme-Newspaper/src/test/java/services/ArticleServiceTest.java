@@ -6,6 +6,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import javax.transaction.Transactional;
+import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,7 +38,24 @@ public class ArticleServiceTest extends AbstractTest {
 
 	// Tests ------------------------------------------------------------------
 	/**
-	 * Acme-Newspaper : Requirement
+	 * Acme-Newspaper: Requirement 6.3
+	 * 
+	 * Write an article and attach it to any newspaper that has not been published, yet.
+	 * Note that articles may be saved in draft mode, which allows to modify them later,
+	 * or final model, which freezes them forever.
+	 * 
+	 * 
+	 * 
+	 * Positive test1: A user writes an article for a public newspaper and has not been published yet.
+	 * Negative test2: A user writes an article for a public newspaper and has already been published.
+	 * Positive test3: A user writes an article for a private newspaper and has not been published yet.
+	 * Negative test4: A user writes an article for a private newspaper and has already been published.
+	 * Negative test5: A user writes an article with an empty title
+	 * Negative test6: A user writes an article with an empty summary
+	 * Negative test7: A user writes an article with an empty body
+	 * Negative test8: An admin tries to write an article
+	 * Negative test9: A customer tries to write an article
+	 * Negative test10: An unlogged user tries to write an article
 	 */
 	@Test
 	public void testCreateArticleDriver() {
@@ -47,22 +65,27 @@ public class ArticleServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 
 			/** userPrincipal,private, Date, title,summary,body,exception */
-			{	//Crea un artículo para un periódico que es público y no ha sido publicado
+			{
 				"user2", n1, false, null, "Title of article1", "Summary of article1", "Body of article1", null
-			}, {//Crea un artículo para un periódico que es público y ya ha sido publicado
+			}, {
 				"user2", n1, false, new Date(System.currentTimeMillis() - 1), "Title of article1", "Summary of article1", "Body of article1", IllegalArgumentException.class
-			}, {//Crea un artículo para un periódico que es privado y no ha sido publicado
+			}, {
 				"user2", n1, true, null, "Title of article1", "Summary of article1", "Body of article1", null
-			}, {//Crea un artículo para un periódico que privado y ya ha sido publicado
+			}, {
 				"user2", n1, true, new Date(System.currentTimeMillis() - 1), "Title of article1", "Summary of article1", "Body of article1", IllegalArgumentException.class
-			}, {//Crea un artículo para un periódico y no añade título
-				"user2", n1, false, new Date(System.currentTimeMillis() - 1), null, "Summary of article1", "Body of article1", IllegalArgumentException.class
-			}, {//Crea un artículo para un periódico y no añade resumen
-				"user2", n1, false, new Date(System.currentTimeMillis() - 1), "Title of article1", null, "Body of article1", IllegalArgumentException.class
-			}, {//Crea un artículo para un periódico y no añade cuerpo
-				"user2", n1, false, new Date(System.currentTimeMillis() - 1), "Title of article1", "Summary of article1", null, IllegalArgumentException.class
+			}, {
+				"user2", n1, false, null, null, "Summary of article1", "Body of article1", ConstraintViolationException.class
+			}, {
+				"user2", n1, false, null, "Title of article1", null, "Body of article1", ConstraintViolationException.class
+			}, {
+				"user2", n1, false, null, "Title of article1", "Summary of article1", null, ConstraintViolationException.class
+			}, {
+				"admin", n1, false, null, "Title of article1", "Summary of article1", "Summary of article1", IllegalArgumentException.class
+			}, {
+				"customer1", n1, false, null, "Title of article1", "Summary of article1", "Summary of article1", IllegalArgumentException.class
+			}, {
+				"null", n1, false, null, "Title of article1", "Summary of article1", "Summary of article1", IllegalArgumentException.class
 			}
-
 		};
 
 		for (int i = 0; i < testingData.length; i++)
@@ -105,6 +128,18 @@ public class ArticleServiceTest extends AbstractTest {
 		this.checkExceptions(expectedException, caught);
 	}
 
+	/**
+	 * Acme-Newspaper: Requirement 6.3:
+	 * 
+	 * Write an article and attach it to any newspaper that has not been published, yet.
+	 * Note that articles may be saved in draft mode, which allows to modify them later,
+	 * or final model, which freezes them forever.
+	 * 
+	 * Positive test1: Save a draft article from a newspaper not published
+	 * Negative test2: Save an article of an already published newspaper
+	 * Negative test3: Save an article that is not created by him/her
+	 */
+
 	@Test
 	public void testSaveArticleDriver() {
 
@@ -112,17 +147,16 @@ public class ArticleServiceTest extends AbstractTest {
 		final Newspaper n4 = this.newspaperService.findOne(this.getEntityId("newspaper4"));//No publicado
 		final Article a4 = this.articleService.findOne(this.getEntityId("article4"));
 		a4.setIsDraft(true);
-		final Article a2 = a4;
-		a2.setIsDraft(false);
 		final Article a3 = this.articleService.findOne(this.getEntityId("article1"));
 		final Object testingData[][] = {
 
 			/** userPrincipal,articulo, periodico, title,summary,body,exception */
-			{	//Guarda un artículo draft que pertenece a un periódico no publicado
+			{
 				"user2", a4, n4, "Title of article1", "Summary of article1", "Body of article1", null
-			}, {	//Guarda un artículo de un periódico que ya ha sido publicado
+
+			}, {
 				"user2", a3, n1, "Title of article1", "Summary of article1", "Body of article1", IllegalArgumentException.class
-			}, {	//Guarda un artículo de un periódico válido pero que no es suyo
+			}, {
 				"user1", a4, n4, "Title of article1", "Summary of article1", "Body of article1", IllegalArgumentException.class
 			}
 
@@ -158,6 +192,14 @@ public class ArticleServiceTest extends AbstractTest {
 		this.checkExceptions(expectedException, caught);
 	}
 
+	/**
+	 * Acme-Newspaper: Requirement 7.1:
+	 * 
+	 * Remove an article that he or she thinks is inappropriate.
+	 * 
+	 * Positive test1: Admin deletes an article
+	 * Negative test2: A user tries to delete an article
+	 */
 	@Test
 	public void testDeleteArticleDriver() {
 
@@ -166,10 +208,14 @@ public class ArticleServiceTest extends AbstractTest {
 		final Object testingData[][] = {
 
 			/** userPrincipal,article,exception */
-			{	//El administrador borra un artículo
+			{
 				"admin", a4, null
-			}, {//Un usuario intenta borrar un artículo
+			}, {
 				"user2", a4, IllegalArgumentException.class
+			}, {
+				"customer1", a4, IllegalArgumentException.class
+			}, {
+				null, a4, IllegalArgumentException.class
 			}
 
 		};
@@ -196,15 +242,24 @@ public class ArticleServiceTest extends AbstractTest {
 		this.checkExceptions(expectedException, caught);
 	}
 
+	/**
+	 * Acme-Newspaper: Requirement 4.4:
+	 * 
+	 * Search for a published article using a single key word that must
+	 * appear somewhere in its title, summary, or body.
+	 * 
+	 * Positive test1: The user find with a key word that must obtain 0 resuls
+	 * Positive test2: The user find with a key word contained in at least 1 article
+	 */
 	@Test
 	public void testFindKeywordArticleDriver() {
 
 		final Object testingData[][] = {
 
 			/** userPrincipal,keyword, encontrados > 0 ,exception */
-			{	//El administrador borra un artículo
+			{
 				"user2", "odkweig3nroimo", false, null
-			}, {//Un usuario intenta borrar un artículo
+			}, {
 				"user2", "title", true, null
 			}
 
@@ -213,6 +268,7 @@ public class ArticleServiceTest extends AbstractTest {
 		for (int i = 0; i < testingData.length; i++)
 			this.testFindKeywordArticleTemplate((String) testingData[i][0], (String) testingData[i][1], (boolean) testingData[i][2], (Class<?>) testingData[i][3]);
 	}
+
 	protected void testFindKeywordArticleTemplate(final String username, final String keyword, final boolean encontrados, final Class<?> expectedException) {
 		this.authenticate(username);
 		Collection<Article> articles = new ArrayList<Article>();

@@ -44,6 +44,7 @@ public class ArticleFormService {
 		final Article a = this.articleService.findOne(articleId);
 
 		final ArticleForm articleForm = new ArticleForm();
+		Assert.isTrue(a.getIsDraft());
 		articleForm.setBody(a.getBody());
 		articleForm.setPictures(a.getPictures());
 		articleForm.setTitle(a.getTitle());
@@ -56,7 +57,6 @@ public class ArticleFormService {
 	}
 	public Article saveFromEdit(final ArticleForm articleForm) {
 		Assert.notNull(articleForm);
-
 		final Article a = this.articleService.findOne(articleForm.getId());
 		a.setTitle(articleForm.getTitle());
 		a.setBody(articleForm.getBody());

@@ -77,6 +77,7 @@ public class ArticleService {
 		final Article result = article;
 		final User principal = this.userService.findByPrincipal();
 		final Newspaper newspaper = article.getNewspaper();
+
 		Assert.isTrue(principal == result.getWriter());
 		Assert.isTrue(newspaper.getPublicationDate() == null);
 		Assert.isTrue(result.getPublicationMoment() == null);
@@ -130,6 +131,16 @@ public class ArticleService {
 	public Collection<Article> findAllByNewspaperId(final int newspaperId) {
 		Collection<Article> result = null;
 		result = this.articleRepository.findAllByNewspaperId(newspaperId);
+		return result;
+	}
+
+	public Collection<Article> getTabooArticles(final String keyword) {
+		Assert.notNull(keyword);
+
+		Collection<Article> result;
+
+		result = this.articleRepository.getTabooArticles(keyword);
+
 		return result;
 	}
 
