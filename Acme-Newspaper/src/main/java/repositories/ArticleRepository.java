@@ -24,6 +24,9 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	@Query("select a from Article a where (a.title like %?1% or a.summary like %?1% or a.body like %?1%)")
 	Collection<Article> getTabooArticles(String tabooWord);
 
+	@Query("select a from Article a where (a.title like %?1% or a.summary like %?1% or a.body like %?1%) and a.newspaper.id = ?2")
+	Collection<Article> findArticleByKeywordAndNewspaperId(String keyword, int newspaperId);
+
 	// Dashboard queries -------------------------------------------------------
 
 	// Acme-Newspaper 1.0 - Requisito 7.3.2
@@ -53,5 +56,4 @@ public interface ArticleRepository extends JpaRepository<Article, Integer> {
 	// Acme-Newspaper 1.0 - Requisito 24.1.3
 	@Query("select avg(n.articles.size) from Newspaper n where n.isPrivate is false")
 	Double avgNoArticlesPerPublicNewspapers();
-
 }
