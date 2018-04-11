@@ -35,7 +35,7 @@ public class NewspaperAdministratorController extends AbstractController {
 		if (word == null || word.equals(""))
 			newspapers = this.newspaperService.findAll();
 		else
-			newspapers = this.newspaperService.findNewspaperByKeyWordNotPrivate(word);
+			newspapers = this.newspaperService.getTabooNewspapers(word);
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
