@@ -52,6 +52,7 @@ public class CustomerServiceTest extends AbstractTest {
 	 * 
 	 * Positive test1: Correct registration
 	 * Negative test2: A customer tries to register with a used username
+	 * Negative test3: A customer tries to register with a invalid email
 	 */
 	@SuppressWarnings("unchecked")
 	@Test
@@ -65,6 +66,10 @@ public class CustomerServiceTest extends AbstractTest {
 			{
 				"testCustomerName1", "testCustomerSurname1", new HashSet<>(Arrays.asList("testCustomerPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testCustomerEmailAddress1@customer1.com")), "customer1",
 				"customer1", IllegalArgumentException.class
+			},
+			{
+				"testCustomerName1", "testCustomerSurname1", new HashSet<>(Arrays.asList("testCustomerPostalAddress1")), new HashSet<>(Arrays.asList("619619619")), new HashSet<>(Arrays.asList("testCustomerEmailAddress1")), "testCustomer1", "customer1",
+				IllegalArgumentException.class
 			}
 		};
 
