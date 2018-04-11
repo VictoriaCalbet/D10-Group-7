@@ -49,16 +49,16 @@ public class ArticleController extends AbstractController {
 	public ModelAndView list(@RequestParam final int newspaperId) {
 		final ModelAndView result;
 		Collection<Article> articles = new ArrayList<Article>();
+		Collection<Article> principalArticles = new ArrayList<Article>();
 		Actor actor = null;
 		User principal = null;
-		if (this.actorService.checkLogin()) {
+		if (this.actorService.checkLogin() == true) {
 			actor = this.actorService.findByPrincipal();
-			if (this.actorService.checkAuthority(actor, "USER"))
+			if (this.actorService.checkAuthority(actor, "USER")) {
 				principal = (User) actor;
+				principalArticles = principal.getArticles();
+			}
 		}
-		Collection<Article> principalArticles = new ArrayList<Article>();
-		principalArticles = principal.getArticles();
-
 		final Newspaper newspaper = this.newsPaperService.findOne(newspaperId);
 		articles = newspaper.getArticles();
 		result = new ModelAndView("article/list");
