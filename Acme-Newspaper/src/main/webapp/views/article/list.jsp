@@ -104,7 +104,7 @@
 	<spring:message code="article.edit" var="editHeader" />
 		<display:column title="${editHeader}" style="${style}">
 			<jstl:choose>
-				<jstl:when test="${row.isDraft == true and fn:contains(principalArticles,row)}">
+				<jstl:when test="${(row.isDraft == true) and (fn:contains(principalArticles,row))}">
 					<spring:message var="articleEditLink" code="article.edit"/>
 					<a href="article/user/edit.do?articleId=${row.id}"><jstl:out value="${articleEditLink}"/></a>
 				</jstl:when>
