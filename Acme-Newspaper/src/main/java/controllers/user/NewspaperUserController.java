@@ -49,7 +49,7 @@ public class NewspaperUserController extends AbstractController {
 		if (word == null || word.equals(""))
 			newspapers = u.getNewspapers();
 		else
-			newspapers = this.newspaperService.findNewspaperByKeyWordNotPrivate(word);
+			newspapers = this.newspaperService.findNewspaperByKeyWordByUser(word, u.getId());
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);

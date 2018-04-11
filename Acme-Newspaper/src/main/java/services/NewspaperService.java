@@ -111,6 +111,10 @@ public class NewspaperService {
 		return this.newspaperRepository.findNewspaperByKeyWord(keyWord);
 	}
 
+	public Collection<Newspaper> findNewspaperByKeyWordByUser(final String keyWord, final int userId) {
+		return this.newspaperRepository.findNewspaperByKeyWordByUser(keyWord, userId);
+	}
+
 	public Integer numArticlesFinalOfNewspaper(final int newspaperId) {
 		return this.newspaperRepository.numArticlesFinalOfNewspaper(newspaperId);
 
