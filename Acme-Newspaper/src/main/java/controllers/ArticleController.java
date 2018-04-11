@@ -13,10 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import services.ActorService;
 import services.ArticleService;
 import services.NewspaperService;
+import domain.Actor;
 import domain.Article;
 import domain.Newspaper;
+import domain.User;
 
 @Controller
 @RequestMapping("/article")
@@ -29,6 +32,9 @@ public class ArticleController extends AbstractController {
 
 	@Autowired
 	private ArticleService		articleService;
+
+	@Autowired
+	private ActorService		actorService;
 
 
 	//Constructor
@@ -43,16 +49,25 @@ public class ArticleController extends AbstractController {
 	public ModelAndView list(@RequestParam final int newspaperId) {
 		final ModelAndView result;
 		Collection<Article> articles = new ArrayList<Article>();
-
+		Collection<Article> principalArticles = new ArrayList<Article>();
+		Actor actor = null;
+		User principal = null;
+		if (this.actorService.checkLogin() == true) {
+			actor = this.actorService.findByPrincipal();
+			if (this.actorService.checkAuthority(actor, "USER")) {
+				principal = (User) actor;
+				principalArticles = principal.getArticles();
+			}
+		}
 		final Newspaper newspaper = this.newsPaperService.findOne(newspaperId);
 		articles = newspaper.getArticles();
-		result = new ModelAndView("article/list");//tiles
+		result = new ModelAndView("article/list");
 		result.addObject("articles", articles);
+		result.addObject("principalArticles", principalArticles);
 		result.addObject("requestURI", "article/list.do");
 		return result;
 
 	}
-
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int articleId) {
 		final ModelAndView result;
