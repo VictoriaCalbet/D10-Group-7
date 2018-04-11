@@ -71,8 +71,7 @@ public class FollowUpUserController extends AbstractController {
 		article = this.articleService.findOne(articleId);
 		followUps = article.getFollowUps();
 
-		if (article.getNewspaper().getIsPrivate() && article.getNewspaper().getPublicationDate() != null)
-			Assert.isTrue(this.subscriptionService.thisCustomerCanSeeThisNewspaper(user.getId(), article.getNewspaper().getId()));
+		Assert.isTrue(article.getNewspaper().getIsPrivate() && article.getNewspaper().getPublicationDate() != null && article.getIsDraft() == false);
 
 		requestURI = "follow-up/user/list.do";
 		displayURI = "follow-up/user/display.do?followUpId=";
@@ -84,7 +83,6 @@ public class FollowUpUserController extends AbstractController {
 
 		return result;
 	}
-
 	// Creation  ------------------------------------------------------------
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
