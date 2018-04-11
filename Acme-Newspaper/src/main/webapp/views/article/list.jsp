@@ -153,8 +153,8 @@
 
 <security:authorize access="isAuthenticated()">
 	<jstl:if test="${not empty articles}">
-		<span style="background-color: #ffad9b; border-radius: 15px 50px;">&nbsp;&nbsp;<spring:message
-				code="article.isDraft" />&nbsp;&nbsp;
+		<span style="background-color: #ffad9b; border-radius: 15px 50px;">&nbsp;&nbsp;
+		<spring:message	code="article.draftMessage" />&nbsp;&nbsp;
 		</span>
 	</jstl:if>
 </security:authorize>

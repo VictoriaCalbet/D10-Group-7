@@ -59,9 +59,11 @@
 		</tr>
 	</table>
 	
-	<jstl:if test="${followup.user.userAccount.id eq loggedactor.id}">
-		<acme:cancel url="${editURI}" code="follow-up.edit"/>
-	</jstl:if>
+	<security:authorize access="hasRole('USER')">
+		<jstl:if test="${followup.user.userAccount.id eq loggedactor.id}">
+			<acme:cancel url="${editURI}" code="follow-up.edit"/>
+		</jstl:if>
+	</security:authorize>
 	
 	<acme:cancel url="${cancelURI}" code="follow-up.cancel"/>
 </fieldset>
