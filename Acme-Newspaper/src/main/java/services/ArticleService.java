@@ -192,6 +192,10 @@ public class ArticleService {
 		return this.articleRepository.findArticleByKeyword(keyword);
 	}
 
+	public Collection<Article> findArticleByKeywordAndNewspaperId(final String keyword, final int newspaperId) {
+		return this.articleRepository.findArticleByKeywordAndNewspaperId(keyword, newspaperId);
+	}
+
 	public Collection<Article> findArticleByKeywordByUser(final String keyword, final int userId) {
 		return this.articleRepository.findArticleByKeywordByUser(keyword, userId);
 	}
