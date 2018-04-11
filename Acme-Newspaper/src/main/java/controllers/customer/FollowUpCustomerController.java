@@ -63,6 +63,8 @@ public class FollowUpCustomerController extends AbstractController {
 		article = this.articleService.findOne(articleId);
 		followUps = article.getFollowUps();
 
+		Assert.isTrue(article.getNewspaper().getPublicationDate() != null && article.getIsDraft() == false);
+
 		if (article.getNewspaper().getIsPrivate())
 			Assert.isTrue(this.subscriptionService.thisCustomerCanSeeThisNewspaper(customer.getId(), article.getNewspaper().getId()));
 
