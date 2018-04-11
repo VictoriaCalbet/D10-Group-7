@@ -38,18 +38,27 @@ public class SystemConfigurationAdministratorController extends AbstractControll
 		if (sysConf != null)
 			tabooWords.addAll(sysConf.getTabooWords());
 		result = new ModelAndView("systemConfiguration/list");
-		result.addObject(tabooWords);
-		result.addObject("requestURI", "systemConfiguration/list.do");
+		List<TabooWordForm> listOfTabooForms;
+		listOfTabooForms = new ArrayList<TabooWordForm>();
+		for (final String word : tabooWords) {
+			TabooWordForm tbf;
+			tbf = new TabooWordForm();
+			tbf.setTabooWord(word);
+			listOfTabooForms.add(tbf);
+		}
+		result.addObject("tabooWords", listOfTabooForms);
+		result.addObject("requestURI", "system-configuration/administrator/list.do");
 
 		return result;
 	}
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
-	public ModelAndView createTabooWord(@RequestParam final String tabooWord) {
+	public ModelAndView createTabooWord() {
 		final ModelAndView result;
 		TabooWordForm tabooWordForm;
 		tabooWordForm = new TabooWordForm();
-		tabooWordForm.setTabooWord(tabooWord);
-		result = this.createEditModelAndViewForm(tabooWordForm);
+		tabooWordForm.setTabooWord(" ");
+		tabooWordForm.setOldTabooWord("none");
+		result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/create.do");
 		return result;
 
 	}
@@ -72,19 +81,26 @@ public class SystemConfigurationAdministratorController extends AbstractControll
 		sysConf = this.sysConfService.findMain();
 		if (sysConf != null)
 			tabooWords.addAll(sysConf.getTabooWords());
-
-		result.addObject(tabooWords);
-		result.addObject("requestURI", "systemConfiguration/list.do");
+		List<TabooWordForm> listOfTabooForms;
+		listOfTabooForms = new ArrayList<TabooWordForm>();
+		for (final String word : tabooWords) {
+			TabooWordForm tbf;
+			tbf = new TabooWordForm();
+			tbf.setTabooWord(word);
+			listOfTabooForms.add(tbf);
+		}
+		result.addObject("tabooWords", listOfTabooForms);
+		result.addObject("requestURI", "system-configuration/administrator/list.do");
 		return result;
 	}
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public ModelAndView createTabooWord(@RequestParam final String tabooWord, @RequestParam final String newTabooWord) {
+	public ModelAndView editTabooWord(@RequestParam final String tabooWord) {
 		final ModelAndView result;
 		TabooWordForm tabooWordForm;
 		tabooWordForm = new TabooWordForm();
 		tabooWordForm.setOldTabooWord(tabooWord);
-		tabooWordForm.setTabooWord(newTabooWord);
-		result = this.createEditModelAndViewForm(tabooWordForm);
+		tabooWordForm.setTabooWord(tabooWord);
+		result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/edit.do");
 		return result;
 	}
 
@@ -93,16 +109,16 @@ public class SystemConfigurationAdministratorController extends AbstractControll
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndViewForm(tabooWordForm);
+			result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/edit.do");
 		else
 			try {
 				this.sysConfService.editTabooWord(tabooWordForm.getOldTabooWord(), tabooWordForm.getTabooWord());
-				result = new ModelAndView("redirect:system-configuration/administrator/list");
+				result = new ModelAndView("redirect:/system-configuration/administrator/list.do");
 			} catch (final Throwable oops) {
 				String messageError = "systemconfiguration.commit.error";
 				if (oops.getMessage().contains("message.error"))
 					messageError = oops.getMessage();
-				result = this.createEditModelAndViewForm(tabooWordForm, messageError);
+				result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/edit.do", messageError);
 			}
 		return result;
 	}
@@ -111,37 +127,37 @@ public class SystemConfigurationAdministratorController extends AbstractControll
 		ModelAndView result;
 
 		if (binding.hasErrors())
-			result = this.createEditModelAndViewForm(tabooWordForm);
+			result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/create.do");
 		else
 			try {
 				this.sysConfService.saveTabooWord(tabooWordForm.getTabooWord());
-				result = new ModelAndView("redirect:system-configuration/administrator/list");
+				result = new ModelAndView("redirect:/system-configuration/administrator/list.do");
 			} catch (final Throwable oops) {
 				String messageError = "systemconfiguration.commit.error";
 				if (oops.getMessage().contains("message.error"))
 					messageError = oops.getMessage();
-				result = this.createEditModelAndViewForm(tabooWordForm, messageError);
+				result = this.createEditModelAndViewForm(tabooWordForm, "system-configuration/administrator/create.do", messageError);
 			}
 		return result;
 	}
 
 	// Ancillary methods
 
-	public ModelAndView createEditModelAndViewForm(final TabooWordForm tabooWordForm) {
+	public ModelAndView createEditModelAndViewForm(final TabooWordForm tabooWordForm, final String requestURI) {
 		ModelAndView result;
 
-		result = this.createEditModelAndViewForm(tabooWordForm, null);
+		result = this.createEditModelAndViewForm(tabooWordForm, requestURI, null);
 
 		return result;
 	}
 
-	public ModelAndView createEditModelAndViewForm(final TabooWordForm tabooWordForm, final String message) {
+	public ModelAndView createEditModelAndViewForm(final TabooWordForm tabooWordForm, final String requestURI, final String message) {
 		ModelAndView result;
 
 		result = new ModelAndView("systemConfiguration/edit");
 		result.addObject("tabooWordForm", tabooWordForm);
 		result.addObject("message", message);
-		result.addObject("requestURI", "systemConfiguration/edit.do");
+		result.addObject("requestURI", requestURI);
 
 		return result;
 	}

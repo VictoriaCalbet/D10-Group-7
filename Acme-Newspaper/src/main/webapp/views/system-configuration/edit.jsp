@@ -18,3 +18,18 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<form:form action="${requestURI}" modelAttribute="tabooWordForm">
+
+
+	<form:hidden path="oldTabooWord"/>
+	
+
+	
+	<acme:textbox code="systemconfiguration.tabooword" path="tabooWord"/>
+	
+	
+	
+	<acme:submit name="save" code="systemconfiguration.save" /> &nbsp;
+	<acme:cancel url="/system-configuration/administrator/list.do" code="systemconfiguration.cancel" /> <br/>
+
+</form:form>

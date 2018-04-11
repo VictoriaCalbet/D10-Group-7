@@ -75,6 +75,7 @@
 						<spring:message code="master.page.administrators" /></a></li>
 				</ul>
 			</li>
+			<li><a class="fNiv" href="system-configuration/administrator/list.do"><spring:message code="master.page.systemconfiguration.administrator.list" /></a></li>
 		</security:authorize>
 
 		<security:authorize access="hasRole('CUSTOMER')">

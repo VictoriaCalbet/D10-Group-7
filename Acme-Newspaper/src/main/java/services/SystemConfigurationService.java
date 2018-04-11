@@ -56,8 +56,9 @@ public class SystemConfigurationService {
 		String tabooWordTrim;
 		tabooWordTrim = tabooWord.trim();
 		this.checkTabooWord(tabooWordTrim);
-		Assert.isTrue(!sysConfiguration.getTabooWords().contains(tabooWord), "message.error.systemconfiguration.iscreate");
+		Assert.isTrue(!(sysConfiguration.getTabooWords().contains(tabooWord)), "message.error.systemconfiguration.iscreate");
 		sysConfiguration.getTabooWords().add(tabooWord);
+		System.out.println("llega");
 		SystemConfiguration sysConfigurationInDB;
 		sysConfigurationInDB = this.systemConfigurationRepository.save(sysConfiguration);
 		return sysConfigurationInDB;
@@ -73,7 +74,7 @@ public class SystemConfigurationService {
 		String tabooWordTrim;
 		tabooWordTrim = tabooWord.trim();
 		this.checkTabooWord(tabooWordTrim);
-		Assert.isTrue(sysConfiguration.getTabooWords().contains(tabooWord), "message.error.systemconfiguration.isnotcreate");
+		Assert.isTrue(sysConfiguration.getTabooWords().contains(oldTabooWord), "message.error.systemconfiguration.isnotcreate");
 		List<String> tabooWords;
 		tabooWords = new ArrayList<String>(sysConfiguration.getTabooWords());
 		tabooWords.set(tabooWords.indexOf(oldTabooWord), tabooWord);

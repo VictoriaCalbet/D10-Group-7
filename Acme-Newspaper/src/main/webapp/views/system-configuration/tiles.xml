@@ -16,13 +16,13 @@
        
 <tiles-definitions>
 
-	<definition name="system-configuration/list" extends="master.page">	
-		<put-attribute name="title" value="List of system configurations" />
+	<definition name="systemConfiguration/list" extends="master.page">	
+		<put-attribute name="title" value="List of taboo words" />
 		<put-attribute name="body" value="/views/system-configuration/list.jsp" />
 	</definition>
 	
-	<definition name="system-configuration/edit" extends="master.page">	
-		<put-attribute name="title" value="Edit a system configuration" />
+	<definition name="systemConfiguration/edit" extends="master.page">	
+		<put-attribute name="title" value="Edit a taboo word" />
 		<put-attribute name="body" value="/views/system-configuration/edit.jsp" />
 	</definition>
 	
