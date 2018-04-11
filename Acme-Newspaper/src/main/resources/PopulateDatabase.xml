@@ -323,7 +323,7 @@
 		<property name="title" value="Title of Article 1"/>
 		<property name="summary" value="Toxic cloud made neighbours evacuate"/>
 		<property name="body" value="An employee messed it all up after accidentally mixing two chemical components in a pool." />
-		<property name="publicationMoment" value="01/11/2016 10:00" />
+		<property name="publicationMoment" value="2016/11/01 10:00" />
 		<property name="pictures"> 
 			<list>			
 			</list>
@@ -341,7 +341,7 @@
 		<property name="title" value="Title of Article 2"/>
 		<property name="summary" value="Chaos in supermatket due to Nutella on sale"/>
 		<property name="body" value="Clients caused chaos in a supermarket. They pushed and kicked each other. The reason? The Nutella had a 70% discount." />
-		<property name="publicationMoment" value="01/11/2016 10:00" />
+		<property name="publicationMoment" value="2016/11/01 10:00" />
 		<property name="pictures">
 			<list>
 			</list>
@@ -359,7 +359,7 @@
 		<property name="title" value="Title of Article 3"/>
 		<property name="summary" value="College student can sleep well and pass exams while having social life"/>
 		<property name="body" value="A student has been able to break the laws of nature. He is able to have an active social life while speeling well and passing all of his exams." />
-		<property name="publicationMoment" value="01/11/2016 12:00" />
+		<property name="publicationMoment" value="2016/11/01 12:00" />
 		<property name="pictures">
 			<list>			
 			</list>
@@ -398,7 +398,7 @@
 		<property name="title" value="FollowUp of Article 3"/>
 		<property name="summary" value="College student still breaks the immutable triangle"/>
 		<property name="text" value="Believe it or not, the student has passed all his exams while having a hangover after last night's party. Truly impressive. 'It's true I didn't sleep that much last night, but hey! I am not so tired, because the previous day I slept for 12 hours!'" />
-		<property name="publicationMoment" value="04/11/2016 10:00" />
+		<property name="publicationMoment" value="2016/11/04 10:00" />
 		<property name="pictures">
 			<list>
 			</list>
@@ -413,7 +413,7 @@
 		<property name="title" value="Difficult to believe (yet true)"/>
 		<property name="description" value="A newspaper dedicated to inform about ridiculously hard to believe yet true news."/>
 		<property name="picture"><null/></property>
-		<property name="publicationDate" value="01/11/2016" />
+		<property name="publicationDate" value="2016/11/01 00:00" />
 		<property name="isPrivate" value="false"/>
 		<property name="publisher" ref="user1"/>
 		<property name="articles">
@@ -432,7 +432,7 @@
 		<property name="title" value="The World Hoy"/>
 		<property name="description" value="A newspaper dedicated to inform about shocking news that happen around the globe."/>
 		<property name="picture"><null/></property>
-		<property name="publicationDate" value="01/11/2016" />
+		<property name="publicationDate" value="2016/11/01 00:00" />
 		<property name="isPrivate" value="true"/>
 		<property name="publisher" ref="user2"/>
 		<property name="articles">
