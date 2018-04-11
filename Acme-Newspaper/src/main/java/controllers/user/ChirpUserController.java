@@ -1,3 +1,4 @@
+
 package controllers.user;
 
 import java.util.ArrayList;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.ModelAndView;
 import services.ChirpService;
 import services.UserService;
 import services.forms.ChirpFormService;
-
 import controllers.AbstractController;
 import domain.Chirp;
 import domain.User;
@@ -25,24 +25,25 @@ import domain.forms.ChirpForm;
 
 @Controller
 @RequestMapping("/chirp/user")
-public class ChirpUserController extends AbstractController{
+public class ChirpUserController extends AbstractController {
 
 	@Autowired
-	private UserService					userService;
-	
+	private UserService			userService;
+
 	@Autowired
-	private ChirpFormService					chirpFormService;
-	
+	private ChirpFormService	chirpFormService;
+
 	@Autowired
-	private ChirpService					chirpService;
-	
-	public ChirpUserController(){
-		
+	private ChirpService		chirpService;
+
+
+	public ChirpUserController() {
+
 		super();
 	}
-	
+
 	///List own chirps
-	
+
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView list() {
 		ModelAndView result;
@@ -56,56 +57,55 @@ public class ChirpUserController extends AbstractController{
 
 		return result;
 	}
-	
+
 	//Following a user
 	@RequestMapping(value = "/follow", method = RequestMethod.GET)
-	public ModelAndView follow(@RequestParam int userId) {
+	public ModelAndView follow(@RequestParam final int userId) {
 		ModelAndView result;
-		
-		try {
-		
-		Assert.notNull(this.userService.findOne(userId),"message.error.user.null");	
-		this.chirpService.followUser(userId);
 
-		result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
-		result.addObject("loggedUser",this.userService.findByPrincipal());
-		}catch(Throwable oops){
+		try {
+
+			Assert.notNull(this.userService.findOne(userId), "message.error.user.null");
+			this.chirpService.followUser(userId);
+
+			result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
+			result.addObject("loggedUser", this.userService.findByPrincipal());
+		} catch (final Throwable oops) {
 			String messageError = "chirp.commit.error";
 			if (oops.getMessage().contains("message.error"))
 				messageError = oops.getMessage();
 			result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
-			result.addObject("message",messageError);
-			
+			result.addObject("message", messageError);
+
 		}
 		return result;
 	}
-	
+
 	//Unfollowing a user
-		@RequestMapping(value = "/unfollow", method = RequestMethod.GET)
-		public ModelAndView unfollow(@RequestParam int userId) {
-			ModelAndView result;
-			
-			try {
-			
-			Assert.notNull(this.userService.findOne(userId),"message.error.user.null");	
+	@RequestMapping(value = "/unfollow", method = RequestMethod.GET)
+	public ModelAndView unfollow(@RequestParam final int userId) {
+		ModelAndView result;
+
+		try {
+
+			Assert.notNull(this.userService.findOne(userId), "message.error.user.null");
 			this.chirpService.unfollowUser(userId);
 
 			result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
-			result.addObject("loggedUser",this.userService.findByPrincipal());
-			}catch(Throwable oops){
-				String messageError = "chirp.commit.error";
-				if (oops.getMessage().contains("message.error"))
-					messageError = oops.getMessage();
-				result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
-				result.addObject("message",messageError);
-				
-				
-			}
-			return result;
+			result.addObject("loggedUser", this.userService.findByPrincipal());
+		} catch (final Throwable oops) {
+			String messageError = "chirp.commit.error";
+			if (oops.getMessage().contains("message.error"))
+				messageError = oops.getMessage();
+			result = new ModelAndView("redirect:/chirp/user/listFollowedUsers.do");
+			result.addObject("message", messageError);
+
 		}
-	
+		return result;
+	}
+
 	//List followed's chirps
-	
+
 	@RequestMapping(value = "/listFollowedChirps", method = RequestMethod.GET)
 	public ModelAndView listFollowerChirps() {
 		ModelAndView result;
@@ -115,98 +115,97 @@ public class ChirpUserController extends AbstractController{
 
 		result = new ModelAndView("chirp/list");
 		result.addObject("chirps", chirps);
-		result.addObject("requestURI", "chirp/user/listFollowerChirps.do");
+		result.addObject("requestURI", "chirp/user/listFollowedChirps.do");
 
 		return result;
 	}
-	
+
 	//List followed users
-	
-			@RequestMapping(value = "/listFollowedUsers", method = RequestMethod.GET)
-			public ModelAndView listFollowedUsers() {
-				ModelAndView result;
-				Collection<User> users = new ArrayList<User>();
-				final User u = this.userService.findByPrincipal();
-				users = u.getFollowed();
 
-				result = new ModelAndView("user/list");
-				result.addObject("users", users);
-				result.addObject("requestURI", "user/listFollowedUsers.do");
-				result.addObject("loggedUser",this.userService.findByPrincipal());
+	@RequestMapping(value = "/listFollowedUsers", method = RequestMethod.GET)
+	public ModelAndView listFollowedUsers() {
+		ModelAndView result;
+		Collection<User> users = new ArrayList<User>();
+		final User u = this.userService.findByPrincipal();
+		users = u.getFollowed();
 
-				return result;
-			}
-			
-			//List followed users
-			
-				@RequestMapping(value = "/listFollowers", method = RequestMethod.GET)
-				public ModelAndView listFollowers() {
-					ModelAndView result;
-					Collection<User> users = new ArrayList<User>();
-					final User u = this.userService.findByPrincipal();
-					users = u.getFollowers();
+		result = new ModelAndView("user/list");
+		result.addObject("users", users);
+		result.addObject("requestURI", "chirp/user/listFollowedUsers.do");
+		result.addObject("loggedUser", this.userService.findByPrincipal());
 
-					result = new ModelAndView("user/list");
-					result.addObject("users", users);
-					result.addObject("requestURI", "user/listFollowers.do");
-					result.addObject("loggedUser",this.userService.findByPrincipal());
-					
-					return result;
-				}	
+		return result;
+	}
 
-	
+	//List followed users
+
+	@RequestMapping(value = "/listFollowers", method = RequestMethod.GET)
+	public ModelAndView listFollowers() {
+		ModelAndView result;
+		Collection<User> users = new ArrayList<User>();
+		final User u = this.userService.findByPrincipal();
+		users = u.getFollowers();
+
+		result = new ModelAndView("user/list");
+		result.addObject("users", users);
+		result.addObject("requestURI", "chirp/user/listFollowers.do");
+		result.addObject("loggedUser", this.userService.findByPrincipal());
+
+		return result;
+	}
+
 	// Creation ----------------------------------------------------------------
 
-		@RequestMapping(value = "/create", method = RequestMethod.GET)
-		public ModelAndView create() {
-			final ModelAndView result;
-			ChirpForm chirpForm;
+	@RequestMapping(value = "/create", method = RequestMethod.GET)
+	public ModelAndView create() {
+		final ModelAndView result;
+		ChirpForm chirpForm;
 
-			chirpForm = this.chirpFormService.create();
+		chirpForm = this.chirpFormService.create();
+		result = this.createModelAndView(chirpForm);
+		return result;
+
+	}
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
+	public ModelAndView create(@Valid final ChirpForm chirpForm, final BindingResult binding) {
+		//		this.rendezvousFormValidator.validate(rendezvousForm, binding);
+
+		ModelAndView result;
+
+		if (binding.hasErrors())
 			result = this.createModelAndView(chirpForm);
-			return result;
+		else
+			try {
+				this.chirpFormService.saveFromCreate(chirpForm);
+				result = new ModelAndView("redirect:/chirp/user/list.do");
+			} catch (final Throwable oops) {
+				String messageError = "chirp.commit.error";
+				if (oops.getMessage().contains("message.error"))
+					messageError = oops.getMessage();
+				result = this.createModelAndView(chirpForm, messageError);
+			}
 
-		}
-		
-		@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-		public ModelAndView create(@Valid final ChirpForm chirpForm, final BindingResult binding) {
-			//		this.rendezvousFormValidator.validate(rendezvousForm, binding);
+		return result;
+	}
 
-			ModelAndView result;
+	// Ancillaty methods
+	protected ModelAndView createModelAndView(final ChirpForm chirpForm) {
+		ModelAndView result;
 
-			if (binding.hasErrors())
-				result = this.createModelAndView(chirpForm);
-			else
-				try {
-					this.chirpFormService.saveFromCreate(chirpForm);
-					result = new ModelAndView("redirect:/chirp/user/list.do");
-				} catch (final Throwable oops) {
-					String messageError = "chirp.commit.error";
-					if (oops.getMessage().contains("message.error"))
-						messageError = oops.getMessage();
-					result = this.createModelAndView(chirpForm, messageError);
-				}
+		result = this.createModelAndView(chirpForm, null);
 
-			return result;
-		}	
-		
-		// Ancillaty methods
-		protected ModelAndView createModelAndView(final ChirpForm chirpForm) {
-			ModelAndView result;
+		return result;
+	}
 
-			result = this.createModelAndView(chirpForm, null);
+	protected ModelAndView createModelAndView(final ChirpForm chirpForm, final String message) {
+		ModelAndView result;
 
-			return result;
-		}
+		result = new ModelAndView("chirp/edit");
+		result.addObject("chirpForm", chirpForm);
+		result.addObject("message", message);
 
-		protected ModelAndView createModelAndView(final ChirpForm chirpForm, final String message) {
-			ModelAndView result;
+		return result;
+	}
 
-			result = new ModelAndView("chirp/edit");
-			result.addObject("chirpForm", chirpForm);
-			result.addObject("message", message);
-
-			return result;
-		}
-	
 }

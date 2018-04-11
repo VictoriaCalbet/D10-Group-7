@@ -42,7 +42,7 @@ public class AdministratorAdministratorController extends AbstractController {
 
 		result = new ModelAndView("administrator/list");
 		result.addObject("administrators", administrators);
-		result.addObject("requestURI", "administrator/list.do");
+		result.addObject("requestURI", "administrator/administrator/list.do");
 		return result;
 	}
 
@@ -109,7 +109,7 @@ public class AdministratorAdministratorController extends AbstractController {
 		result = new ModelAndView("actorForm/edit");
 		result.addObject("actorForm", actorForm);
 		result.addObject("message", message);
-		result.addObject("requestURI", "administrator/edit.do");
+		result.addObject("requestURI", "administrator/administrator/edit.do");
 
 		return result;
 	}

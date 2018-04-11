@@ -33,6 +33,7 @@ public class NewspaperController extends AbstractController {
 
 	@Autowired
 	private ActorService		actorService;
+
 	@Autowired
 	private CustomerService		customerService;
 
@@ -93,7 +94,7 @@ public class NewspaperController extends AbstractController {
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
 		result.addObject("ns", ns);
-		result.addObject("requestURI", "newspaper/list.do");
+		result.addObject("requestURI", "newspaper/searchWord.do");
 		return result;
 
 	}

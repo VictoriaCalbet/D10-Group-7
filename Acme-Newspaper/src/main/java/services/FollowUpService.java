@@ -72,7 +72,7 @@ public class FollowUpService {
 		Assert.isTrue(!followUp.getArticle().getIsDraft(), "message.error.followUp.articleIsDraft");
 		Assert.notNull(followUp.getArticle().getNewspaper().getPublicationDate(), "message.error.followUp.theNewspaperHasntBeenPublishedYet");
 
-		followUp.setPublicationMoment(new Date());
+		followUp.setPublicationMoment(new Date(System.currentTimeMillis() - 1));
 
 		// Paso 1: realizo la entidad del servicio FollowUp
 

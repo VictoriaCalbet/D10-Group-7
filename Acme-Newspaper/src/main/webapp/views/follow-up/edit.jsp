@@ -68,7 +68,7 @@
 			<acme:textarea code="follow-up.pictures" path="pictures"/>
 			
 			<acme:submit name="save" code="follow-up.save"/> &nbsp;
-			<acme:cancel url="follow-up/user/list.do" code="follow-up.cancel"/>
+			<acme:cancel url="article/user/listOwnArticles.do" code="follow-up.cancel"/>
 			<br/>
 		</form:form>
 		
