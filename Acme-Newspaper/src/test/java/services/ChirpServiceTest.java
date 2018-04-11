@@ -42,7 +42,7 @@ public class ChirpServiceTest extends AbstractTest{
 		 */
 		@Test
 		public void testSaveFromCreateChirp() {
-			// Chirp: title, description, publicationMoment, user, expected exception.
+			// Chirp: title, description, user, expected exception.
 			User user = this.userService.findOne(getEntityId("user1"));
 			final Object[][] testingData = {
 				{
@@ -96,29 +96,31 @@ public class ChirpServiceTest extends AbstractTest{
 		 * 
 		 * Test 1: positive case
 		 * Test 2: negative case; the user tries to follow itself
-		 * 
+		 * Test 3: negative case; the user tries to follow the same user twice
 		 */
 		
 		@Test
 		public void testFollowUser() {
-			// Chirp: User, expected exception.
+			// Chirp: User, user, expected exception.
 			User user = this.userService.findOne(getEntityId("user1"));
 			User user2 = this.userService.findOne(getEntityId("user2"));
 			final Object[][] testingData = {
 				{
-					user, null
+					user, null, null
 				},
 				{
-					user2, IllegalArgumentException.class
+					user2, null, IllegalArgumentException.class
+				},{
+					user, user, IllegalArgumentException.class
 				}
 			};
 
 			for (int i = 0; i < testingData.length; i++)
-				this.testFollowUser((User) testingData[i][0], (Class<?>) testingData[i][1]);
+				this.testFollowUser((User) testingData[i][0], (User) testingData[i][1],(Class<?>) testingData[i][2]);
 
 		}
 
-		protected void testFollowUser(final User user, final Class<?> expectedException) {
+		protected void testFollowUser(final User user, final User user2, final Class<?> expectedException) {
 
 			Class<?> caught = null;
 
@@ -131,6 +133,11 @@ public class ChirpServiceTest extends AbstractTest{
 				
 				Assert.isTrue(this.userService.findByPrincipal().getFollowed().contains(user));
 
+				if(user2!=null){
+					
+					this.chirpService.followUser(user2.getId());
+				}
+				
 			} catch (final Throwable oops) {
 				caught = oops.getClass();
 			} finally {
@@ -148,26 +155,31 @@ public class ChirpServiceTest extends AbstractTest{
 		 * Follow or unfollow another user. This test will be dedicated to unfollowing users functionality.
 		 * 
 		 * Test 1: positive case
-		 * 
+		 * Test 2: negative case; the user to unfollow is null
+		 * Test 3: negative case; the user tries to unfollow a user they weren't previously following
 		 */
 		
 		@Test
 		public void testUnfollowUser() {
-			// Chirp: User, expected exception.
+			// Arguments: User, user, expected exception.
 			
 			User user2 = this.userService.findOne(getEntityId("user2"));
 			final Object[][] testingData = {
 				{
-					user2, null
+					user2, null, null
+				},{
+					null, null, NullPointerException.class
+				},{
+					user2, user2, IllegalArgumentException.class
 				}
 			};
 
 			for (int i = 0; i < testingData.length; i++)
-				this.testUnfollowUser((User) testingData[i][0], (Class<?>) testingData[i][1]);
+				this.testUnfollowUser((User) testingData[i][0],(User) testingData[i][1], (Class<?>) testingData[i][2]);
 
 		}
 
-		protected void testUnfollowUser(final User user, final Class<?> expectedException) {
+		protected void testUnfollowUser(final User user, final User user2,final Class<?> expectedException) {
 
 			Class<?> caught = null;
 
@@ -178,7 +190,13 @@ public class ChirpServiceTest extends AbstractTest{
 				this.chirpService.unfollowUser(user.getId());
 				this.chirpService.flush();
 				Assert.isTrue(!this.userService.findByPrincipal().getFollowed().contains(user));
-
+				
+				if(user2!=null){
+					
+					this.chirpService.unfollowUser(user2.getId());
+					this.chirpService.flush();
+				}
+				
 			} catch (final Throwable oops) {
 				caught = oops.getClass();
 			} finally {
@@ -197,33 +215,37 @@ public class ChirpServiceTest extends AbstractTest{
 		 * 
 		 * Test 1: positive case
 		 * Test 2: negative case; the chirp to delete is null
+		 * Test 3: negative case; the logged actor isn't an administrator
 		 */
 		
 		@Test
 		public void testDeleteChirp() {
-			// Chirp: Chirp, expected exception.
+			// Chirp: Chirp, loggedactor, expected exception.
 			Chirp chirp = this.chirpService.findOne(this.getEntityId("chirp1"));
 			final Object[][] testingData = {
 				{
-					chirp, null
+					chirp, "admin", null
 				},
 				{
-					null, IllegalArgumentException.class
+					null, "admin", IllegalArgumentException.class
+				},
+				{
+					chirp, "user1", IllegalArgumentException.class
 				}
 			};
 
 			for (int i = 0; i < testingData.length; i++)
-				this.testDeleteChirp((Chirp) testingData[i][0], (Class<?>) testingData[i][1]);
+				this.testDeleteChirp((Chirp) testingData[i][0],(String) testingData[i][1], (Class<?>) testingData[i][2]);
 
 		}
 
-		protected void testDeleteChirp(final Chirp chirp, final Class<?> expectedException) {
+		protected void testDeleteChirp(final Chirp chirp,final String loggedUser, final Class<?> expectedException) {
 
 			Class<?> caught = null;
 
 			try {
 				
-				this.authenticate("admin");
+				this.authenticate(loggedUser);
 				
 				this.chirpService.delete(chirp);
 				this.chirpService.flush();
