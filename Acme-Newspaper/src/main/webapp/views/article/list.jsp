@@ -29,9 +29,7 @@
 </form>
 <br>
 
-<display:table name="articles" id="row" requestURI="${requestURI}"
-	pagesize="5">
-
+<display:table name="articles" id="row" requestURI="${requestURI}" pagesize="5">
 
 	<jstl:set var="isDraft" value="${row.isDraft}" />
 

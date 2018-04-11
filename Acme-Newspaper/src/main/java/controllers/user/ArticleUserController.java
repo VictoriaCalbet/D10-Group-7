@@ -88,7 +88,7 @@ public class ArticleUserController extends AbstractController {
 		result = new ModelAndView("article/user/list");//tiles
 		result.addObject("articles", articles);
 		result.addObject("principalArticles", principalArticles);
-		result.addObject("requestURI", "article/user/list.do");//view
+		result.addObject("requestURI", "article/user/listOwnArticles.do");//view
 		result.addObject("principal", principal);
 		return result;
 
