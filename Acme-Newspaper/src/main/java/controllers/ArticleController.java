@@ -51,7 +51,7 @@ public class ArticleController extends AbstractController {
 	//Listing
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
-	public ModelAndView list(@RequestParam(required = false) final Integer newspaperId, @RequestParam(required = false, defaultValue = "") final String word) {
+	public ModelAndView list(@RequestParam(required = false) final int newspaperId, @RequestParam(required = false, defaultValue = "") final String word) {
 		ModelAndView result = null;
 		Collection<Article> articles = new ArrayList<Article>();
 		Actor actor = null;
@@ -62,13 +62,13 @@ public class ArticleController extends AbstractController {
 
 		articles = this.articleService.findArticleByKeyword("");
 
-		if (newspaperId != null) {
+		if (newspaperId != 0) {
 			newspaper = this.newsPaperService.findOne(newspaperId);
 			articles = newspaper.getArticles();
 		}
 
 		if (!(word == null || word.equals("")))
-			articles = this.articleService.findArticleByKeyword(word);
+			articles = this.articleService.findArticleByKeywordAndNewspaperId(word, newspaperId);
 
 		result = new ModelAndView("article/list");
 
@@ -81,18 +81,19 @@ public class ArticleController extends AbstractController {
 			if (this.actorService.checkAuthority(actor, "USER")) {
 				principal = (User) actor;
 				principalArticles = principal.getArticles();
-			} else if (this.actorService.checkAuthority(actor, "CUSTOMER") && newspaperId != null) {
+			} else if (this.actorService.checkAuthority(actor, "CUSTOMER") && newspaperId != 0) {
 				newspaper = this.newsPaperService.findOne(newspaperId);
 				if (newspaper != null && newspaper.getIsPrivate()) {
 					showFollowUps = this.subscriptionService.thisCustomerCanSeeThisNewspaper(actor.getId(), newspaperId);
 					Assert.isTrue(showFollowUps);	// Si es false, significa que no está suscrito
 				}
 			}
-		} else if (newspaperId != null)
+		} else if (newspaperId != 0)
 			Assert.isTrue(!newspaper.getIsPrivate());
 
 		result.addObject("principalArticles", principalArticles);
 		result.addObject("showFollowUps", showFollowUps);
+		result.addObject("newspaperId", newspaperId);
 
 		return result;
 	}

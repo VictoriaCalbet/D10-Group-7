@@ -54,7 +54,7 @@ public class NewspaperUserController extends AbstractController {
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
 		result.addObject("message", message);
-		result.addObject("requestURI", "newspaper/user/list.do?");
+		result.addObject("requestURI", "newspaper/user/list.do");
 
 		return result;
 	}
