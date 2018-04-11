@@ -18,18 +18,17 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<form:form action="${requestURI}" modelAttribute="tabooWordForm">
+<form:form action="${requestURI}" modelAttribute="systemConfiguration">
 
-
-	<form:hidden path="oldTabooWord"/>
+	<!-- Hidden attributes -->
+	<form:hidden path="id"/>
+	<form:hidden path="version"/>
 	
-
+	<!-- Editable attributes -->
+	<acme:textarea code="systemConfiguration.tabooWords" path="tabooWords"/>
 	
-	<acme:textbox code="systemconfiguration.tabooword" path="tabooWord"/>
-	
-	
-	
-	<acme:submit name="save" code="systemconfiguration.save" /> &nbsp;
-	<acme:cancel url="/system-configuration/administrator/list.do" code="systemconfiguration.cancel" /> <br/>
+	<!-- Action buttons -->
+	<acme:submit name="save" code="systemConfiguration.save" /> &nbsp;
+	<acme:cancel url="systemConfiguration/administrator/list.do" code="systemConfiguration.cancel" /> <br/>
 
 </form:form>
