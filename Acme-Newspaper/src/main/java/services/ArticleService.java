@@ -77,6 +77,7 @@ public class ArticleService {
 		final Article result = article;
 		final User principal = this.userService.findByPrincipal();
 		final Newspaper newspaper = article.getNewspaper();
+
 		Assert.isTrue(principal == result.getWriter());
 		Assert.isTrue(newspaper.getPublicationDate() == null);
 		Assert.isTrue(result.getPublicationMoment() == null);

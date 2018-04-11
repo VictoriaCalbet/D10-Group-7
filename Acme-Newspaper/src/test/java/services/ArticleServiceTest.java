@@ -135,8 +135,9 @@ public class ArticleServiceTest extends AbstractTest {
 	 * Note that articles may be saved in draft mode, which allows to modify them later,
 	 * or final model, which freezes them forever.
 	 * 
-	 * Positive test1: Guarda un artículo draft que pertenece a un periódico no publicado
-	 * Negative test2: Guarda un artículo de un periódico que ya ha sido publicado
+	 * Positive test1: Save a draft article from a newspaper not published
+	 * Negative test2: Save an article of an already published newspaper
+	 * Negative test3: Save an article that is not created by him/her
 	 */
 
 	@Test
@@ -146,17 +147,16 @@ public class ArticleServiceTest extends AbstractTest {
 		final Newspaper n4 = this.newspaperService.findOne(this.getEntityId("newspaper4"));//No publicado
 		final Article a4 = this.articleService.findOne(this.getEntityId("article4"));
 		a4.setIsDraft(true);
-		final Article a2 = a4;
-		a2.setIsDraft(false);
 		final Article a3 = this.articleService.findOne(this.getEntityId("article1"));
 		final Object testingData[][] = {
 
 			/** userPrincipal,articulo, periodico, title,summary,body,exception */
 			{
 				"user2", a4, n4, "Title of article1", "Summary of article1", "Body of article1", null
+
 			}, {
 				"user2", a3, n1, "Title of article1", "Summary of article1", "Body of article1", IllegalArgumentException.class
-			}, {	//Guarda un artículo de un periódico válido pero que no es suyo
+			}, {
 				"user1", a4, n4, "Title of article1", "Summary of article1", "Body of article1", IllegalArgumentException.class
 			}
 
