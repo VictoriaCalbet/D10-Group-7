@@ -28,22 +28,23 @@
 	</display:column>
 	
 	<security:authorize access="hasRole('USER')">
-		
-			<display:column>
-				<jstl:choose>
-					<jstl:when test="${row.user.userAccount.id eq loggedactor.id}"> 
-						<spring:message code="follow-up.edit" var="followUpEditLink"/>
-						<a href="follow-up/user/edit.do?followUpId=${row.id}"><jstl:out value="${followUpEditLink}"/></a>
-					</jstl:when>
-					<jstl:otherwise>
-						<spring:message code="follow-up.noEditable" var="followUpNoEditableLink"/>
-						<jstl:out value="${followUpNoEditableLink}"/>
-					</jstl:otherwise>
-				</jstl:choose>
-			</display:column>
-		
+		<display:column>
+			<jstl:choose>
+				<jstl:when test="${row.user.userAccount.id eq loggedactor.id}"> 
+					<spring:message code="follow-up.edit" var="followUpEditLink"/>
+					<a href="follow-up/user/edit.do?followUpId=${row.id}"><jstl:out value="${followUpEditLink}"/></a>
+				</jstl:when>
+				<jstl:otherwise>
+					<spring:message code="follow-up.noEditable" var="followUpNoEditableLink"/>
+					<jstl:out value="${followUpNoEditableLink}"/>
+				</jstl:otherwise>
+			</jstl:choose>
+		</display:column>
 	</security:authorize>
 
+	<spring:message code="follow-up.article.title" var="followUpArticleTitleHeader"/>
+	<display:column property="article.title" title="${followUpArticleTitleHeader}"/>
+	
 	<spring:message code="follow-up.title" var="followUpTitleHeader"/>
 	<display:column property="title" title="${followUpTitleHeader}"/>
 	

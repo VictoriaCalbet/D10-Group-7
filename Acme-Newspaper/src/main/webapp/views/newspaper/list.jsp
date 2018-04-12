@@ -29,7 +29,7 @@
 
 <security:authentication property="principal" var="loggedactor"/>
 
-<display:table name="newspapers" id="row" requestURI="${requestURI}" pagesize="5">
+<display:table name="newspapers" id="row" requestURI="${requestURI}" pagesize="2">
 
 	<jstl:set var="isPrivate" value="${row.isPrivate}" />		
 	
@@ -47,7 +47,15 @@
 	<spring:message code="newspaper.publicationDate" var="publicationDateHeader" />
 	<spring:message code="newspaper.publicationDate.pattern" var="datePattern"/>
 	<display:column title="${publicationDateHeader}" style="${style}">
-		<fmt:formatDate value="${row.publicationDate}" pattern="${datePattern}"/>
+		<jstl:choose>
+			<jstl:when test="${not empty row.publicationDate}">
+				<fmt:formatDate value="${row.publicationDate}" pattern="${datePattern}"/> 
+			</jstl:when>
+			<jstl:otherwise>
+				<spring:message code="newspaper.publicationDate.null" var="newspaperPublicationDateNull" />
+				<jstl:out value="${newspaperPublicationDateNull}"/>	
+			</jstl:otherwise>
+		</jstl:choose>
 	</display:column>
 	
 	<spring:message code="newspaper.description" var="descriptionHeader" />
