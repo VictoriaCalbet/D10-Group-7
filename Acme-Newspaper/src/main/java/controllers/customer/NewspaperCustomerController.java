@@ -48,7 +48,7 @@ public class NewspaperCustomerController extends AbstractController {
 		result.addObject("newspapers", newspapers);
 		result.addObject("message", message);
 		result.addObject("ns", ns);
-		result.addObject("requestURI", "newspaper/customer/list.do?");
+		result.addObject("requestURI", "newspaper/customer/list.do");
 
 		return result;
 	}

@@ -40,7 +40,7 @@ public class NewspaperAdministratorController extends AbstractController {
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
 		result.addObject("message", message);
-		result.addObject("requestURI", "newspaper/administrator/list.do?");
+		result.addObject("requestURI", "newspaper/administrator/list.do");
 
 		return result;
 	}

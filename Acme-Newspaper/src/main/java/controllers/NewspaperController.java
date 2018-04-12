@@ -76,7 +76,7 @@ public class NewspaperController extends AbstractController {
 		result.addObject("newspapers", newspapers);
 		result.addObject("ns", ns);
 		result.addObject("message", message);
-		result.addObject("requestURI", "newspaper/list.do?");
+		result.addObject("requestURI", "newspaper/list.do");
 
 		return result;
 	}
