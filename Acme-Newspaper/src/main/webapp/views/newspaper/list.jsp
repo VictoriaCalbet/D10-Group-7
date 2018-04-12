@@ -29,7 +29,7 @@
 
 <security:authentication property="principal" var="loggedactor"/>
 
-<display:table name="newspapers" id="row" requestURI="${requestURI}" pagesize="2">
+<display:table name="newspapers" id="row" requestURI="${requestURI}" pagesize="5">
 
 	<jstl:set var="isPrivate" value="${row.isPrivate}" />		
 	
