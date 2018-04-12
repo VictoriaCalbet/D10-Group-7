@@ -37,12 +37,12 @@ public class NewspaperCustomerController extends AbstractController {
 		Collection<Newspaper> newspapers = new ArrayList<Newspaper>();
 		Collection<Newspaper> ns = new ArrayList<Newspaper>();
 		final Actor a = this.actorService.findByPrincipal();
+		ns = this.newspaperService.findNewspaperSubscribedOfCustomer(a.getId());
 
-		if (word == null || word.equals("")) {
+		if (word == null || word.equals(""))
 			newspapers = this.newspaperService.findNewspaperSubscribedOfCustomer();
-			ns = this.newspaperService.findNewspaperSubscribedOfCustomer(a.getId());
-		} else
-			newspapers = this.newspaperService.findNewspaperByKeyWordNotPrivate(word);
+		else
+			newspapers = this.newspaperService.findNewspaperByKeyWord(word);
 
 		result = new ModelAndView("newspaper/list");
 		result.addObject("newspapers", newspapers);
