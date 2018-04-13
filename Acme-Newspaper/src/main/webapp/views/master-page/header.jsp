@@ -17,7 +17,7 @@
 
 <div>
 	<a href=""><img src="images/logo.png"
-		alt="Acme-Newspaper Co., Inc." /></a>
+		alt="Acme-Newspaper Co., Inc." height="180"/></a>
 </div>
 
 <div>
