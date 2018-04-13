@@ -1,0 +1,7 @@
+Procesador Inter(R) Core(TM) i5-3230M
+
+CPU @ 2.60 GHz 2.60 GHz
+
+Memoria RAM: la de la maquina virtual
+
+Toshiba Sattelite C55 - A - 1EF
