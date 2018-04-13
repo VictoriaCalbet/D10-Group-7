@@ -1,0 +1,3 @@
+Processor: Intel Core i3-4030U 1.9GHz, 3MB L3 cache, 2 cores.
+Ram: DD3 L 
+Hard disk: HDD

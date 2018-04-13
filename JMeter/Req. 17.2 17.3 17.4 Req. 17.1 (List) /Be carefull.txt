@@ -1,0 +1,1 @@
+This script cover requirements: 17.1, 17.2, 17.3 and 17.4
