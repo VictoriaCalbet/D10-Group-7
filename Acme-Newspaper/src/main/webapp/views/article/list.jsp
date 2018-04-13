@@ -82,6 +82,9 @@
 				<security:authorize access="hasRole('USER')">
 					<a href="follow-up/user/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
 				</security:authorize>
+				<security:authorize access="hasRole('ADMIN')">
+					<a href="follow-up/administrator/list.do?articleId=${row.id}"><jstl:out value="${articleListFollowUpsLink}"/></a>
+				</security:authorize>
 				<security:authorize access="hasRole('CUSTOMER')">
 					<jstl:choose>
 						<jstl:when test="${showFollowUps eq true and not empty row.newspaper.publicationDate and row.isDraft eq false and not empty row.followUps}">
