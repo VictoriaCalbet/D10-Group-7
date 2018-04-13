@@ -1,0 +1,3 @@
+Procesador	Intel(R) Core(TM) i5-3570K CPU @ 3.40GHz, 3801 Mhz, 4 procesadores principales, 4 procesadores lógicos
+Memoria física instalada (RAM)	8,00 GB
+KINGSTON SA400S37240G 500GB
