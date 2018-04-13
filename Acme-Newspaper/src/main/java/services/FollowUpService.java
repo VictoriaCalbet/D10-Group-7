@@ -91,7 +91,6 @@ public class FollowUpService {
 
 		user = this.userService.findByPrincipal();
 
-		System.out.println(followUp.getArticle().getNewspaper().getPublicationDate());
 		Assert.notNull(followUp, "message.error.followUp.null");
 		Assert.notNull(user, "message.error.followUp.principal.null");
 		Assert.isTrue(followUp.getUser().equals(user));

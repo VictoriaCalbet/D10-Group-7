@@ -199,6 +199,8 @@ public class ArticleServiceTest extends AbstractTest {
 	 * 
 	 * Positive test1: Admin deletes an article
 	 * Negative test2: A user tries to delete an article
+	 * Negative test3: A customer tries to delete an article
+	 * Negative test4: A null actor tries to delete an article
 	 */
 	@Test
 	public void testDeleteArticleDriver() {

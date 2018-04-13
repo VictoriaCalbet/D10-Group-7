@@ -97,14 +97,22 @@ public class FollowUpServiceTest extends AbstractTest {
 
 	}
 
-	/*
+	/**
+	 * 
+	 * Acme-Newspaper 1.0: information requirement 14
+	 * 
+	 * - The writer of an article may write follow-ups on it. Follow-ups can be written
+	 * only after an article is saved in final mode and the corresponding newspaper
+	 * is published. For every follow-up, the system must store the following data:
+	 * title, publication moment, summary, text and optional pictures.
+	 * 
 	 * Positive test 1: edit a follow-up with user that is the property
 	 * Negative test 2: edit a follow-up with user that is not the property
 	 * Negative test 3: edit a follow-up with customer
 	 * Negative test 4: edit a follow-up with user and title is null
 	 * Negative test 5: edit a follow-up with user and summary is null
 	 */
-
+	@SuppressWarnings("unchecked")
 	@Test
 	public void testEditFollowUpDriver() {
 		final Object[][] testingData = {

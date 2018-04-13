@@ -230,6 +230,7 @@ public class NewspaperServiceTest extends AbstractTest {
 	 * 
 	 * Positive test 1: Publish a newspaper.
 	 * Negative test 2: Publish a newspaper with article in mode draft.
+	 * Negative test 3: Publish a newspaper as a customer.
 	 */
 	@Test
 	public void testPublishNewspaper() {
@@ -240,6 +241,8 @@ public class NewspaperServiceTest extends AbstractTest {
 				"user1", "newspaper6", "description of newspaper6", "https://goo.gl/UscuZg", false, "article6", "summary of article6", "body of article6", false, null
 			}, {
 				"user1", "newspaper6", "description of newspaper6", "https://goo.gl/UscuZg", false, "article6", "summary of article6", "body of article6", true, IllegalArgumentException.class
+			}, {
+				"customer1", "newspaper6", "description of newspaper6", "https://goo.gl/UscuZg", false, "article6", "summary of article6", "body of article6", false, IllegalArgumentException.class
 			}
 		};
 
@@ -291,6 +294,7 @@ public class NewspaperServiceTest extends AbstractTest {
 	 * 
 	 * Positive test 1: Delete a newspaper from the database by an admin.
 	 * Negative test 2: Delete a newspaper from the database by a user.
+	 * Negative test 3: Delete a newspaper from the database by a customer.
 	 */
 	@Test
 	public void testDeleteNewspaperAdmin() {
@@ -302,6 +306,8 @@ public class NewspaperServiceTest extends AbstractTest {
 				"admin", n1, null
 			}, {
 				"user1", n1, IllegalArgumentException.class
+			}, {
+				"customer1", n1, IllegalArgumentException.class
 			}
 		};
 
